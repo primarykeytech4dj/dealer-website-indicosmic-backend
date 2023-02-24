@@ -1,0 +1,21 @@
+.container{
+    width: 90%;
+}
+
+
+.image{
+    width:70% !important;
+    margin-left:2px !important;
+     height:153px !important ;
+}
+ .slick-next:before {
+   
+    color: #d6c3c3;
+}
+.slick-prev:before{
+    color: #d6c3c3;
+}
+.sliderimage{
+    height: 171px !important;
+    width: 100 !important;
+} 
