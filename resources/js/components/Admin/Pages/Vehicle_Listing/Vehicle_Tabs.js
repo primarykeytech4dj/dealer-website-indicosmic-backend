@@ -16,9 +16,20 @@ export default class VehicleTabs extends React.Component {
       super(props);
       this.state = {
         
-        value:"1",
+        value:"",
         fields:{
+           " For Used Vehicle":{
+                "For used vehicle":{ "History":"",
+                "Km Driven":"",
+                "Last Serviced On":"",
+                "Registration No":"",
+                "Registered In":"",
+                "Owner":"",
+                "Insurance Validity":"",
+                }
+               
 
+            },
             Specification:{
 
                 "Engine & Transmission":{
@@ -42,7 +53,7 @@ export default class VehicleTabs extends React.Component {
                  "Fuel Tank Capacity":""
      
                 },
-                "Suspensions, Brakes & Steering":{
+                "Suspensions Brakes & Steering":{
                  "Suspension Front":"",
                  "Suspension Rear":"",
                  "Front Brake Type":"",
@@ -123,11 +134,12 @@ export default class VehicleTabs extends React.Component {
            console.log("value ")
             this.setState(old => ({...old, value: value}));
           };
-
+          var i =0;
+          var a=0;
         return(<>
 
 
-      <BreadCrumb breadcrumb={this.props.title} breadcrumbItem1={this.props.title+" "+'Update'} />
+      <BreadCrumb breadcrumb={"vehicletabs"} />
       <Box sx={{ width: '100%', typography: 'body1', backgroundColor:'white', borderRadius:"6px" }}>
 
 
@@ -136,14 +148,20 @@ export default class VehicleTabs extends React.Component {
                 <Tabs value={this.state.value} onChange={handleChange} aria-label="Vehicle"  variant={"scrollable"}
                    scrollButtons={"auto"} >
  
-                    <Tab label={<b>For Used Vehicle</b>} value="1" />
+                    {/* <Tab label={<b>For Used Vehicle</b>} value="1" /> 
                     <Tab label={<b>For Used Vehicle</b>} value="2" />
-                    {Object.entries(this.state.fields).map(([key,value])=>{
+                     */}
+                    {
+                    Object.entries(this.state.fields).map(([key,value])=>{
                        // console.log("key",key,"value",value)
-                       var i = 1;
-                        return(<>
-
-                                  <Tab label={<b>{key}</b>} value={(++i)} />
+                       
+                       //   i = String(parseInt(i)+1);
+                        i = parseInt(i)+1;
+                    
+                        console.log("i=>", i)
+                       return(
+                        <>
+                            <Tab key={key} label={<b>{key}</b>} value={`${i}`} />
                         </>)
                     })}
 
@@ -151,18 +169,23 @@ export default class VehicleTabs extends React.Component {
                     
                 </Tabs>
 
-                <TabPanel value={"1"}><VehicleCreation  /></TabPanel> 
+                {/* <TabPanel value={"1"}><VehicleCreation  /></TabPanel> 
 
-                <TabPanel value={"2"}><VehicleCreation  /></TabPanel> 
+                 <TabPanel value={"2"}><VehicleCreation  /></TabPanel>  */}
 
                 {Object.entries(this.state.fields).map(([key,value])=>{
-                    var i = 1;
-                       // console.log("key",key,"value",value)
-                        return(<>
+                    //  a = String(parseInt(a)+1);
+                        a = parseInt(a)+1;
+                    // console.log("key",key,"value",value)
+                       
+                     console.log("a=>", a)
+                    return(<>
 
-                         <TabPanel value={(++i)}><h1>hello</h1></TabPanel> 
-                        </>)
-                    })}
+                      
+                        <TabPanel key={key} value={`${a}`}><VehicleCreation title={key} data={value} /></TabPanel> 
+
+                    </>)
+                })}
               
                 
             </Box>
