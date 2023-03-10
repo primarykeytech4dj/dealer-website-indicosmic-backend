@@ -936,7 +936,7 @@ function Model(props){
                     })
                     setTimeout(() => {
                       Swal.close()
-                      location.reload("/product-category")
+                      location.reload("/admin/product-category")
                 }, 3000);
                     
 

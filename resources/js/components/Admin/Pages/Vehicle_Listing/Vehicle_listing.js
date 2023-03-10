@@ -230,7 +230,7 @@ function IsActive(props){
         
     //      });
        }else{
-        location.reload(`/${props.url}-list`)
+        location.reload(`/admin/${props.url}-list`)
        }
      });
    }

@@ -27,7 +27,7 @@ export default class Staticjson extends React.Component {
               method: 'get',
               url: 'https://dealer-website.primarykeytech.in/dynamic/api/public/config-json/Home.json',
               headers: { 
-                'Authorization': 'Bearer '+localStorage.getItem('_token')
+                'Authorization': 'Bearer '+localStorage.getItem('dealer_token')
             },
             };
             

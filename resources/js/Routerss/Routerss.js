@@ -14,7 +14,7 @@ import Layout from '../components/Admin/Layout/Layout'
 import Login  from '../components/Admin/Pages/Login/Login'
 
 const isLoggedIn = () => {
-  if(localStorage.getItem('_token')){
+  if(localStorage.getItem('dealer_token')){
 
     return true
   } else {
@@ -31,8 +31,14 @@ const Routerss = () => {
         <Layout/>
           
         :
-        <Login />
-        // <Router>
+        <Router>
+          <Routes>
+          <Route path='/' element={<Login/>} ></Route> 
+        <Route path='/admin' element={<Login/>} ></Route> 
+          {/* <Login /> */}
+
+          </Routes>
+        </Router>
         //   <Navbar/>
         //     <Routes>       
         //         {/* <Route path='/' element={<About_us/>} exact></Route>
@@ -42,7 +48,6 @@ const Routerss = () => {
         //         <Route path="/about" element={<About_us />} />
         //         {/* <Route path="/login" element={<Login />} /> */}
         //     </Routes>
-        // </Router>
         
         }
     </div>

@@ -2,18 +2,21 @@
 import  React, {useState} from 'react';
 import Swal from 'sweetalert2'
 import axios from 'axios';
+import { API_CONSTANTS } from './assets/constant';
+
 const axiosRequestConfig = {
   headers: { 'Content-Type': 'application/json' }
 }
 
-const API_CONSTANTS = process.env.MIX_API_URL;
+
+// const API_CONSTANTS = API_CONSTANTS.BASE_URL;
 export default class Api extends React.Component {
   constructor(props) {
     super(props);
   }
 
   getBaseUrl(){
-    return API_CONSTANTS;
+    return API_CONSTANTS.BASE_URL;
   }
 
 //  tokenValid() {
@@ -37,7 +40,7 @@ export default class Api extends React.Component {
               method: 'post',
               url: API_CONSTANTS+'refresh',
               headers: { 
-                  'Authorization': 'Bearer '+localStorage.getItem('_token')
+                  'Authorization': 'Bearer '+localStorage.getItem('dealer_token')
               },
           };
             axios(config).then(function (response) {
@@ -47,7 +50,7 @@ export default class Api extends React.Component {
                 // let milliseconds= 3600 * 1000; // 10 seconds = 10000 milliseconds
                 // timeObject = new Date(timeObject.getTime() + milliseconds);
                 // localStorage.setItem('expire_token', timeObject);
-                localStorage.setItem('_token',response.data.access_token)
+                localStorage.setItem('dealer_token',response.data.access_token)
               resolve(response.data.access_token);
               }
             })
@@ -58,10 +61,10 @@ export default class Api extends React.Component {
 
   getToken(){
     return new Promise((resolve,reject)=>{
-        if(localStorage.getItem('_token')){
+        if(localStorage.getItem('dealer_token')){
           // if(this.tokenValid()){
-            // console.log(localStorage.getItem('_token'))
-            resolve(localStorage.getItem('_token'))
+            // console.log(localStorage.getItem('dealer_token'))
+            resolve(localStorage.getItem('dealer_token'))
           // } else {
           //   resolve(this.refreshToken())
            
@@ -74,7 +77,7 @@ export default class Api extends React.Component {
   }
 
 callAxios(endPoint, reqData, auth=true,type='application/json'){
-  console.log( 'data', reqData)
+  // console.log( 'data', reqData)
     return new Promise((resolve, reject) => {
         Promise.all([this.getBaseUrl(),this.getToken()])
         .then(data => {

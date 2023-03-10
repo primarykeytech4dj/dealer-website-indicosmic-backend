@@ -7,7 +7,7 @@ export default class Header extends Component {
       const logout = async (e) => {
         sessionStorage.removeItem('token');
         this.setState({redirect: true});
-          window.location.href = '/';
+          window.location.href = '/admin';
         
           
       }

@@ -160,7 +160,7 @@ function Action(props){
               showConfirmButton: false,
               timer: 1200,
             });
-            location.reload("/product/product-list")
+            location.reload("/admin/product/product-list")
               } else {
                 Swal.fire({
                   title: 'Deleted unsuccessfully!',
@@ -394,7 +394,7 @@ deletebyid=(delrowbyid)=>{
             })
         }
             console.log("===>",response);
-            location.reload("/product/product-list")
+            location.reload("/admin/product/product-list")
           
         }).catch(function (error) {
           console.log(error);

@@ -98,7 +98,7 @@ export default class AddRoles extends React.Component {
               }
 
 
-              location.reload('/')
+              location.reload('/admin')
               console.log("Addrole===>",response);
               // sessionStorage.setItem('_token', response.data.)
               

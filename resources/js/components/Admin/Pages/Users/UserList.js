@@ -118,7 +118,7 @@ export  class UserList extends React.Component {
       <div className='col-md-12 mb-3'>
         {/* <Button  type="button" style={{ backgroundColor: '#183883',width:"96px", marginLeft:"47rem",color:"#fff"}}  size='large' >Add User</Button> */}
         <Link
-        to={"/create/user"} >
+        to={"/admin/create/user"} >
           <Button  type="button" style={{ backgroundColor: '#183883',width:"96px", marginLeft:"47rem",color:"#fff"}}  size='large' >Add User</Button>
 
         </Link>
@@ -246,7 +246,7 @@ function Action(props){
       <>
             
                {/* <Button  type="button"  data-bs-toggle="modal" size='small' href="#exampleModalToggle" onClick={editUserdata}>Edit</Button>&nbsp;&nbsp; */}
-               <Link key={props.key}  to={`/create/user`} state={{param:props.param}}><Button>Edit</Button></Link>  &nbsp;
+               <Link key={props.key}  to={`/admin/create/user`} state={{param:props.param}}><Button>Edit</Button></Link>  &nbsp;
                <Button  type="button"  size='small' onClick={()=>deleteUser(props.param)}>Delete</Button>
                
              
@@ -385,7 +385,7 @@ function Model(props){
                       showConfirmButton: false,
                   })
               }
-              location.reload('/user-list')
+              location.reload('/admin/user-list')
               console.log("Updateuser===>",response);
               // sessionStorage.setItem('_token', response.data.)
               

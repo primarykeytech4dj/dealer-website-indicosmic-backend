@@ -204,7 +204,7 @@ function IsActive(props){
                showConfirmButton: false,
                timer: 1200,
              });
-            location.reload(`/${props.url}-list`)
+            location.reload(`/admin/${props.url}-list`)
                } else {
                  Swal.fire({
                    title: `Vehicle ${msg1} unsuccessfully!`,
@@ -219,7 +219,7 @@ function IsActive(props){
         
          });
        }else{
-        location.reload(`/${props.url}-list`)
+        location.reload(`/admin/${props.url}-list`)
        }
      });
    }

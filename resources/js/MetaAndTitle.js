@@ -1,6 +1,7 @@
 import React from 'react'
 import { useEffect } from "react";
 import { BrowserRouter as Router , Routes, Route , useLocation} from 'react-router-dom'
+import { API_CONSTANTS } from './assets/constant';
 
 export default function MetaAndTitle() {
     const pathname = window.location.pathname;
@@ -35,15 +36,12 @@ export default function MetaAndTitle() {
           metaDescription = "Claim Assessment";
           break;
         case "/dealer/claim-details":
-          title = "Claim Details";
-          metaDescription = "Claim Details";
+          title = "ADMIN . Dealer";
+          metaDescription = "ADMIN . Dealer";
           break;
         default:
-          title= "Claim Insurance";
-          metaDescription= "Claim Insurance";
-         
-        
-       
+          title= API_CONSTANTS.subdomain;
+          metaDescription=  API_CONSTANTS.subdomain;
       }
       
   

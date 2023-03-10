@@ -178,7 +178,7 @@ function Action(props){
       pathname:'/product/edit',
       state: props.param
     }} > Edit</Link> */}
-    <Link key={props.key}  to={`/${url}/edit`} state={{param:props.param}}><Button>Edit</Button></Link>  
+    <Link key={props.key}  to={`/admin/${url}/edit`} state={{param:props.param}}><Button>Edit</Button></Link>  
     
   </>)
 }
@@ -258,7 +258,7 @@ function IsActive(props){
            });
          
           
-          location.reload(`/${props.url}-list`)
+          location.reload(`/admin/${props.url}-list`)
              } else {
                Swal.fire({
                  title: `${productType} ${msg1} unsuccessfully!`,
@@ -269,7 +269,7 @@ function IsActive(props){
 
                setTimeout(() => {
                 Swal.close()
-                location.reload(`/${props.url}-list`)
+                location.reload(`/admin/${props.url}-list`)
           }, 3000);
               
              }
@@ -279,7 +279,7 @@ function IsActive(props){
       
        });
      }else{
-      location.reload(`/${props.url}-list`)
+      location.reload(`/admin/${props.url}-list`)
      }
    });
  }

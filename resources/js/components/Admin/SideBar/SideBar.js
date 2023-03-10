@@ -8,7 +8,7 @@ export default function SideBar() {
     <ul className="navbar-nav navbar-sidenav" id="exampleAccordion">
         <li className="nav-item" data-toggle="tooltip" data-placement="right" style={{borderBottomColor:"#183883", borderBottomWidth:"thin"}}  title="Dashboard">
         
-        <Link className="nav-link" to="/">
+        <Link className="nav-link" to="/admin">
             <i className="fa fa-fw fa-dashboard"></i>
             <span className="nav-link-text">&nbsp;Dashboard</span>
           </Link>
@@ -33,16 +33,16 @@ export default function SideBar() {
           </a>
           <ul className="sidenav-second-level collapse" id="collapseMylistings">
             <li>
-            <Link  to="/user-list">User List</Link>
+            <Link  to="/admin/user-list">User List</Link>
             </li>
             <li>
-              <Link  to="/claim-list">Claim List</Link> 
+              <Link  to="/admin/claim-list">Claim List</Link> 
             </li>
             <li  >
-              <Link  to="/inspection-detail-list">Inspection Details</Link> 
+              <Link  to="/admin/inspection-detail-list">Inspection Details</Link> 
             </li>
             <li>
-              <Link  to="/create-role">Role List</Link> 
+              <Link  to="/admin/create-role">Role List</Link> 
             </li>
             <li>
             </li>
@@ -58,7 +58,7 @@ export default function SideBar() {
 
         {/* <li className="nav-item" data-toggle="tooltip" data-placement="right" style={{borderBottomColor:"#183883", borderBottomWidth:"thin"}}  title="Dashboard">
         
-        <Link className="nav-link" to="/user-list">
+        <Link className="nav-link" to="/admin/user-list">
             <i className="fa fa-fw fa-list"></i>
             <span className="nav-link-text">&nbsp;Users List</span>
           </Link>
@@ -66,7 +66,7 @@ export default function SideBar() {
         </li>
         <li className="nav-item" data-toggle="tooltip" data-placement="right" style={{borderBottomColor:"#183883", borderBottomWidth:"thin"}}  title="Dashboard">
         
-        <Link className="nav-link" to="/claim-list">
+        <Link className="nav-link" to="/admin/claim-list">
             <i className="fa fa-fw fa-list"></i>
             <span className="nav-link-text">&nbsp;Claim List</span>
           </Link>
@@ -74,7 +74,7 @@ export default function SideBar() {
         </li>
         <li className="nav-item" data-toggle="tooltip" data-placement="right" style={{borderBottomColor:"#183883", borderBottomWidth:"thin"}}  title="Dashboard">
         
-        <Link className="nav-link" to="/inspection-detail-list">
+        <Link className="nav-link" to="/admin/inspection-detail-list">
             <i className="fa fa-fw fa-list"></i>
             <span className="nav-link-text">&nbsp;Inspection Detail List</span>
           </Link>
@@ -87,10 +87,10 @@ export default function SideBar() {
           </a>
           <ul className="sidenav-second-level collapse" id="collapseMylistings">
             <li>
-              <Link  to="/create-role">Add Role</Link>
+              <Link  to="/admin/create-role">Add Role</Link>
             </li>
             <li>
-            <Link  to="/role-list">Roles List</Link> 
+            <Link  to="/admin/role-list">Roles List</Link> 
 
             </li>
           </ul>
@@ -166,7 +166,7 @@ class Columns extends React.Component {
         <ul className="sidenav-second-level collapse" id="collapseMylistings">
           
         {/* <li>
-            <Link  to="/claim-list">Claim List</Link>
+            <Link  to="/admin/claim-list">Claim List</Link>
           </li> */}
           <li>
             {/* <a >Expired <span className="badge badge-pill badge-danger">6</span></a> */}
@@ -179,7 +179,7 @@ class Columns extends React.Component {
     //   return(
     //     <li className="nav-item" data-toggle="tooltip" data-placement="right" style={{borderBottomColor:"#183883", borderBottomWidth:"thin"}}  title="Dashboard">
         
-    //     <Link className="nav-link" to="/claim-list">
+    //     <Link className="nav-link" to="/admin/claim-list">
     //         <i className="fa fa-fw fa-dashboard"></i>
     //         <span className="nav-link-text">&nbsp;Claim List</span>
     //       </Link>
@@ -202,13 +202,13 @@ class Columns extends React.Component {
         </a>
         <ul className="sidenav-second-level collapse" id="collapseMylistings">
           
-        <li><Link  to="/setup/type/website">Website Setting</Link></li>
-      <li><Link  to="/setup/type/home">Home Setting</Link></li>
-      <li><Link  to="/setup/type/about">About US setting</Link></li>
-      <li><Link  to="/setup/type/services">Services Setting</Link></li>
-      <li><Link  to="/setup/type/products">Products Settings</Link></li>
-      <li><Link  to="/setup/type/gallery">Gallery Settings</Link></li>
-      <li><Link  to="/setup/type/services">Contact Us Settings</Link></li>
+        <li><Link  to="/admin/setup/type/website">Website Setting</Link></li>
+      <li><Link  to="/admin/setup/type/home">Home Setting</Link></li>
+      <li><Link  to="/admin/setup/type/about">About US setting</Link></li>
+      <li><Link  to="/admin/setup/type/services">Services Setting</Link></li>
+      <li><Link  to="/admin/setup/type/products">Products Settings</Link></li>
+      <li><Link  to="/admin/setup/type/gallery">Gallery Settings</Link></li>
+      <li><Link  to="/admin/setup/type/services">Contact Us Settings</Link></li>
         </ul>
   </li>
 
@@ -220,7 +220,7 @@ class Columns extends React.Component {
         </a>
         <ul className="sidenav-second-level collapse" id="collapseMylistings">
           
-        <li><Link  to="/setup-list">Setup List</Link></li>
+        <li><Link  to="/admin/setup-list">Setup List</Link></li>
     
         </ul>
   </li>
@@ -232,8 +232,8 @@ class Columns extends React.Component {
           <span className="nav-link-text">&nbsp; Products</span>
         </a>
         <ul className="sidenav-second-level collapse" id="collapseMylistings">
-        <li><Link  to="/products/categories">Product Categories</Link></li>
-      <li><Link  to="/product/list">Products</Link></li>
+        <li><Link  to="/admin/products/categories">Product Categories</Link></li>
+      <li><Link  to="/admin/product/list">Products</Link></li>
         </ul>
   </li>
 
@@ -243,8 +243,8 @@ class Columns extends React.Component {
           <span className="nav-link-text">&nbsp; Service </span>
         </a>
         <ul className="sidenav-second-level collapse" id="collapseMylistings">
-        <li><Link  to="/service/categories">Service Categories</Link></li>
-      <li><Link  to="/service/list">Services</Link></li>
+        <li><Link  to="/admin/service/categories">Service Categories</Link></li>
+      <li><Link  to="/admin/service/list">Services</Link></li>
         </ul>
   </li>
 
@@ -254,14 +254,14 @@ class Columns extends React.Component {
           <span className="nav-link-text">&nbsp; Users</span>
         </a>
         <ul className="sidenav-second-level collapse" id="collapseMylistings">
-        <li><Link  to="/user-list">UserList</Link></li>
+        <li><Link  to="/admin/user-list">UserList</Link></li>
     
         </ul>
   </li>
 
   <li className="nav-item" data-toggle="tooltip" data-placement="right" style={{borderBottomColor:"#183883", borderBottomWidth:"thin"}}  title="Testimonials">
   
-  <Link className="nav-link" to="/testimonials">
+  <Link className="nav-link" to="/admin/testimonials">
       <i className="fa fa-fw fa-dashboard"></i>
       <span className="nav-link-text">&nbsp;Testimonials</span>
     </Link>
@@ -275,8 +275,8 @@ class Columns extends React.Component {
           <span className="nav-link-text">&nbsp; Excel Master</span>
         </a>
         <ul className="sidenav-second-level collapse" id="collapseMylistings">
-        <li><Link  to="/vehicle-excel/export">Vehicle Upload Format</Link></li>
-      <li><Link  to="/vehicle-list">Vehicle List</Link></li>
+        <li><Link  to="/admin/vehicle-excel/export">Vehicle Upload Format</Link></li>
+      <li><Link  to="/admin/vehicle-list">Vehicle List</Link></li>
         </ul>
   </li>
 
@@ -284,7 +284,7 @@ class Columns extends React.Component {
 
 <li className="nav-item" data-toggle="tooltip" data-placement="right" style={{borderBottomColor:"#183883", borderBottomWidth:"thin"}}  title="Sliders">
   
-  <Link className="nav-link" to="/Sliders/list">
+  <Link className="nav-link" to="/admin/Sliders/list">
       <i className="fa fa-fw fa-dashboard"></i>
       <span className="nav-link-text">&nbsp;Sliders</span>
     </Link>
@@ -294,7 +294,7 @@ class Columns extends React.Component {
 
 <li className="nav-item" data-toggle="tooltip" data-placement="right" style={{borderBottomColor:"#183883", borderBottomWidth:"thin"}}  title="Testimonials">
   
-  <Link className="nav-link" to="/enquiry-list">
+  <Link className="nav-link" to="/admin/enquiry-list">
       <i className="fa fa-fw fa-dashboard"></i>
       <span className="nav-link-text">&nbsp;Enquiry List</span>
     </Link>

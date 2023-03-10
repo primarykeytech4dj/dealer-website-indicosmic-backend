@@ -15,12 +15,14 @@ import './Login.css'
 
 import swal from 'sweetalert'
 
+import withRouter from '../../../../withRouter'
+
 import Swal from 'sweetalert2'
 import { object } from 'prop-types'
 import { keys } from 'lodash'
 
 
-export default class Login extends React.Component {
+export  class Login extends React.Component {
 
     constructor(props){
         super(props);
@@ -68,7 +70,6 @@ export default class Login extends React.Component {
 
         const handlechange =(e)=>{
             this.setState({[e.target.name]:e.target.value})
-            console.log(this.state)
         }
 
     const submituser=  (e) => {
@@ -77,14 +78,10 @@ export default class Login extends React.Component {
             email:this.state.email,
             password:this.state.password
          }
-         console.log('Credentials', data)
          const isValid =this.formValidation()
-         console.log("isvalid",isValid)
          var msg = Object.entries(isValid);
-         console.log("message=",msg);
          var str = '';
          msg.map((msg, key)=>{
-           console.log("api controller ".msg);
            str+=msg[1]+"<br>";
          })
 
@@ -92,10 +89,10 @@ export default class Login extends React.Component {
             // this.setState({})
         this.apiCtrl.callAxios('login', data, false).then(response => {
 
-            console.log("logres===",response)
+            // console.log("logres===",response)
             if(response.success) {
                 // alert(response.success);
-                localStorage.setItem('_token', response.access_token)
+                localStorage.setItem('dealer_token', response.access_token)
                 localStorage.setItem('user_roles',  JSON.stringify(response.data.user_roles));
                 localStorage.setItem('user_details', JSON.stringify(response.data.user_details));
                 // x = this.setup();
@@ -105,7 +102,9 @@ export default class Login extends React.Component {
                     icon: "success",
                     showConfirmButton: false,
                 })
-                location.reload('/')
+                
+                window.location.reload('/admin')
+                // this.props.location.navigattion('/admin')
                 // if(x){
                 //     Swal.fire({
                 //         title: "Login",
@@ -135,9 +134,6 @@ export default class Login extends React.Component {
         });
     }else{
 
-
-
-        console.log("str",isValid)
        
         Swal.fire({
             title: "Login",
@@ -153,7 +149,6 @@ export default class Login extends React.Component {
     }
 
     const {errors}=this.state
-    console.log(errors)
   return (
     <>
 
@@ -207,8 +202,8 @@ export default class Login extends React.Component {
                 <div className="col-md-1"></div>
             </div>
 
-            <div className='row' style={{ justifyContent:"space-around"}}>
-                    <FormControlLabel control={<Checkbox />} label="Remember me" />
+            <div className='row' style={{ justifyContent:"center"}}>
+                    {/* <FormControlLabel control={<Checkbox />} style={{marginTop:'10px'}} label="Remember me" /> */}
                 <a href="#" style={{marginTop:"10px"}}>Forgot Password?</a>
                
             </div>
@@ -232,3 +227,6 @@ export default class Login extends React.Component {
   )
         }
 }
+
+
+export default withRouter(Login)

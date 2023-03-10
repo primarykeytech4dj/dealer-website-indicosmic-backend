@@ -196,7 +196,7 @@ export default class TestiMonialList extends React.Component {
               });
               setTimeout(() => {
                 Swal.close()
-                location.reload("/testimonial-list")
+                location.reload("/admin/testimonial-list")
           }, 3000);
               
                 } else {
@@ -216,7 +216,7 @@ export default class TestiMonialList extends React.Component {
          
           });
         }
-        location.reload("/testimonial-list")
+        location.reload("/admin/testimonial-list")
       });
      
       //  apiCtrl.callAxios(`testimonial/delete/${state.id}`,data).then(response => {
@@ -464,7 +464,7 @@ class TestiMonialEdit extends React.Component {
                       //  Swal.close()
                       setTimeout(() => {
                             Swal.close()
-                               location.reload("/testimonials")
+                               location.reload("/admin/testimonials")
                       }, 3000);
                      // location.reload("/testimonials")
                   

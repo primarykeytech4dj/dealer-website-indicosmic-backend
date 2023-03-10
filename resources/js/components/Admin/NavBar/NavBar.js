@@ -3,13 +3,14 @@ import logo from "../../../../assets/img/logo.png";
 import logo_sticky from "../../../../assets/img/logo_sticky.png";
 import SideBar from '../SideBar/SideBar';
 
-
+import { useNavigate } from 'react-router-dom';
 export default function NavBar() {
+    const navigation = useNavigate();
 
     const logout = () => {
-        localStorage.clear()
-        
-        location.reload('/')
+        localStorage.clear();
+        navigation('/admin');
+        location.reload('/admin');
     }
   return (
     <>

@@ -228,7 +228,7 @@ function IsActive(props){
           setTimeout(() => {
             Swal.close()
       }, 3000);
-          location.reload("/slider-list")
+          location.reload("/admin/slider-list")
             } else {
               Swal.fire({
                 title: `Slider ${msg1} unsuccessfully!`,
@@ -246,7 +246,7 @@ function IsActive(props){
      
       });
     }else{
-      location.reload("/slider-list")
+      location.reload("/admin/slider-list")
     }
   });
 }
@@ -478,7 +478,7 @@ function Model(props){
             })
             setTimeout(() => {
               Swal.close()
-              location.reload("/Sliders/list")
+              location.reload("/admin/Sliders/list")
         }, 3000);
         } else {
             Swal.fire({

@@ -71,90 +71,72 @@ export default function Layout() {
             
           { roles === "" ? 
              <Routes>
-              <Route path='/login' element={<Login />} />
-              <Route exact path="/" element={<Dashboard />} />
-              <Route path='/forgotpassword' element={<ForgotPassword/>}/>
+              <Route path='/admin/login' element={<Login />} />
+              <Route exact path="/admin" element={<Dashboard />} />
+              <Route path='/admin/forgotpassword' element={<ForgotPassword/>}/>
               </Routes> 
               :''}
               
           { roles[0].role_code === "WO" || roles[0].role_code === "IN" || roles[0].role_code === "DA" || roles[0].role_code === "AG" ? 
               <Routes>
-                 <Route exact path="/" element={<Dashboard />} />
-                {/* <Route path="/claim-list" element={<ClaimList />} />  */}
-                {/* <Route path="/assessor/claim-assessment" element={<ClaimAssesment />} /> */}
+                 <Route exact path="/admin" element={<Dashboard />} />
+                {/* <Route path="/admin/claim-list" element={<ClaimList />} />  */}
+                {/* <Route path="/admin/assessor/claim-assessment" element={<ClaimAssesment />} /> */}
               </Routes> 
               :''}
 
 
               { roles[0].role_code === "SA" || roles[0].role_code === "AD" || roles[0].role_code === "AS"  || roles[0].role_code === "CC" ?  
               <Routes>
-              <Route exact path="/" element={<Dashboard />} />
-
-             
-              
-            
-            
-              {/* <Route path="/create/:any" element={<AddUsers />} /> */}
-              <Route path="/create/user" element={<AddUsers />} />
+                <Route  path="/admin" element={<Dashboard />} />
+                    {/* <Route path="/admin/create/:any" element={<AddUsers />} /> */}
+                 <Route path="/admin/create/user" element={<AddUsers />} />
        
-              {/* <Route path="/user-list/:any" element={<UserList />} />  */}
-              <Route path="/user-list" element={<UserList />} /> 
-              <Route path="/create-role" element={<AddRoles />} /> 
-              <Route path="/role-list" element={<RolesList />} /> 
-               <Route path="/products" element={<Product title={'Product'} />} />
-              <Route path="/service" element={<Product title={'service'} />} /> 
-              <Route path="/products-list" element={<ProductList title={'Product'}/>} /> 
-              <Route path="/service-list" element={<ProductList title={'service'}/>} /> 
-              {/* <Route path="/products/categories" element={<ProductCategory title={'Product'}/>}/>
-              <Route path="/service/categories" element={<ProductCategory title={'service'}/>}/> */}
-              <Route path="/:any/categories" element={<ProductCategory />}/>
-              <Route path="/:any/categories" element={<ProductCategory />}/>
-              <Route path="/setup" element={<Setup/>}/>
-              {/* <Route path="/setup/type/website" element={<Setting/>}/> */}
-              <Route path="/website" element={<Setting/>}/>
-              <Route path="/productCreation" element={<ProducCreation/>}/>
-              <Route path="/setup/type/products" element={<SetupProductSetting/>}/>
-              <Route path="/setup-list" element={< SetupList/>}/>
-              <Route path="/setting" element={<ProductSetting/>}/>
-              <Route path="/setup/type/website" element ={<WebsiteSetting/>}/>
-              <Route path ="/setup/type/home" element={<HomeSetting/>}/>
-              <Route path ="/slider/creation" element={<SliderCreation/>}/>
-              <Route path ="/Sliders/list" element={<SliderList/>}/>
-              <Route path ="/text-editor" element={<TextEditor/>}/>
-              <Route path="/testimonial/creation" element={<TestiMonial/>}/>
-              <Route path='/testimonials' element={<TestiMonialList/>}/>
-              <Route path='/product' element={<Products/>}/>
-              {/* <Route path='/product/list' element={<ProductsList title={'Product'}/>}/>
-              <Route path='/service/list' element={<ProductsList title={'Service'}/>}/> */}
-                 <Route path='/:any/list' element={<ProductsList/>}/>
-              {/* <Route path='/service/list' element={<ProductsList />}/> */}
-              <Route path='/product/edit' element={<ProductEdit title={'product'}/>}/>
-              <Route path='/service/edit' element={<ProductEdit title={'service'}/>}/>
-              {/* <Route path='/file-upload' element={<FileUpload/>}/> */}
-              {<Route path="/file-upload" element={<FileUploadCampaign/>}/>}
-              {<Route path ="/vehicle-excel/export" element={<VehicleExcelExport/>}/>}
-              {<Route path ="/template" element={<GandhiTemplate/>}/>}
-              {<Route path="/vehicle-list" element={<VehicleList/>}/>}
-              {<Route path='/vehicle-upload' element={<VehicleImageUpload/>}/>}
-              {<Route path='/vehicle-create' element={<VehicleCreation/>}/>}
-              {<Route path ="/template" element={<GandhiTemplate/>}/>}
-              {<Route path="/enquiry-list" element={<EnquiryList/>}/>}
-              {<Route path='/create-user' element={<UserCreation/>}/>}
-              {<Route path='/vehicletab' element={<VehicleTabs/>}/>}
-             
-             
-             
-            
-
-              
-              
-           
-             
-            
-              
-
-           
-          
+                  {/* <Route path="/admin/user-list/:any" element={<UserList />} />  */}
+                  <Route path="/admin/user-list" element={<UserList />} /> 
+                  <Route path="/admin/create-role" element={<AddRoles />} /> 
+                  <Route path="/admin/role-list" element={<RolesList />} /> 
+                    <Route path="/admin/products" element={<Product title={'Product'} />} />
+                  <Route path="/admin/service" element={<Product title={'service'} />} /> 
+                  <Route path="/admin/products-list" element={<ProductList title={'Product'}/>} /> 
+                  <Route path="/admin/service-list" element={<ProductList title={'service'}/>} /> 
+                  {/* <Route path="/admin/products/categories" element={<ProductCategory title={'Product'}/>}/>
+                  <Route path="/admin/service/categories" element={<ProductCategory title={'service'}/>}/> */}
+                  <Route path="/admin/:any/categories" element={<ProductCategory />}/>
+                  <Route path="/admin/:any/categories" element={<ProductCategory />}/>
+                  <Route path="/admin/setup" element={<Setup/>}/>
+                  {/* <Route path="/admin/setup/type/website" element={<Setting/>}/> */}
+                  <Route path="/admin/website" element={<Setting/>}/>
+                  <Route path="/admin/productCreation" element={<ProducCreation/>}/>
+                  <Route path="/admin/setup/type/products" element={<SetupProductSetting/>}/>
+                  <Route path="/admin/setup-list" element={< SetupList/>}/>
+                  <Route path="/admin/setting" element={<ProductSetting/>}/>
+                  <Route path="/admin/setup/type/website" element ={<WebsiteSetting/>}/>
+                  <Route path ="/admin/setup/type/home" element={<HomeSetting/>}/>
+                  <Route path ="/admin/slider/creation" element={<SliderCreation/>}/>
+                  <Route path ="/admin/Sliders/list" element={<SliderList/>}/>
+                  <Route path ="/admin/text-editor" element={<TextEditor/>}/>
+                  <Route path="/admin/testimonial/creation" element={<TestiMonial/>}/>
+                  <Route path='/admin/testimonials' element={<TestiMonialList/>}/>
+                  <Route path='/admin/product' element={<Products/>}/>
+                  {/* <Route path='/admin/product/list' element={<ProductsList title={'Product'}/>}/>
+                  <Route path='/admin/service/list' element={<ProductsList title={'Service'}/>}/> */}
+                      <Route path='/admin/:any/list' element={<ProductsList/>}/>
+                  {/* <Route path='/admin/service/list' element={<ProductsList />}/> */}
+                  <Route path='/admin/product/edit' element={<ProductEdit title={'product'}/>}/>
+                  <Route path='/admin/service/edit' element={<ProductEdit title={'service'}/>}/>
+                  {/* <Route path='/admin/file-upload' element={<FileUpload/>}/> */}
+                  {<Route path="/admin/file-upload" element={<FileUploadCampaign/>}/>}
+                  {<Route path ="/admin/vehicle-excel/export" element={<VehicleExcelExport/>}/>}
+                  {<Route path ="/admin/template" element={<GandhiTemplate/>}/>}
+                  {<Route path="/admin/vehicle-list" element={<VehicleList/>}/>}
+                  {<Route path='/admin/vehicle-upload' element={<VehicleImageUpload/>}/>}
+                  {<Route path='/admin/vehicle-create' element={<VehicleCreation/>}/>}
+                  {<Route path ="/admin/template" element={<GandhiTemplate/>}/>}
+                  {<Route path="/admin/enquiry-list" element={<EnquiryList/>}/>}
+                  {<Route path='/admin/create-user' element={<UserCreation/>}/>}
+                  {<Route path='/admin/vehicletab' element={<VehicleTabs/>}/>}
+                
               </Routes>
                :""}
                 

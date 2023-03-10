@@ -47,7 +47,7 @@ function Navbar(){
 			<ul>
 				<li><span><a href="#0">Home</a></span>
 					<ul>
-						<li><Link to="/">Home Default</Link></li>
+						<li><Link to="/admin">Home Default</Link></li>
 						<li>
 							<span><a href="#0">Sliders - Parallax</a></span>
 							<ul>
@@ -160,17 +160,17 @@ function Navbar(){
 						<li><a href="restaurant-detail.html">Restaurant Detail</a></li>
 					</ul>
 				</li>
-				<li><span><Link to="/adventure">Adventure</Link></span></li>
+				<li><span><Link to="/admin/adventure">Adventure</Link></span></li>
 				<li><span><a href="#0">Pages</a></span>
 					<ul>
-						<li><Link to="/about">About</Link></li>
+						<li><Link to="/admin/about">About</Link></li>
 						<li><a href="media-gallery.html">Media gallery</a></li>
 						<li><a href="help.html">Help Section</a></li>
 						<li><a href="faq.html">Faq Section</a></li>
 						<li><a href="wishlist.html">Wishlist page</a></li>
 						<li><a href="contacts.html">Contacts</a></li>
 						<li><a href="">login</a></li>
-						<li><Link to='/signup'>Register</Link></li>
+						<li><Link to='/admin/signup'>Register</Link></li>
 						<li><a href="blog.html">Blog</a></li>
 						<li><a href="bootstrap-modal.html">Bootstrap Modal <strong className="badge badge-danger">New!</strong></a></li>
 						<li><a href="modal-version-2.html">Another Modal <strong className="badge badge-danger">New!</strong></a></li>
