@@ -16,6 +16,8 @@ import './Vehicle.css'
 
 import textModifier from "../../../services/textModifier";
 import { useEffect } from "react";
+import { Edit } from "@mui/icons-material";
+import { Link } from "react-router-dom";
 
  export class VehicleList extends React.Component {
     constructor(props){
@@ -26,7 +28,7 @@ import { useEffect } from "react";
         data : [],
         isLoading: false,
         page: 0,
-        pageSize: 10,
+        pageSize: 5,
         productData:[],
         vehiclemodel:[]
        // product_type:this.props.title,
@@ -40,14 +42,16 @@ import { useEffect } from "react";
       this.getProductList();
     }
 
+
+
     
 
-    // componentDidUpdate(prevProps, prevState){
-    //   // console.log('update')
-    //   if ((prevState.page !== this.state.page)||(prevProps.params !== this.props.params)) {
-    //       this.getProductList();
-    //   }
-    // }
+    componentDidUpdate(prevProps, prevState){
+      // console.log('update')
+      if ((prevState.page !== this.state.page)||(prevState.pageSize !== this.state.pageSize)) {
+          this.getProductList();
+      }
+    }
 
     // componentDidUpdate = (prevProps, prevState) =>{
     //   if(prevProps.params !== this.props.params){
@@ -67,7 +71,7 @@ import { useEffect } from "react";
           console.log(response);
           
           if(response.success == true){
-              this.setState(old => ({...old, data:response.data, total:response.data.iTotalRecords}))
+              this.setState(old => ({...old, data:[...old.data, ...response.data.aaData], total:response.data.iTotalRecords}))
   
           } else {
           alert("No Data Available")
@@ -92,7 +96,7 @@ import { useEffect } from "react";
     
   
       const columns = [
-        { field: 'id', headerName: 'ID', width: 100 },
+        { field: 'sr_no', headerName: 'Sr no', width: 100 },
         { field: 'vehicle_model', headerName: 'Vehicle Model', width: 200,renderCell: (params) => textModifier(params.row.vehicle_model) },
         { field: 'vehicle_make', headerName: 'Vehicle Make', width: 150 },
         { field: 'transmission', headerName: 'Transmission', width: 150 },
@@ -102,7 +106,7 @@ import { useEffect } from "react";
         {field:'images',headerName:'Images',width:200,renderCell: (params) => <Images key={params.row.id}    param={params.row} />,},
         { field: 'is_active', headerName: 'Active', width: 150 ,renderCell: (params) => <IsActive key={params.row.id}    param={params.row} />,},
         { field: 'upload', headerName: 'Upload', width: 150 ,renderCell: (params) => <Upload key={params.row.id} func={handleClick}   param={params.row} />,},
-        // { field: 'gst', headerName: 'GST', width: 150 },
+        { field: 'edit', headerName: 'Edit', width: 150 ,renderCell:(params)=><EditVehicle key={params.row.id} func={handleClick}   param={params.row}/>},
        
       ];
 
@@ -113,8 +117,9 @@ import { useEffect } from "react";
       <>
       <BreadCrumb breadcrumb={"Vehicle List"} />
      
-      <Box sx={{ width: '100%', height: '100%', typography: 'body1', backgroundColor:'white', borderRadius:"6px", padding: '2%' }}>
+      <Box sx={{ width: '100%', height: '100%', typography: 'body1', backgroundColor:'white', textAlign:'right', borderRadius:"6px", padding: '2%' }}>
    
+      <Link  to={"/vehicletab"} ><Button style={{marginBottom: '18px'}}>Creacte Vehicle</Button></Link>
       <div style={{ height: '100%', width: '100%' }}>
      
       <DataGrid
@@ -122,7 +127,7 @@ import { useEffect } from "react";
           rows={this.state.data}
           rowCount={this.state.total}
           page={this.state.page}
-          
+      
           loading={this.state.isLoading}
           columns={columns}
           pagination
@@ -132,7 +137,7 @@ import { useEffect } from "react";
       
           onPageChange={(newPage) => this.setState(old=>({...old, page: newPage}))}
           onPageSizeChange={(newPageSize) => this.setState(old=>({...old, pageSize: newPageSize}))}
-
+          disableRowSelectionOnClick
   
           />
          
@@ -161,18 +166,10 @@ function IsActive(props){
      setState(old=>({...old,is_active:e.target.checked?1:0}))
    
      const data={
-        id:props.param.id,
+        // id:props.param.id,
        is_active:e.target.checked?1:0
      }
-    // console.log("productdeletedata",data)
    
-     // apiCtrl.callAxios(`slider/delete/${state.id}`,data).then(response => {
-     //   console.log("response=>",response)
-     //   if(response.success == true){
-       //   location.reload("/slider-list")
-     //     }
-       
-     // })
      const msg_1={
       text_1:"Do you want to De-Activate",
       //text_1:"",
@@ -204,31 +201,39 @@ function IsActive(props){
      }).then((result) => {
    
        if (result.value) {
-    //    apiCtrl.callAxios("ghghghbhjbhjmjmhb",data).then(response => {
+       apiCtrl.callAxios(`vehicle/delete/${state.id}`,data).then(response => {
    
    
-    //        if(response.success == true){
-    //          Swal.fire({
+           if(response.success == true){
+             Swal.fire({
               
-    //               title:`Vehicle ${msg1} Successfully!`,
-    //            icon: "success",
-    //            showConfirmButton: false,
-    //            timer: 1200,
-    //          });
-    //         location.reload(`/${props.url}-list`)
-    //            } else {
-    //              Swal.fire({
-    //                title: `Vehicle ${msg1} unsuccessfully!`,
-    //                icon: "error",
-    //                showConfirmButton: false,
-    //                timer: 1200,
-    //              });
-    //            }
+                  title:`Vehicle ${msg1} Successfully!`,
+               icon: "success",
+               showConfirmButton: false,
+               timer: 1200,
+             });
+             setTimeout(() => {
+              Swal.close()
+              
+             }, 5000);
+            // location.reload(`/${props.url}-list`)
+               } else {
+                 Swal.fire({
+                   title: `Vehicle ${msg1} unsuccessfully!`,
+                   icon: "error",
+                   showConfirmButton: false,
+                   timer: 1200,
+                 });
+                 setTimeout(() => {
+                  Swal.close()
+                  
+                 }, 5000);
+               }
              
-    //        console.log('deleted res', response);
+           console.log('deleted res', response);
    
         
-    //      });
+         });
        }else{
         location.reload(`/admin/${props.url}-list`)
        }
@@ -284,6 +289,18 @@ function Upload(props){
 
 
   </>)
+}
+
+function EditVehicle(props){
+
+
+  return(<>
+
+{/* <Link key={props.key}  to={`/create/user`} state={{param:props.param}}><Button>Edit</Button></Link>  &nbsp; */}
+
+<Link key={props.key} to={"/vehicletab"} state={{...props.param}}><Button>Edit</Button></Link>&nbsp;
+  </>)
+
 }
 
 

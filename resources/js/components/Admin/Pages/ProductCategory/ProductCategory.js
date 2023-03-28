@@ -22,6 +22,8 @@ import Swal from "sweetalert2";
 import { ErrorMessage } from "@hookform/error-message";
 import { event } from "jquery";
 import swal from "sweetalert";
+import Editor from "../Editor/Editor";
+
 
 
 class ProductCategory extends React.Component {
@@ -164,134 +166,162 @@ class ProductCategory extends React.Component {
           
           // this.setState({errors: ''})
         }
+
+        console.log()
     
            
-            const prosumbmit = async (e) => {              
-                e.preventDefault();            
-                // var data = {
-                    
+        const prosumbmit = async (e) => {              
+            e.preventDefault();            
+            // var data = {
+                
 
-                //     category_name:this.state.category_name,
-                //     description:this.state.description,
-                //     hsn_code:this.state.hsn_code,
-                //     gst:this.state.gst,
-                //     is_service:this.state.isservice,
-                //     is_parent:this.state.isparent,
-                //     // slug:this.props.data.slug
-                
-                // }
-
-                
-            let errors = {};
-            let isValid = this.state.isValid;
-            Object.entries(this.state.validation).map(([key,value])=>{
-    
-                
-                if((this.state[key] === null) ) {
-                    let temp =  key.replace(/_/g, " "); 
-                    var name = temp
-                    .toLowerCase()
-                    .split(' ')
-                    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-                    .join(' ');
-    
-                    if(value.required === true){
-                        errors[key] = `${name} Field is Required`;
-                        isValid = false;
-                    }
-                } else {
-                    errors[key] = '';
-                    isValid = true;
-                }
-                this.setState(old=>({
-                    ...old,
-                    errors:errors
-                })) 
-            })
-    
-            var count = 0;
-            Object.entries(errors).map(([key, value])=>{
-                if(value !== ''){
-                    count += 1;
-                }
-            })
+            //     category_name:this.state.category_name,
+            //     description:this.state.description,
+            //     hsn_code:this.state.hsn_code,
+            //     gst:this.state.gst,
+            //     is_service:this.state.isservice,
+            //     is_parent:this.state.isparent,
+            //     // slug:this.props.data.slug
             
-            if(count>0){
-                return false;
+            // }
+
+            
+        let errors = {};
+        let isValid = this.state.isValid;
+        Object.entries(this.state.validation).map(([key,value])=>{
+
+            
+            if((this.state[key] === null) ) {
+                let temp =  key.replace(/_/g, " "); 
+                var name = temp
+                .toLowerCase()
+                .split(' ')
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                .join(' ');
+
+                if(value.required === true){
+                    errors[key] = `${name} Field is Required`;
+                    isValid = false;
+                }
+            } else {
+                errors[key] = '';
+                isValid = true;
             }
+            this.setState(old=>({
+                ...old,
+                errors:errors
+            })) 
+        })
+
+        var count = 0;
+        Object.entries(errors).map(([key, value])=>{
+            if(value !== ''){
+                count += 1;
+            }
+        })
+        
+        if(count>0){
+            return false;
+        }
+          
+            var data = new FormData();
+
+            const statedata={
+
+              category_name:this.state.category_name,
+              description:this.state.description,
+              hsn_code:this.state.hsn_code, 
+              image_name_1:this.state.image_name_1,
+              is_service:this.state.is_service
+
+            }
+
+            if(products=="service"){
+              statedata.link = this.state.link;
               
-                var data = new FormData();
+            }
+  
+  
 
-                
+            
 
-                Object.entries(this.state).map(([index, value])=>{
-                  if((index!=="errors")&&(index!=="validation")&&(index!=="isValid")&&(index!=="imageshow")){
-                    data.append(`${index}`, value);
-                  }
-                
-                })         
-                //  console.log(data);
-                 // return;
+            Object.entries(statedata).map(([index, value])=>{
+              // if((index!=="errors")&&(index!=="validation")&&(index!=="isValid")&&(index!=="imageshow")){
+              //   data.append(`${index}`, value);
+              // }
+
+              data.append(`${index}`, value);
+            
+            })         
+            //  console.log(data);
+              // return;
 
 
-                 this.apiCtrl.callAxiosFile("product/create-product-category",data).then((response)=>{
-                  if(response.success == true){
+              this.apiCtrl.callAxiosFile("product/create-product-category",data).then((response)=>{
+              if(response.success == true){
+                Swal.fire({
+                    title: productType+" "+"Category",
+                    text: "Created!",
+                    icon: "success",
+                    showConfirmButton: false,
+                })
+                // this.setState({
+                //   category_name:null,
+                //   description:null,
+                //   hsn_code:null,
+                //   image_name_1:null,
+                // })
+                setTimeout(() => {
+                  Swal.close()
+                  this.setState({
+                    category_name:null,
+                    description:null,
+                    hsn_code:null,
+                    image_name_1:null,
+                  })
+                  
+            }, 3000);
+
+            // this.setState({
+            //   category_name:"",
+            //   description:"",
+            //   hsn_code:"",
+            //   image_name_1:"",
+            // })
+            
+            
+                // $('.close').trigger('click');
+                } else {
                     Swal.fire({
-                        title: productType+" "+"Category",
-                        text: "Created!",
-                        icon: "success",
+                      title: productType+" "+"Category",
+                        text: "Not Created!",
+                        icon: "error",
                         showConfirmButton: false,
                     })
-                    // this.setState({
-                    //   category_name:null,
-                    //   description:null,
-                    //   hsn_code:null,
-                    //   image_name_1:null,
-                    // })
                     setTimeout(() => {
                       Swal.close()
-                      this.setState({
-                        category_name:null,
-                        description:null,
-                        hsn_code:null,
-                        image_name_1:null,
-                      })
-                      
-                }, 3000);
-
-                // this.setState({
-                //   category_name:"",
-                //   description:"",
-                //   hsn_code:"",
-                //   image_name_1:"",
-                // })
-                
-                
-                    // $('.close').trigger('click');
-                    } else {
-                        Swal.fire({
-                          title: productType+" "+"Category",
-                            text: "Not Created!",
-                            icon: "error",
-                            showConfirmButton: false,
-                        })
-                        setTimeout(() => {
-                          Swal.close()
-                        
-                    }, 3000);
-                        $('.close').trigger('click');
-                        // location.reload(`/${products}-category`)
-                    }
-                  
-                    // console.log("CategoryCreate===>",response);
-                    // sessionStorage.setItem('_token', response.data.)
                     
-                  }).catch(function (error) {
-                    console.log(error);
-                  });
-                  
-                 
-            }
+                }, 3000);
+                    $('.close').trigger('click');
+                    // location.reload(`/${products}-category`)
+                }
+              
+                // console.log("CategoryCreate===>",response);
+                // sessionStorage.setItem('_token', response.data.)
+                
+              }).catch(function (error) {
+                console.log(error);
+              });
+              
+              
+        }
+
+        const handleEdit=(data)=>{
+          console.log("data=>",data)
+
+          this.setState(old=>({...old,description:data}))
+
+        }
 
              
 
@@ -332,7 +362,7 @@ class ProductCategory extends React.Component {
 
                </div>
 
-               <div className="col-md-6 mb-3">
+               {/* <div className="col-md-6 mb-3">
                
                <MaterialTextField    name="description" onChange={(e)=>{handleChange(e)}}  
                   label="Description"
@@ -347,7 +377,7 @@ class ProductCategory extends React.Component {
                />
                
 
-               </div>
+               </div> */}
 
                <div className="col-md-6 mb-3">
                
@@ -365,13 +395,17 @@ class ProductCategory extends React.Component {
                
 
                </div>
+               {products=="service"?<>
 
-               {/* <div className="col-md-6 ">
-               
-               <MaterialTextField    name="gst"  onChange={(e)=>this.setState({gst : e.target.value})} label="Gst"  fullWidth  />
-               
+                <div className="col-md-6 ">
+                
+                  <MaterialTextField placeholder="Enter URL"   name="link"  onChange={(e)=>this.setState({link : e.target.value})} label="Link"  fullWidth  />
+                  
 
-               </div> */}
+                </div>
+               </>:""}
+
+              
         
                 {/* <div className="col-md-6">
                 <FormControlLabel control={<Checkbox checked={this.state.is_service===1?true:false}   onChange={(e)=>this.setState({is_service:e.target.checked?1:0})}/>} label="Is Service" />
@@ -412,6 +446,10 @@ class ProductCategory extends React.Component {
 
             
             </div>
+
+            <Editor func={handleEdit}/>
+
+          
            
              
             <div className="row mt-2">
@@ -511,8 +549,10 @@ class ProductCategoryList extends React.Component{
             { field: 'hsn_code', headerName: 'HSN Code', width: 190 },
             { field: 'description', headerName: 'Description', width: 150 },
             // { field: 'is_service', headerName: 'Is Service', width: 150 },
+            // {field:"link",headerName:'Link',width:190,renderCell:(params) => params.row.link !== null ? <span>{params.row.link}</span>: ''},
+             {field:"link",headerName:'Link',width:190,renderCell:(params) => params.row.link !== null ?  <a href={params.row.link}>{params.row.link}</a>: ''},
             { field: 'action', headerName: 'Action',  width: 190,  renderCell: (params) => <Editbutton fun={handleClick}  key={params.row.id} param={params.row} />, },
-            
+           
         ];
 
         let  products =  this.props.params.any.replace(/-/g, " "); 
@@ -573,12 +613,7 @@ export default (props) => {
   return <ProductCategoryList {...props}   params={useParams()}/>
   
 }
-// function Editbutton(props){ 
-//     return(
-//         <Button id={props.param.id} >Edit</Button>
-  
-//     );
-// }
+
 
 
 function Editbutton(props){ 
@@ -689,7 +724,7 @@ function Model(props){
       <>
      
         <div className="modal fade" id="exampleModalToggle1" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabIndex="-1">
-          <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-dialog modal-lg modal-dialog-centered">
           <div className="modal-content">
           <div className="modal-header">
               <h5 class="modal-title" id="exampleModalLongTitle">{"Create"+" "+ productType +" "+"Category"}</h5>
@@ -912,13 +947,29 @@ function Model(props){
             }
               
                 var data = new FormData();
+                const statedata={
+
+                  category_name:this.state.category_name,
+                  description:this.state.description,
+                  hsn_code:this.state.hsn_code, 
+                  image_name_1:this.state.image_name_1,
+                  id:this.state.id,
+                  is_service:this.state.is_service
+
+                }
+
+                if(products=="service"){
+                  statedata.link = this.state.link;
+                 
+               }
 
                 
 
-                Object.entries(this.state).map(([index, value])=>{
-                  if((index!=="errors")&&(index!=="validation")&&(index!=="isValid")){
-                    data.append(`${index}`, value);
-                  }
+                Object.entries(statedata).map(([index, value])=>{
+                  // if((index!=="errors")&&(index!=="validation")&&(index!=="isValid")){
+                  //   data.append(`${index}`, value);
+                  // }
+                  data.append(`${index}`, value);
                 
                 })      
                 
@@ -982,12 +1033,20 @@ function Model(props){
                 }
               }
 
+              const handleEdit=(data)=>{
+                console.log("data=>",data)
+      
+                this.setState(old=>({...old,description:data}))
+      
+              }
+      
+
             
                
             return(
                 <>
                <div className="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabIndex="-1">
-          <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-dialog modal-lg modal-dialog-centered">
           <div className="modal-content">
           <div className="modal-header">
               <h5 class="modal-title" id="exampleModalLongTitle">{productType+" " +"Category "+" "+ "Update"}</h5>
@@ -1033,7 +1092,7 @@ function Model(props){
 
                 </div>
 
-                <div className="col-md-6">
+                {/* <div className="col-md-6">
                 
                 <MaterialTextField  value={this.state.description?this.state.description:""}  
                  name="description"   onChange={(e)=>{handleChange(e)}}    label="Description" 
@@ -1049,11 +1108,7 @@ function Model(props){
                  />
                 
 
-                </div>
-              </div>
-
-              <div className="row ">
-
+                </div> */}
                 <div className="col-md-6 mb-2">
                 
                 <MaterialTextField  value={this.state.hsn_code?this.state.hsn_code:""}  name="hsn_code"  
@@ -1071,6 +1126,22 @@ function Model(props){
                 
 
                 </div>
+              </div>
+
+              <div className="row ">
+
+                
+
+                {products=="service"?<>
+
+                <div className="col-md-6 mb-2 ">
+                
+                  <MaterialTextField placeholder="Enter URL"   name="link"  onChange={(e)=>this.setState({link : e.target.value})} label="Link"  fullWidth  />
+                  
+
+                </div>
+               </>:""}
+
 
                 {/* <div className="col-md-6 ">
                 
@@ -1114,6 +1185,9 @@ function Model(props){
                      }
 
               </div>
+
+              <Editor func={handleEdit} data={this.state.description?this.state.description:""}/>
+
 
               
               <div className="row mt-2">

@@ -256,6 +256,12 @@ function IsActive(props){
              showConfirmButton: false,
              timer: 1200,
            });
+
+           setTimeout(() => {
+            Swal.close()
+            // location.reload(`/${props.url}-list`)
+          }, 5000);
+          
          
           
           location.reload(`/admin/${props.url}-list`)

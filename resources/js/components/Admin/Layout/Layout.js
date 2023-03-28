@@ -40,20 +40,18 @@ import { VehicleExcelExport } from '../Pages/Vehicle_Excel_Export/Vehicle_Excel_
 import GandhiTemplate from '../Pages/Ak_ghandi_template/GandhiTemplate';
 import { VehicleList } from '../Pages/Vehicle_Listing/Vehicle_listing';
 import { EnquiryList } from '../Pages/Enquiry_List/Enquiry_List';
-import { UserCreation } from '../Pages/User_Creation/User_Creation';
+
 import { VehicleImageUpload } from '../Pages/Vehicle_Image_Upload/Vehicle_Image_Upload';
-import { VehicleCreation } from '../Pages/Vehicle_Listing/Vehicle_Creation';
+
 import VehicleTabs from '../Pages/Vehicle_Listing/Vehicle_Tabs';
-
-
-
-
-
-
-
-
-
-
+import { VariationCreate } from '../Pages/Vehicle/Variation_Create';
+import VariationList from '../Pages/Vehicle/Variation_List';
+import { FeatureCreation } from '../Pages/Vehicle/Feature';
+import FeatureList from '../Pages/Vehicle/Feature_list';
+import VehicleCreation from '../Pages/Vehicle_Listing/Vehicle_Creation';
+import GalleryImage from '../Pages/Gallery_Image/Gallery_Image';
+import { GalleryTabs } from '../Pages/Gallery_Image/GalleryImage_Tab';
+// import UserCreation
 
 
 export default function Layout() {
@@ -131,12 +129,17 @@ export default function Layout() {
                   {<Route path ="/admin/template" element={<GandhiTemplate/>}/>}
                   {<Route path="/admin/vehicle-list" element={<VehicleList/>}/>}
                   {<Route path='/admin/vehicle-upload' element={<VehicleImageUpload/>}/>}
-                  {<Route path='/admin/vehicle-create' element={<VehicleCreation/>}/>}
+                  {<Route path='/admin/vehicle-creation' element={<VehicleCreation/>}/>}
                   {<Route path ="/admin/template" element={<GandhiTemplate/>}/>}
                   {<Route path="/admin/enquiry-list" element={<EnquiryList/>}/>}
-                  {<Route path='/admin/create-user' element={<UserCreation/>}/>}
                   {<Route path='/admin/vehicletab' element={<VehicleTabs/>}/>}
                 
+              {<Route path='/admin/variation-create' element={<VariationCreate/>}/>}
+              {<Route path='/admin/variation-list' element={<VariationList/>}/>}
+              {/* {<Route path='/featured-list' element={<FeatureCreation/>}/>} */}
+              {<Route path='/admin/featured-list' element={<FeatureList/>}/>}
+              {<Route path='/admin/gallery' element={<GalleryImage/>}/>}
+              {<Route path='/admin/gallery-list' element={<GalleryTabs/>}/>}
               </Routes>
                :""}
                 

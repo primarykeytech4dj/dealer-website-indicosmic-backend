@@ -182,7 +182,7 @@ export default class TestiMonialList extends React.Component {
         showCancelButton: true,
         confirmButtonColor: '#00B96F',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, De-Activated!',
+        confirmButtonText: 'Yes',
       }).then((result) => {
         if (result.value) {
           apiCtrl.callAxios(`testimonial/delete/${state.id}`,data).then(response => {

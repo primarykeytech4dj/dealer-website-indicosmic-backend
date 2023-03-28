@@ -16,7 +16,7 @@ export default class Api extends React.Component {
   }
 
   getBaseUrl(){
-    return API_CONSTANTS.BASE_URL;
+    return API_CONSTANTS.BASE_URL+'/';
   }
 
 //  tokenValid() {

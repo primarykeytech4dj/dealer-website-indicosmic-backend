@@ -15,6 +15,7 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 import Switch from '@mui/material/Switch';
 import SliderCreation from "./Slider_Creation";
+import MaterialTextArea from "../../../../Tags/MaterialTextArea";
 export default class SliderList extends React.Component{
 
     constructor(props){
@@ -580,11 +581,11 @@ function Model(props){
                             { <strong> {"Active"} </strong>         }
                           </div>
                         <div className="col-md-6 mb-3">
-                            <MaterialTextField label="JS"value={this.state.js?this.state.js:""} row={1} multiline placeholder="js" fullWidth name='js' onChange={(e)=>this.setState({js : e.target.value})}/>
+                            <MaterialTextArea  style={{height: "123px"}} row={4} label="JS"value={this.state.js?this.state.js:""}  multiline placeholder="js" fullWidth name='js' onChange={(e)=>this.setState({js : e.target.value})}/>
 
                         </div>
                         <div className="col-md-6 mb-3">
-                            <MaterialTextField label="Css" value={this.state.css?this.state.css:""} row={1} multiline placeholder="Css" fullWidth name='css' onChange={(e)=>this.setState({css : e.target.value})}/>
+                            <MaterialTextArea style={{height: "123px"}} row={4}label="Css" value={this.state.css?this.state.css:""}  multiline placeholder="Css" fullWidth name='css' onChange={(e)=>this.setState({css : e.target.value})}/>
 
                         </div>
                     
@@ -641,7 +642,7 @@ function Model(props){
                 </div>
                 <Divider sx={{ borderColor: '#dac4c4'}} />
                 <div className='row'>
-                  <div className="col-md-3">
+                  <div className="col-md-12 d-flex justify-content-end">
                       <Button style={{ backgroundColor: '#183883' }} onClick={ submituser }>Update</Button>
                   </div>
               </div>

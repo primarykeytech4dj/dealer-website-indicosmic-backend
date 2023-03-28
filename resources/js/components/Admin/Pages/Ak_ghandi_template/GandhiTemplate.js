@@ -20,7 +20,7 @@ import { Button } from 'react-bootstrap';
             <div className="row">
                 <div className="col-md-6">
 
-                    <img  src="https://akgandhi.in/img/book-online.jpg" />
+                    <img  src="https://akgandhi.in/img/book-online.jpg" /><br></br>
                     <img src="https://akgandhi.in/img/tvs-credit-new.jpg"/>
                 
 

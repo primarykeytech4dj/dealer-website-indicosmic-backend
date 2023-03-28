@@ -269,17 +269,44 @@ class Columns extends React.Component {
 
 </li>
 
-<li className="nav-item" data-toggle="tooltip" style={{borderBottomColor:"#183883", borderBottomWidth:"thin"}}  data-placement="right" title="My listings">
+  <li className="nav-item" data-toggle="tooltip" style={{borderBottomColor:"#183883", borderBottomWidth:"thin"}}  data-placement="right" title="My listings">
         <a className="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMylistings">
           <i className="fa fa-fw fa-list"></i>
           <span className="nav-link-text">&nbsp; Excel Master</span>
         </a>
         <ul className="sidenav-second-level collapse" id="collapseMylistings">
         <li><Link  to="/admin/vehicle-excel/export">Vehicle Upload Format</Link></li>
+     {/* <li><Link  to="/admin/vehicle-list">Vehicle List</Link></li>*/}
+        </ul>
+  </li>
+
+  <li className="nav-item" data-toggle="tooltip" style={{borderBottomColor:"#183883", borderBottomWidth:"thin"}}  data-placement="right" title="My listings">
+        <a className="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMylistings">
+          <i className="fa fa-fw fa-list"></i>
+          <span className="nav-link-text">&nbsp;Vehicle</span>
+        </a>
+        <ul className="sidenav-second-level collapse" id="collapseMylistings">
+        {/* <li><Link  to="/admin/variation-create">Variation</Link></li> */}
+
+        <li><Link  to="/admin/variation-list">Variation </Link></li>
+        <li><Link  to="/admin/featured-list">Features</Link></li>
       <li><Link  to="/admin/vehicle-list">Vehicle List</Link></li>
         </ul>
   </li>
 
+  <li className="nav-item" data-toggle="tooltip" style={{borderBottomColor:"#183883", borderBottomWidth:"thin"}}  data-placement="right" title="My listings">
+        <a className="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapsegallerylistings">
+          <i className="fa fa-fw fa-list"></i>
+          <span className="nav-link-text">&nbsp;Gallery</span>
+        </a>
+        <ul className="sidenav-second-level collapse" id="collapsegallerylistings">
+        {/* <li><Link  to="/variation-create">Variation</Link></li> */}
+
+        <li><Link  to="/gallery">Gallery Image Upload </Link></li>
+        <li><Link  to="gallery-list">Gallery Tab</Link></li>
+     
+        </ul>
+  </li>
 
 
 <li className="nav-item" data-toggle="tooltip" data-placement="right" style={{borderBottomColor:"#183883", borderBottomWidth:"thin"}}  title="Sliders">

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { DataGrid } from '@mui/x-data-grid';
 
 import { Box, Divider } from '@mui/material';
@@ -13,6 +13,7 @@ import Api from '../../../../api';
 import { useState } from "react";
 import textModifier from "../../../services/textModifier";
 import { object } from "prop-types";
+import MaterialSelect from "../../../../Tags/MaterialSelect";
 
 
  export class EnquiryList extends React.Component {
@@ -39,12 +40,16 @@ import { object } from "prop-types";
 
     
 
-    // componentDidUpdate(prevProps, prevState){
-    //   // console.log('update')
-    //   if ((prevState.page !== this.state.page)||(prevProps.params !== this.props.params)) {
-    //       this.getProductList();
-    //   }
-    // }
+    componentDidUpdate(prevProps, prevState){
+      // console.log('update')
+      if(prevState.enquiry_type !== this.state.enquiry_type){
+        this.getProductList();
+      
+    } 
+      if ((prevState.page !== this.state.page)||(prevProps.params !== this.props.params)) {
+          this.getProductList();
+      }
+    }
 
     // componentDidUpdate = (prevProps, prevState) =>{
     //   if(prevProps.params !== this.props.params){
@@ -56,7 +61,7 @@ import { object } from "prop-types";
     getProductList = () =>{
   
       this.setState(old => ({...old, isLoading:true}))
-       var data = {length:this.state.pageSize, start:this.state.page*this.state.pageSize};
+       var data = {enquiry_type:this.state.enquiry_type,length:this.state.pageSize, start:this.state.page*this.state.pageSize};
       // var data = {
       //   is_service: (this.props.params.any === 'service')?1:0
       // }
@@ -64,7 +69,7 @@ import { object } from "prop-types";
           console.log(response);
           
           if(response.success == true){
-              this.setState(old => ({...old, data:response.data, total:response.data.iTotalRecords}))
+              this.setState(old => ({...old, data:response.data.aaData, total:response.data.iTotalRecords}))
   
           } else {
           alert("No Data Available")
@@ -82,6 +87,21 @@ import { object } from "prop-types";
     render() {
       
      // console.log("props",this.props)
+     const enquiryType={
+
+      "vehicle":"Vehicle",
+      "product":"Product",
+      "contact-us":"Contact-us",
+      "":"All"
+
+
+     }
+
+     const onHandleChange=(e)=>{
+      this.setState(old =>({...old, enquiry_type:e.target.value}))
+     
+
+   }
 
      const  handleClick = (data) => {
          console.log("dataproduct===",data)
@@ -91,7 +111,7 @@ import { object } from "prop-types";
     
   
       const columns = [
-        { field: 'id', headerName: 'ID', width: 100 },
+        { field: 'sr_no', headerName: 'Sr.No', width: 100 },
         { field: 'name', headerName: 'Name', width: 190 },
         { field: 'phone', headerName: 'Phone ', width: 190 },
         { field: 'enquiry_type', headerName: 'Enquiry Type', width: 150 },
@@ -111,6 +131,16 @@ import { object } from "prop-types";
       <BreadCrumb breadcrumb={"Enquiry List"} />
      
       <Box sx={{ width: '100%', height: '100%', typography: 'body1', backgroundColor:'white', borderRadius:"6px", padding: '2%' }}>
+        <div className="row mb-3">
+          <div className="col-md-10"></div>
+          <div className="col-md-2 d-flex justify-content-end">
+            
+            <MaterialSelect value={this.state.enquiry_type?this.state.enquiry_type:""} size={"small"} data={enquiryType} 
+            label={"Enquiry Type"}  onChange={(e)=>{onHandleChange(e)}} fullWidth/>
+
+          </div>
+
+        </div>
    
       <div style={{ height: '100%', width: '100%' }}>
      
@@ -246,15 +276,18 @@ function Action(props){
 
 function Model(props){
 
-   const [data,setData]=useState(props)
-   console.log("props",props)
-   console.log("data",data)
-     
+   const [data,setData]=useState({})
+  
+  //  console.log("data",data)
+
+  
+  console.log("props",props)
+  
       return(
         <>
        
           <div className="modal fade" id="exampleModalToggle1" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabIndex="-1">
-            <div className="modal-dialog modal-sm modal-dialog-centered">
+            <div className="modal-dialog modal-lg modal-dialog-centered">
             <div className="modal-content">
             <div className="modal-header">
                 <h5 className="modal-title" id="exampleModalLongTitle"></h5>
@@ -278,14 +311,156 @@ function Model(props){
                           {/* <legend className="col-form-label col-sm-2  pt-0" ></legend> */}
                             <div className="col-sm-10">
                                 <div className="row">
+
                                  
-                                 {Object.entries(props.params).map(([key,value])=>{
+                                 
+                                 {(typeof props.params.data !== 'undefined') && Object.entries(props.params.data).slice(0).reverse().map(([key,value])=>{
 
+                                    //console.log("key",key,"value",value)
+
+                                    return(
+                                      <>
+                                      <div className="row m-2">
+                                      <span><b>{textModifier(key)}</b></span>
+
+                                      {
+                                            Object.entries(value).slice(0).reverse().map(([key1,val1])=>{
+                                             // console.log('first Loop', key1, val1)
+
+                                             return(
+                                              <div className='row m-1'>
+                                                {/* <span><b>{textModifier(key1)}</b></span> */}
+                                                {(typeof val1 === 'object') ?
+                                                  <>
+                                                  <span><b>{textModifier(key1)}</b></span>
+
+                                                  {
+                                                     Object.entries(val1).slice(0).reverse().map(([key2, val2])=>{
+                                                     // console.log('second Loop', key2, val2)
+                                                      return(
+                                                        <div className='row m-1'>
+                                                          {(typeof val2 === 'object') ?
+                                                            <>
+                                                            <span><b>{textModifier(key2)}</b></span>
+                                                             { Object.entries(val2).slice(0).reverse().map(([key3, val3])=>{
+                                                             //   console.log('Third Loop', key3, val3)
+                                                                return(
+                                                                  <>
+                                                                    <span><b>{textModifier(key3)}</b> : {val3}</span>
+                                                                  </>
+                                                                )              
+                                                              })}
+                                                            </>
+                                                            :
+                                                            <span><b>{textModifier(key2)}</b> : {val2}</span>
+                                                          }
+                                                        </div>
+                                                      )
+                                                    })
+                                                  }
+                                                  </>
+                                                  :
+                                                  <span><b>{textModifier(key1)}</b> : {val1}</span>
+                                                }
+                                              </div>
+                                             )
+                                                // return(<>
+                                                //    <Divider sx={{ borderColor: '#dac4c4',marginTop:"10px",marginBottom:"10px"}} />
+                                                //   <span><b>{textModifier(key1)}</b></span>                             
+                                                //  {
+                                                //    Object.entries(val1).slice(0).reverse().map(([key2,val2])=>{
+
+                                                //     return(<>
+
+                                                //       { ( (Object.keys(val2).length > 0)) ? 
+                                                //       <>
+
+                                                //           {/* <span><b>{textModifier(key2)}</b></span> */}
+                                                //        { Object.entries(val2).map(([key3, val3])=>{
+                                                //           return <span><b>{textModifier(key3)}</b>:  {val3}</span>
+                                                //         })}
+                                                //         </>
+                                                //        :
+                                                       
+                                                //         <span><b>{textModifier(key2)}</b>:  {val2}</span>
+                                                //        }
+
+                                                //     </>)
+
+                                                  
+                                                //   })
+                                                //  }
+                                                   
+                                                  
+                                                // </>)
+
+                                              // if(key1=="user"){
+                                                
+
+
+
+                                              // }else{
+
+
+                                              //   return(<>
+
+                                                 
+                                              //    <p>{textModifier(key1)}</p>
+
+                                              //      {
+                                              //           Object.entries(val1).slice(0).reverse().map(([key3,val3])=>{
+                                              //         //   console.log("key3",key3,"val3",val3)
+
+                                                    
+
+                                              //         return(<>
+                                                       
+                                                            
+                                              //           {key3!=="features"&&key3!=="specification"?
+
+                                              //             <span><b>{textModifier(key3)}</b>:  {val3}</span>
+
+                                              //         :   Object.entries(val3).map(([key4,val4])=>{
+
+                                              //             //console.log("key4",key4,"val4",val4)
+
+                                              //               return(<>
+
+
+                                              //                   {Object.entries(val4).map(([key5,val5])=>{
+
+                                              //                   return(<>
+                                              //                         <span><b>{textModifier(key5)}</b>:  {val5}</span>
+                                              //                   </>)
+                                              //                   })}
+                                              //               </>)
+
+                                              //             })
+                                                       
+
+
+                                              //           }
+                                                            
+                                              //         </>)
+
+                                              //       })
+                                              //      }
+                                              //   </>)
+
+                                              // }
+                                            
+                                              
+
+
+                                            })
+
+                                      }
+
+                                      </div>
+                                      </>
+                                    )
                                    
-                                    return(<>
-
-                                          <span><b>{textModifier(key)}</b>:  {value}</span>
-                                    </>)
+                                   
 
                                  })}
 

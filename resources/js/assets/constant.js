@@ -3,8 +3,8 @@ import React from "react";
 let host = window.location.host;
 let protocol = window.location.protocol;
 let parts = host.split(".");
-var subdomain = "dealer-website";
-var domain = 'primarykeytech'
+var subdomain = "shubhauto";
+var domain = '2wh'
 // If we get more than 3 parts, then we have a subdomain
 // INFO: This could be 4, if you have a co.uk TLD or something like that.
 if (parts.length >= 3) {
@@ -25,7 +25,7 @@ if (parts.length >= 3) {
 
 // BASE_URL: `http://127.0.0.1:8003/api`, //'https://primarykeytech.in/glocal/api',
 export const API_CONSTANTS = {
-  BASE_URL: `https://${subdomain}.${domain}.in/dynamic/api/api/`, //'https://primarykeytech.in/glocal/api',
+  BASE_URL: `https://${subdomain}.${domain}.in/dynamic/api/api`, //'https://primarykeytech.in/glocal/api',
   URL: `https://${subdomain}.${domain}.in/dynamic/api`,
     login: "/login", //used
     refresh: "/refresh",

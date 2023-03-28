@@ -210,7 +210,7 @@ export default class SliderCreation extends React.Component{
                             { <strong> {"Active"} </strong>         }
                           </div>
                         <div className="col-md-6 mb-3">
-                            <MaterialTextArea label="Js" row={4} multiline placeholder="js" fullWidth name='js' onChange={(e)=>handleChange(e)}
+                            <MaterialTextArea style={{height: "123px"}}label="Js" row={4} multiline placeholder="js" fullWidth name='js' onChange={(e)=>handleChange(e)}
                               value={this.state.js?this.state.js:""}
                                helperText={
                                 this.state.errors.js
@@ -223,7 +223,7 @@ export default class SliderCreation extends React.Component{
 
                         </div>
                         <div className="col-md-6 mb-3">
-                            <MaterialTextArea label="CSS" row={4} multiline placeholder="Css" fullWidth name='css' onChange={(e)=>handleChange(e)}
+                            <MaterialTextArea style={{height: "123px"}} label="CSS" row={4} multiline placeholder="Css" fullWidth name='css' onChange={(e)=>handleChange(e)}
                             value={this.state.css?this.state.css:""}
                              helperText={
                                 this.state.errors.css
