@@ -302,8 +302,8 @@ class Columns extends React.Component {
         <ul className="sidenav-second-level collapse" id="collapsegallerylistings">
         {/* <li><Link  to="/variation-create">Variation</Link></li> */}
 
-        <li><Link  to="/gallery">Gallery Image Upload </Link></li>
-        <li><Link  to="gallery-list">Gallery Tab</Link></li>
+        <li><Link  to="/admin/gallery">Gallery Image Upload </Link></li>
+        <li><Link  to="/admin/gallery-list">Gallery Tab</Link></li>
      
         </ul>
   </li>

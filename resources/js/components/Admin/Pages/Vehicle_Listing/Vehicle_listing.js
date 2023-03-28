@@ -119,7 +119,7 @@ import { Link } from "react-router-dom";
      
       <Box sx={{ width: '100%', height: '100%', typography: 'body1', backgroundColor:'white', textAlign:'right', borderRadius:"6px", padding: '2%' }}>
    
-      <Link  to={"/vehicletab"} ><Button style={{marginBottom: '18px'}}>Creacte Vehicle</Button></Link>
+      <Link  to={"/admin/vehicletab"} ><Button style={{marginBottom: '18px'}}>Creacte Vehicle</Button></Link>
       <div style={{ height: '100%', width: '100%' }}>
      
       <DataGrid
@@ -298,7 +298,7 @@ function EditVehicle(props){
 
 {/* <Link key={props.key}  to={`/create/user`} state={{param:props.param}}><Button>Edit</Button></Link>  &nbsp; */}
 
-<Link key={props.key} to={"/vehicletab"} state={{...props.param}}><Button>Edit</Button></Link>&nbsp;
+<Link key={props.key} to={"/admin/vehicletab"} state={{...props.param}}><Button>Edit</Button></Link>&nbsp;
   </>)
 
 }

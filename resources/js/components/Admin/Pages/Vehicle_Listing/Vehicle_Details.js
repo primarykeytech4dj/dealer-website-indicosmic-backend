@@ -97,7 +97,7 @@ export class VehicleDetails extends React.Component {
 
                   return(<>
 
-                        <label><b>{key}</b></label>
+                        <label><b>{key=="0"?"":key}</b></label>
 
                         {
                                 

@@ -82,7 +82,7 @@ const GalleryImage=()=>{
 
             
 
-            if(response.success == true){
+            if(res.success==true){
                 Swal.fire({
                     title: "Gallery",
                     text: res.message,
