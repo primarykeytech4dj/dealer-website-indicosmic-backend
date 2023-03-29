@@ -33,19 +33,20 @@ export default class TestiMonialList extends React.Component {
     }
   
     componentWillMount = () => {
-      this.getProductList();
+      this.getTestimonialList();
     }
 
     componentDidUpdate(prevProps, prevState){
       // console.log('update')
-      if ((prevState.page !== this.state.page) ) {
-        this.getProductList();
-      } 
+      if ((prevState.page !== this.state.page)||(prevState.pageSize !== this.state.pageSize)) {
+        this.getTestimonialList();
+    }
+  
     
     }
    
   
-    getProductList = () =>{
+    getTestimonialList = () =>{
   
       this.setState(old => ({...old, isLoading:true}))
       var data = {length:this.state.pageSize, start:this.state.page*this.state.pageSize};
@@ -53,7 +54,8 @@ export default class TestiMonialList extends React.Component {
           console.log("rs==>",response);
           
           if(response.success == true){
-              this.setState(old => ({...old, data:response.data,}))
+             // this.setState(old => ({...old, data:response.data,}))
+             this.setState(old => ({...old, data:[...old.data, ...response.data.aaData], total:response.data.iTotalRecords}))
   
           } else {
           alert("No Data Available")
@@ -78,9 +80,9 @@ export default class TestiMonialList extends React.Component {
        }
   
       const columns = [
-        { field: 'id', headerName: 'ID', width: 100 },
+        { field: 'id', headerName: 'Sr.No', width: 100 },
         { field: 'title', headerName: 'Title', width: 190 },
-        { field: 'image', headerName: 'Image', width: 190 },
+        { field: 'image', headerName: 'Image', width: 200 ,renderCell: (params) => <Images key={params.row.id}    param={params.row} />,},
         { field: 'description', headerName: 'Description ', width: 100 },
         { field: 'is_active', headerName: 'Active', width: 150 ,renderCell: (params) => <IsActive key={params.row.id}  param={params.row} />,},
         { field: 'priority', headerName: 'Priority', width: 150 },
@@ -111,7 +113,7 @@ export default class TestiMonialList extends React.Component {
         
           onPageChange={(newPage) => this.setState(old=>({...old, page: newPage}))}
           onPageSizeChange={(newPageSize) => this.setState(old=>({...old, pageSize: newPageSize}))}
-
+          disableRowSelectionOnClick
   
           />
          
@@ -196,7 +198,7 @@ export default class TestiMonialList extends React.Component {
               });
               setTimeout(() => {
                 Swal.close()
-                location.reload("/admin/testimonial-list")
+                // location.reload("/admin/testimonial-list")
           }, 3000);
               
                 } else {
@@ -216,7 +218,7 @@ export default class TestiMonialList extends React.Component {
          
           });
         }
-        location.reload("/admin/testimonial-list")
+        // location.reload("/admin/testimonial-list")
       });
      
       //  apiCtrl.callAxios(`testimonial/delete/${state.id}`,data).then(response => {
@@ -241,6 +243,19 @@ export default class TestiMonialList extends React.Component {
       </div>
     </>)
   }
+
+  function Images(props){
+
+    return(<>
+
+
+          <div className="col-md-12">
+            <img style={{width:"58%"}} className="img-fluid img-thumbnail" key={props.param.id} src={props.param.image} alt={props.param.vehicle_model} />
+          
+
+          </div>
+    </>)
+}
   
 function Model(props){
 

@@ -48,7 +48,7 @@ import { Link } from "react-router-dom";
 
     componentDidUpdate(prevProps, prevState){
       // console.log('update')
-      if ((prevState.page !== this.state.page)||(prevState.pageSize !== this.state.pageSize)) {
+    if ((prevState.page !== this.state.page)||(prevState.pageSize !== this.state.pageSize)) {
           this.getProductList();
       }
     }

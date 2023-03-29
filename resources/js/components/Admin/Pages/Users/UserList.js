@@ -40,6 +40,9 @@ export  class UserList extends React.Component {
   if(prevProps.params.any !== this.props.params.any){
     this.getUserList();
   }
+  if ((prevState.page !== this.state.page)||(prevState.pageSize !== this.state.pageSize)) {
+    this.getUserList();
+  }
  }
  
 
@@ -53,7 +56,9 @@ export  class UserList extends React.Component {
         console.log(response);
         
         if(response.success == true){
-            this.setState(old => ({...old, data:response.data.aaData, total:response.data.iTotalRecords}))
+           // this.setState(old => ({...old, data:response.data.aaData, total:response.data.iTotalRecords}))
+           this.setState(old => ({...old, data:[...old.data, ...response.data.aaData], total:response.data.iTotalRecords}))
+  
 
         } else {
         alert("No Data Available")
@@ -81,13 +86,7 @@ export  class UserList extends React.Component {
     // });
   }
 
-  componentDidUpdate(prevProps, prevState){
-    // console.log('update')
-    if (prevState.page !== this.state.page) {
-        this.getUserList();
-    }
-    
-  }
+
 
 
  

@@ -47,11 +47,13 @@ export default class SliderList extends React.Component{
 
         componentDidUpdate(prevProps, prevState){
           // console.log('update')
-          if ((prevState.page !== this.state.page) ) {
-                 this.getSliderList();
-          } 
-        
+         
+          if ((prevState.page !== this.state.page)||(prevState.pageSize !== this.state.pageSize)) {
+            this.getSliderList();
+          }
         }
+        
+        
        
       
          
@@ -70,7 +72,9 @@ export default class SliderList extends React.Component{
             console.log("APIresponse=>",response);
             
             if(response.success == true){
-                this.setState(old => ({...old, data:response.data, }))
+                //this.setState(old => ({...old, data:response.data, }))
+                this.setState(old => ({...old, data:[...old.data, ...response.data.aaData], total:response.data.iTotalRecords}))
+  
     
             } else {
             alert("No Data Available")
@@ -136,7 +140,7 @@ export default class SliderList extends React.Component{
                 rowsPerPageOptions={[10, 30, 50, 70, 100]}
                 onPageChange={(newPage) => this.setState(old=>({...old, page: newPage}))}
                 onPageSizeChange={(newPageSize) => this.setState(old=>({...old, pageSize: newPageSize}))}
-
+                disableRowSelectionOnClick
                 />
             
             </div>

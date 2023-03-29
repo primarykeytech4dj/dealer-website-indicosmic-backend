@@ -46,7 +46,7 @@ import MaterialSelect from "../../../../Tags/MaterialSelect";
         this.getProductList();
       
     } 
-      if ((prevState.page !== this.state.page)||(prevProps.params !== this.props.params)) {
+      if ((prevState.page !== this.state.page)||(prevProps.params !== this.props.params)||(prevState.pageSize !== this.state.pageSize)) {
           this.getProductList();
       }
     }
@@ -69,7 +69,9 @@ import MaterialSelect from "../../../../Tags/MaterialSelect";
           console.log(response);
           
           if(response.success == true){
-              this.setState(old => ({...old, data:response.data.aaData, total:response.data.iTotalRecords}))
+              //this.setState(old => ({...old, data:response.data.aaData, total:response.data.iTotalRecords}))
+              this.setState(old => ({...old, data:[...old.data, ...response.data.aaData], total:response.data.iTotalRecords}))
+  
   
           } else {
           alert("No Data Available")
@@ -159,7 +161,7 @@ import MaterialSelect from "../../../../Tags/MaterialSelect";
         //   checkboxSelection
           onPageChange={(newPage) => this.setState(old=>({...old, page: newPage}))}
           onPageSizeChange={(newPageSize) => this.setState(old=>({...old, pageSize: newPageSize}))}
-
+          disableRowSelectionOnClick
   
           />
          
