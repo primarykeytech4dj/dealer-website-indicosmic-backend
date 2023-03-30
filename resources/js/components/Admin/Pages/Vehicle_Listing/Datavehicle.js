@@ -45,11 +45,11 @@ export class Detailvehicle extends React.Component {
         "used":"Used",
         "new":"New"
     }
-    const model={
+    const make={
        "tvs":" TVS"
 
     }
-    const make={
+    const model={
        "Tvs Sport Bsiv Es Spl": "Tvs Sport Bsiv Es Spl",
        "Jupiter Classic":"Jupiter Classic",
        "Apache Rtr160 White Spl Edition Fd":" Apache Rtr160 White Spl Edition Fd"

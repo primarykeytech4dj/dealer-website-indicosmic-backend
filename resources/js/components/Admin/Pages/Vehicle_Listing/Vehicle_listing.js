@@ -28,7 +28,7 @@ import { Link } from "react-router-dom";
         data : [],
         isLoading: false,
         page: 0,
-        pageSize: 5,
+        pageSize: 10,
         productData:[],
         vehiclemodel:[]
        // product_type:this.props.title,

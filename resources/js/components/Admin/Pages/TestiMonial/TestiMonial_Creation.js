@@ -16,6 +16,7 @@ import Switch from "@mui/material/Switch";
 import axios from "axios";
 import Swal from "sweetalert2";
 import MaterialTextArea from "../../../../Tags/MaterialTextArea";
+import Editor from "../Editor/Editor";
 export default class TestiMonial extends React.Component{
     constructor(props){
         super(props);
@@ -216,6 +217,13 @@ export default class TestiMonial extends React.Component{
           this.setState(old=>({...old,imgshow:URL.createObjectURL(e.target.files[0])}))
         }
       }
+      const handleEdit=(data)=>{
+        console.log("data=>",data)
+
+        this.setState(old=>({...old,description:data}))
+
+      }
+
   
         
 
@@ -292,7 +300,7 @@ export default class TestiMonial extends React.Component{
                             </div>:""
                          }
                         
-                        <strong>Description</strong>
+                        {/* <strong>Description</strong>
 
                           <div className="col-md-12">
                             <MaterialTextArea  style={{height: "118px"}} row={4} multiline label={" Description" }placeholder='Enter About your description'  fullWidth name='description'   onChange={(e)=>{handleChange(e)}}  
@@ -305,7 +313,10 @@ export default class TestiMonial extends React.Component{
                                    error={this.state.errors.description?true:false}
                             />
 
-                          </div>
+                          </div> */}
+                             <Editor func={handleEdit} data={this.state.description?this.state.description:""}/>
+
+
                         {/* <div style={{ border: "1px solid black", padding: '2px', minHeight: '400px' }}>
                         
                             <TextEditor func={onhandlechange}/>

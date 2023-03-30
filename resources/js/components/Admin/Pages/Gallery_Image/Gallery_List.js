@@ -49,7 +49,7 @@ export default class GalleryList extends React.Component{
           Object.entries(this.props.data).map(([ind, val])=>{
             
 
-            data = [...data, {src:val.images, desc:ind, sub:val.title}]
+            data = [...data, {src:val.images, desc:val.title, sub:val.title}]
              
           })
 

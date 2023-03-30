@@ -246,7 +246,7 @@ export  class VehicleTabs extends React.Component {
             
             var titlename=title
              //console.log("title=>",titlename)
-              console.log("state=>",state)
+             // console.log("state=>",state)
             
             if(titlename==""){
                // console.log("state=>",state)
@@ -298,7 +298,7 @@ export  class VehicleTabs extends React.Component {
 
             }
 
-            console.log("data=>",data)
+           // console.log("data=>",data)
 
 
             
@@ -353,7 +353,7 @@ export  class VehicleTabs extends React.Component {
                     
                     {                 
                     Object.entries(this.state.fields).map(([key,value])=>{
-                         console.log("key",key,"value",value)
+                        // console.log("key",key,"value",value)
                         //console.log("types",typeof value)
                        
                         // i = parseInt(i)+1;
@@ -395,7 +395,7 @@ export  class VehicleTabs extends React.Component {
                     //  console.log("a=>", a)
 
                    if(typeof value!=="string" &&value!==null){
-                     console.log("value=>",value)
+                   //  console.log("value=>",value)
                     a = String(parseInt(a)+1);
                    
                     return(

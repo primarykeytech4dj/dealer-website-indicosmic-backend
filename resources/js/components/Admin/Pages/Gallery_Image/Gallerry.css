@@ -17,3 +17,44 @@
     width: 100%;
     height: 146px !important;
 }
+
+img.styles_lightroomimg__1r0lF{
+    width: 73% !important;
+    height: auto !important;
+}
+.styles_lightroomcontent__1SCaZ{
+    margin-top: 10rem !important;
+}
+
+.styles_topmenu__oGT_u{
+    top: 14% !important;
+    right: -37px !important;
+}
+
+
+.styles_carouselcontrolprev__Bmyua {
+    position: absolute;
+    left: 16% !important;
+    top: 66% !important;
+}
+.styles_carouselcontrolnext__DoQ9- {
+    position: absolute;
+    right: 5% !important;
+    top: 66% !important;
+}
+
+.styles_lightroomcontent__1SCaZ {
+    margin: auto;
+    height: 80% ;
+    width: 67vw ;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 204px !important;
+}
+.styles_icon__1uWQb {
+    margin-left: 15px;
+    font-size: 20px;
+    cursor: pointer;
+}

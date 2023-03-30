@@ -15,6 +15,7 @@ import Swal from 'sweetalert2';
 import Api from '../../../../api';
 import TestiMonial from "./TestiMonial_Creation";
 import { useState } from "react";
+import Editor from "../Editor/Editor";
 export default class TestiMonialList extends React.Component {
     constructor(props){
       super(props)
@@ -513,6 +514,15 @@ class TestiMonialEdit extends React.Component {
           this.setState(old=>({...old,[e.target.name] : e.target.files[0]}))
         }
       }
+
+      const handleEdit=(data)=>{
+        console.log("data=>",data)
+
+        this.setState(old=>({...old,description:data}))
+
+      }
+
+  
       
   
       return (
@@ -597,7 +607,7 @@ class TestiMonialEdit extends React.Component {
                     <img  style={{width:"58px",marginLeft:"2px"}} src={this.state.image?this.state.image:""} />
                     </div>:""
                      }
-                    <strong>Description</strong>
+                    {/* <strong>Description</strong> */}
                     {/* <div style={{ border: "1px solid black", padding: '2px', minHeight: '400px' }}>
                     
                         <TextEditor func={onhandlechange}/>
@@ -605,7 +615,7 @@ class TestiMonialEdit extends React.Component {
             
                     </div> */}
 
-                  <div className="col-md-12 mb-4" >
+                  {/* <div className="col-md-12 mb-4" >
                     <MaterialTextArea row={4} multiline label={" Description" } placeholder=" Description" value={this.state.description?this.state.description:""} fullWidth name='description' 
                     onChange={(e)=>{handleChange(e)}} 
                     helperText={
@@ -615,7 +625,10 @@ class TestiMonialEdit extends React.Component {
                       }
                       error={this.state.errors.description?true:false}
                     />
-                    </div>
+                    </div> */}
+
+                    <Editor func={handleEdit} data={this.state.description?this.state.description:""}/>
+
 
                   </div>
                 

@@ -31,7 +31,7 @@ const handlechange=(event, editor)=>{
 
        {/* <h2>Description</h2> */}
         <div className="row ml-1">
-          <label><b>Description</b></label>
+          <label><b>{props.label?props.label:"Description"}</b></label>
         </div>
                 <CKEditor
                     editor={ ClassicEditor }

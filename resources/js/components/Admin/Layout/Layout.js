@@ -51,6 +51,7 @@ import FeatureList from '../Pages/Vehicle/Feature_list';
 import VehicleCreation from '../Pages/Vehicle_Listing/Vehicle_Creation';
 import GalleryImage from '../Pages/Gallery_Image/Gallery_Image';
 import { GalleryTabs } from '../Pages/Gallery_Image/GalleryImage_Tab';
+import { Company } from '../Pages/Company/Company';
 // import UserCreation
 
 
@@ -140,6 +141,7 @@ export default function Layout() {
               {<Route path='/admin/featured-list' element={<FeatureList/>}/>}
               {<Route path='/admin/gallery' element={<GalleryImage/>}/>}
               {<Route path='/admin/gallery-list' element={<GalleryTabs/>}/>}
+              {<Route path='/admin/company' element={<Company/>}/>}
               </Routes>
                :""}
                 
