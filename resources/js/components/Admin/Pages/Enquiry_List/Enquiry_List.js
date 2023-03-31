@@ -27,6 +27,7 @@ import MaterialSelect from "../../../../Tags/MaterialSelect";
         page: 0,
         pageSize: 10,
         detailsData:[],
+        enquiry_type:""
        // product_type:this.props.title,
       
   
@@ -35,7 +36,7 @@ import MaterialSelect from "../../../../Tags/MaterialSelect";
     }
   
     componentWillMount = () => {
-      this.getProductList();
+      this.getEnquiryList();
     }
 
     
@@ -43,11 +44,20 @@ import MaterialSelect from "../../../../Tags/MaterialSelect";
     componentDidUpdate(prevProps, prevState){
       // console.log('update')
       if(prevState.enquiry_type !== this.state.enquiry_type){
-        this.getProductList();
+          // this.setState(old=>({...old,data:[""]}))
+          alert()
+        this.getEnquiryList();
       
-    } 
-      if ((prevState.page !== this.state.page)||(prevProps.params !== this.props.params)||(prevState.pageSize !== this.state.pageSize)) {
-          this.getProductList();
+      } 
+
+      // if ((prevState.page !== this.state.page)||(prevProps.params !== this.props.params)||(prevState.pageSize !== this.state.pageSize)) {
+      //     this.getEnquiryList();
+      // }
+        if ((prevState.page !== this.state.page)) {
+          this.getEnquiryList(this.state.pageSize);
+      }
+      if ((prevState.pageSize !== this.state.pageSize)) {
+        this.getEnquiryList(prevState.pageSize);
       }
     }
 
@@ -58,7 +68,7 @@ import MaterialSelect from "../../../../Tags/MaterialSelect";
     //  }
   
   
-    getProductList = () =>{
+    getEnquiryList = (pageSize) =>{
   
       this.setState(old => ({...old, isLoading:true}))
        var data = {enquiry_type:this.state.enquiry_type,length:this.state.pageSize, start:this.state.page*this.state.pageSize};
@@ -67,16 +77,23 @@ import MaterialSelect from "../../../../Tags/MaterialSelect";
       // }
       this.apiCtrl.callAxios('enquiry/list',data).then(response => {
           console.log(response);
+            this.setState({data:""})
           
           if(response.success == true){
               //this.setState(old => ({...old, data:response.data.aaData, total:response.data.iTotalRecords}))
-              this.setState(old => ({...old, data:[...old.data, ...response.data.aaData], total:response.data.iTotalRecords}))
+              //this.setState(old => ({...old, data:[...old.data, ...response.data.aaData], total:response.data.iTotalRecords}))
   
-  
+              const {aaData}=response.data
+            
+              if(pageSize == this.state.pageSize){
+                this.setState(old => ({...old, data:[...old.data,...aaData], total:response.data.iTotalRecords}))
+              } else {
+                this.setState(old => ({...old, data:aaData, total:response.data.iTotalRecords}))
+              }
           } else {
           alert("No Data Available")
           }
-          this.setState(old => ({...old, isLoading:false}))
+           this.setState(old => ({...old, isLoading:false}))
           // sessionStorage.setItem('_token', response.data.)
           
       }).catch(function (error) {
@@ -106,9 +123,11 @@ import MaterialSelect from "../../../../Tags/MaterialSelect";
    }
 
      const  handleClick = (data) => {
-         console.log("dataproduct===",data)
+       //  console.log("dataproduct===",data)
          this.setState({detailsData: data})
        }
+
+       console.log("Enquiry State =>",this.state)
   
     
   
@@ -264,8 +283,11 @@ function IsActive(props){
    }
 
 function Action(props){
+  // console.log("props action",props)
   const viewdetails = (event)=>{
-    props.fun(props.param.data)
+      const{data}=props.param
+    // props.fun(props.param.data)
+    props.fun(data)
   }
 
   return(<>
@@ -323,9 +345,9 @@ function Model(props){
                                     return(
                                       <>
                                       <div className="row m-2">
-                                      <span><b>{textModifier(key)}</b></span>
+                                      <span><b>{key!=="date"&&textModifier(key)}</b></span>
 
-                                      {
+                                      {key!=="date"&&
                                             Object.entries(value).slice(0).reverse().map(([key1,val1])=>{
                                              // console.log('first Loop', key1, val1)
 
@@ -362,6 +384,7 @@ function Model(props){
                                                   }
                                                   </>
                                                   :
+                                                 
                                                   <span><b>{textModifier(key1)}</b> : {val1}</span>
                                                 }
                                               </div>

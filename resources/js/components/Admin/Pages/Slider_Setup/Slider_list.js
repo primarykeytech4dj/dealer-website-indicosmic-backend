@@ -48,8 +48,14 @@ export default class SliderList extends React.Component{
         componentDidUpdate(prevProps, prevState){
           // console.log('update')
          
-          if ((prevState.page !== this.state.page)||(prevState.pageSize !== this.state.pageSize)) {
-            this.getSliderList();
+          // if ((prevState.page !== this.state.page)||(prevState.pageSize !== this.state.pageSize)) {
+          //   this.getSliderList();
+          // }
+            if ((prevState.page !== this.state.page)) {
+              this.getSliderList(this.state.pageSize);
+          }
+          if ((prevState.pageSize !== this.state.pageSize)) {
+            this.getSliderList(prevState.pageSize);
           }
         }
         
@@ -58,7 +64,7 @@ export default class SliderList extends React.Component{
       
          
     
-      getSliderList=() =>{
+      getSliderList=(pageSize) =>{
 
        
         this.setState(old => ({...old, isLoading:true}))
@@ -73,7 +79,14 @@ export default class SliderList extends React.Component{
             
             if(response.success == true){
                 //this.setState(old => ({...old, data:response.data, }))
-                this.setState(old => ({...old, data:[...old.data, ...response.data.aaData], total:response.data.iTotalRecords}))
+               // this.setState(old => ({...old, data:[...old.data, ...response.data.aaData], total:response.data.iTotalRecords}))
+               const {aaData}=response.data
+            
+               if(pageSize == this.state.pageSize){
+                 this.setState(old => ({...old, data:[...old.data,...aaData], total:response.data.iTotalRecords}))
+               } else {
+                 this.setState(old => ({...old, data:aaData, total:response.data.iTotalRecords}))
+               }
   
     
             } else {
@@ -107,16 +120,16 @@ export default class SliderList extends React.Component{
            }
 
         const columns = [
-            { field: 'id', headerName: 'SR No', width: 100 },
+            { field: 'sr_no', headerName: 'SR No', width: 100 },
             { field: 'name', headerName: 'Name', width: 190 },
             { field: 'slider_code', headerName: 'Slider Code', width: 190 },
             { field: 'image_count', headerName: 'Image Count', width: 150 },
             { field: 'css', headerName: 'Css', width: 150},
             { field: 'js', headerName: 'Js', width: 100 },
-            { field: 'is_active', headerName: 'Active', width: 150 ,renderCell: (params) => <IsActive key={params.row.id}  param={params.row} />,},
+            { field: 'is_active', headerName: 'Active', width: 150 ,renderCell: (params) => <IsActive key={params.row.id+'_'+params.row.sr_no} func={this.getSliderList}  param={params.row} />,},
             { field: 'created', headerName: 'Created', width: 150 },
             { field: 'modified', headerName: 'Modified', width: 150 },
-            { field: 'action', headerName: 'Action',  width: 190,  renderCell: (params) => <Action func={(e)=>{handleClick(e)}} key={params.row.id} param={params.row} />, },
+            { field: 'action', headerName: 'Action',  width: 190,  renderCell: (params) => <Action func={(e)=>{handleClick(e)}} key={params.row.id+'_'+params.row.sr_no} param={params.row} />, },
           ];
         return(<>
 
@@ -233,7 +246,7 @@ function IsActive(props){
           setTimeout(() => {
             Swal.close()
       }, 3000);
-          location.reload("/admin/slider-list")
+          //location.reload("/admin/slider-list")
             } else {
               Swal.fire({
                 title: `Slider ${msg1} unsuccessfully!`,
@@ -251,7 +264,8 @@ function IsActive(props){
      
       });
     }else{
-      location.reload("/admin/slider-list")
+     // location.reload("/admin/slider-list")
+     
     }
   });
 }
@@ -483,7 +497,8 @@ function Model(props){
             })
             setTimeout(() => {
               Swal.close()
-              location.reload("/admin/Sliders/list")
+              $('.close').trigger('click');
+              //location.reload("/admin/Sliders/list")
         }, 3000);
         } else {
             Swal.fire({
@@ -494,6 +509,7 @@ function Model(props){
             })
             setTimeout(() => {
               Swal.close()
+              $('.close').trigger('click');
         }, 3000);
         }
             console.log("===>",response);

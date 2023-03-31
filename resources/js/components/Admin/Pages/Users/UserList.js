@@ -40,13 +40,19 @@ export  class UserList extends React.Component {
   if(prevProps.params.any !== this.props.params.any){
     this.getUserList();
   }
-  if ((prevState.page !== this.state.page)||(prevState.pageSize !== this.state.pageSize)) {
-    this.getUserList();
-  }
+    // if ((prevState.page !== this.state.page)||(prevState.pageSize !== this.state.pageSize)) {
+    //   this.getUserList();
+    // }
+    if ((prevState.page !== this.state.page)) {
+        this.getUserList(this.state.pageSize);
+    }
+    if ((prevState.pageSize !== this.state.pageSize)) {
+      this.getUserList(prevState.pageSize);
+    }
  }
  
 
-  getUserList = () =>{
+  getUserList = (pageSize) =>{
 
 
     //  console.log("urldata===>",data)
@@ -57,8 +63,14 @@ export  class UserList extends React.Component {
         
         if(response.success == true){
            // this.setState(old => ({...old, data:response.data.aaData, total:response.data.iTotalRecords}))
-           this.setState(old => ({...old, data:[...old.data, ...response.data.aaData], total:response.data.iTotalRecords}))
-  
+          // this.setState(old => ({...old, data:[...old.data, ...response.data.aaData], total:response.data.iTotalRecords}))
+          const {aaData}=response.data
+            
+          if(pageSize == this.state.pageSize){
+            this.setState(old => ({...old, data:[...old.data,...aaData], total:response.data.iTotalRecords}))
+          } else {
+            this.setState(old => ({...old, data:aaData, total:response.data.iTotalRecords}))
+          }
 
         } else {
         alert("No Data Available")
@@ -97,7 +109,7 @@ export  class UserList extends React.Component {
       this.setState({userData: data})
     }
     const columns = [
-      { field: 'sr_no', headerName: 'ID', width: 100 },
+      { field: 'sr_no', headerName: 'Sr.No', width: 100 },
       { field: 'name', headerName: 'Name', width: 190 },
       { field: 'email', headerName: 'Email', width: 300 },
       { field: 'mobile', headerName: 'Mobile', width: 190 },
@@ -376,6 +388,11 @@ function Model(props){
                       icon: "success",
                       showConfirmButton: false,
                   })
+                  setTimeout(() => {
+                    Swal.close()
+                    $('.close').trigger('click');
+                    
+                }, 3000);
               } else {
                   Swal.fire({
                       title: "user",
@@ -383,8 +400,13 @@ function Model(props){
                       icon: "error",
                       showConfirmButton: false,
                   })
+                  setTimeout(() => {
+                    Swal.close()
+                    $('.close').trigger('click');
+                    
+                }, 3000);
               }
-              location.reload('/admin/user-list')
+             // location.reload('/admin/user-list')
               console.log("Updateuser===>",response);
               // sessionStorage.setItem('_token', response.data.)
               

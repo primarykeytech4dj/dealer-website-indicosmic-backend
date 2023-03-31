@@ -330,6 +330,7 @@ export class AddUsers extends React.Component {
                         })
                         setTimeout(() => {
                             Swal.close()
+                            $('.close').trigger('click');
                             
                         }, 3000);
                     } else {
@@ -341,6 +342,7 @@ export class AddUsers extends React.Component {
                         })
                         setTimeout(() => {
                             Swal.close()
+                            $('.close').trigger('click');
                             
                         }, 3000);
                     }

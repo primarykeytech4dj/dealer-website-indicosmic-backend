@@ -93,7 +93,7 @@ import { Products } from "./Products";
        }
   
       const columns = [
-        { field: 'sr_no', headerName: 'ID', width: 100 },
+        { field: 'sr_no', headerName: 'Sr.No', width: 100 },
         { field: 'product', headerName: 'Product', width: 190 },
         { field: 'product_code', headerName: 'Product Code', width: 190 },
         { field: 'slug', headerName: 'Slug', width: 150 },

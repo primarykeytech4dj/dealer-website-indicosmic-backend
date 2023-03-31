@@ -265,12 +265,6 @@ class ProductCategory extends React.Component {
                     icon: "success",
                     showConfirmButton: false,
                 })
-                // this.setState({
-                //   category_name:null,
-                //   description:null,
-                //   hsn_code:null,
-                //   image_name_1:null,
-                // })
                 setTimeout(() => {
                   Swal.close()
                   this.setState({
@@ -279,19 +273,11 @@ class ProductCategory extends React.Component {
                     hsn_code:null,
                     image_name_1:null,
                   })
+                  $('.close').trigger('click');
                   
-            }, 3000);
+                 }, 3000);
 
-            // this.setState({
-            //   category_name:"",
-            //   description:"",
-            //   hsn_code:"",
-            //   image_name_1:"",
-            // })
-            
-            
-                // $('.close').trigger('click');
-                } else {
+              } else {
                     Swal.fire({
                       title: productType+" "+"Category",
                         text: "Not Created!",
@@ -300,9 +286,10 @@ class ProductCategory extends React.Component {
                     })
                     setTimeout(() => {
                       Swal.close()
+                      $('.close').trigger('click');
                     
                 }, 3000);
-                    $('.close').trigger('click');
+                    //$('.close').trigger('click');
                     // location.reload(`/${products}-category`)
                 }
               
@@ -544,7 +531,7 @@ class ProductCategoryList extends React.Component{
       }
 
         const columns = [
-            { field: 'sr_no', headerName: 'ID', width: 100 },
+            { field: 'sr_no', headerName: 'Sr.No', width: 100 },
             { field: 'category_name', headerName: 'Category Name', width: 190 },
             { field: 'hsn_code', headerName: 'HSN Code', width: 190 },
             { field: 'description', headerName: 'Description', width: 150 },
@@ -987,7 +974,8 @@ function Model(props){
                     })
                     setTimeout(() => {
                       Swal.close()
-                      location.reload("/admin/product-category")
+                      $('.close').trigger('click');
+                     // location.reload("/admin/product-category")
                 }, 3000);
                     
 
@@ -1001,6 +989,7 @@ function Model(props){
                     })
                     setTimeout(() => {
                       Swal.close()
+                      $('.close').trigger('click');
                       
                 }, 3000);
                 }

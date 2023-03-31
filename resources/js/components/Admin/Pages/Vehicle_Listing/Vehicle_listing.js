@@ -39,7 +39,7 @@ import { Link } from "react-router-dom";
     }
   
     componentWillMount = () => {
-      this.getProductList();
+      this.getProductList(this.state.pageSize);
     }
 
 
@@ -48,10 +48,15 @@ import { Link } from "react-router-dom";
 
     componentDidUpdate(prevProps, prevState){
       // console.log('update')
-    if ((prevState.page !== this.state.page)||(prevState.pageSize !== this.state.pageSize)) {
-          this.getProductList();
+      if ((prevState.page !== this.state.page)) {
+          this.getProductList(this.state.pageSize);
       }
+      if ((prevState.pageSize !== this.state.pageSize)) {
+        this.getProductList(prevState.pageSize);
+      }
+      
     }
+   
 
     // componentDidUpdate = (prevProps, prevState) =>{
     //   if(prevProps.params !== this.props.params){
@@ -60,7 +65,7 @@ import { Link } from "react-router-dom";
     //  }
   
   
-    getProductList = () =>{
+    getProductList = (pageSize) =>{
   
       this.setState(old => ({...old, isLoading:true}))
        var data = {length:this.state.pageSize, start:this.state.page*this.state.pageSize};
@@ -70,8 +75,15 @@ import { Link } from "react-router-dom";
       this.apiCtrl.callAxios('vehicle/list',data).then(response => {
           console.log(response);
           
+          
           if(response.success == true){
-              this.setState(old => ({...old, data:[...old.data, ...response.data.aaData], total:response.data.iTotalRecords}))
+            const {aaData}=response.data
+            
+            if(pageSize == this.state.pageSize){
+              this.setState(old => ({...old, data:[...old.data,...aaData], total:response.data.iTotalRecords}))
+            } else {
+              this.setState(old => ({...old, data:aaData, total:response.data.iTotalRecords}))
+            }
   
           } else {
           alert("No Data Available")
@@ -93,6 +105,8 @@ import { Link } from "react-router-dom";
       //console.log("userdata",data)
        this.setState({vehiclemodel: data})
      }
+
+      console.log("Vehicle List=>",this.state)
     
   
       const columns = [
@@ -324,7 +338,7 @@ useEffect(()=>{
   const submit=()=>{
     
   }
-  console.log("props=>",props.params)
+  //console.log("props=>",props.params)
  
  
 

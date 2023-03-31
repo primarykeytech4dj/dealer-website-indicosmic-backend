@@ -188,6 +188,7 @@ export default class TestiMonial extends React.Component{
                                             description:null,
                                 
                                         })
+                                        $('.close').trigger('click');
                                   }, 3000);
                                   
                             
@@ -200,6 +201,7 @@ export default class TestiMonial extends React.Component{
                                     })
                                     setTimeout(() => {
                                         Swal.close()
+                                        $('.close').trigger('click');
                                   }, 3000);
                                     }
                     })

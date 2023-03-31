@@ -157,6 +157,7 @@ export default class SliderCreation extends React.Component{
                                 
                             },
                         })
+                        $('.close').trigger('click');
                   }, 3000);
                 } else {
                     Swal.fire({
@@ -167,6 +168,7 @@ export default class SliderCreation extends React.Component{
                     })
                     setTimeout(() => {
                         Swal.close()
+                        $('.close').trigger('click');
                   }, 3000);
                 }
             })
