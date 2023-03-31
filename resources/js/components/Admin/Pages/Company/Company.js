@@ -10,7 +10,7 @@ import MaterialSelect from "../../../../Tags/MaterialSelect";
 import MaterialButton from "../../../../Tags/MaterialButton";
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { use } from "browser-sync";
+
 
 export  class Company extends React.Component {
     constructor(props){
