@@ -21,6 +21,7 @@ export  class UserList extends React.Component {
     this.state = {
       data : [],
       isLoading: false,
+      filter:"",
       page: 0,
       pageSize: 10,  
       paramsdata:[],
@@ -49,6 +50,9 @@ export  class UserList extends React.Component {
     if ((prevState.pageSize !== this.state.pageSize)) {
       this.getUserList(prevState.pageSize);
     }
+    if((prevState.filter!==this.state.filter)){
+      this.getUserList()
+    }
  }
  
 
@@ -58,7 +62,7 @@ export  class UserList extends React.Component {
     //  console.log("urldata===>",data)
 
     this.setState(old => ({...old, isLoading:true}))
-    this.apiCtrl.callAxios('users/list',{role_name:this.props.params.any,length:this.state.pageSize, start:this.state.page*this.state.pageSize}).then(response => {
+    this.apiCtrl.callAxios('users/list',{filter:this.state.filter,role_name:this.props.params.any,length:this.state.pageSize, start:this.state.page*this.state.pageSize}).then(response => {
         console.log(response);
         
         if(response.success == true){
@@ -126,11 +130,20 @@ export  class UserList extends React.Component {
     <Box sx={{ width: '100%', height: '100%', typography: 'body1', backgroundColor:'white', borderRadius:"6px", padding: '2%' }}>
      
      <div className='row'>
-      <div className='col-md-12 mb-3'>
+     <div className="col-md-3"></div>   
+        <div className="col-md-3"></div>
+        <div className="col-md-3 mb-2">
+          <MaterialTextField size="small" name='search'  placeholder="Search"
+          onChange={(e)=>this.setState(old => ({...old, filter: e.target.value}))}
+          />
+        </div>
+      
+      <div className='col-md-3 mb-3'>
+
         {/* <Button  type="button" style={{ backgroundColor: '#183883',width:"96px", marginLeft:"47rem",color:"#fff"}}  size='large' >Add User</Button> */}
         <Link
         to={"/admin/create/user"} >
-          <Button  type="button" style={{ backgroundColor: '#183883',width:"96px", marginLeft:"47rem",color:"#fff"}}  size='large' >Add User</Button>
+          <Button  type="button" style={{ backgroundColor: '#183883',width:"96px",color:"#fff"}}  size='large' >Add User</Button>
 
         </Link>
       </div>

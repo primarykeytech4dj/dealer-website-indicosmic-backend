@@ -50,6 +50,7 @@ export class FeatureCreation extends React.Component {
                                     vehicle_type_id:null,
                         
                                 })
+                                $('.close').trigger('click');
                                
                           }, 3000);
                           
@@ -64,6 +65,7 @@ export class FeatureCreation extends React.Component {
                             })
                             setTimeout(() => {
                                 Swal.close()
+                                $('.close').trigger('click');
                           }, 3000);
                             }
             })

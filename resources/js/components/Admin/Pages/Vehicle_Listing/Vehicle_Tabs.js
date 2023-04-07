@@ -11,6 +11,7 @@ import { VehicleDetails } from "./Vehicle_Details";
 import { Detailvehicle } from "./Datavehicle";
 import Swal from "sweetalert2";
 import withRouter from "../../../../withRouter";
+import textModifier from "../../../services/textModifier";
 
 export  class VehicleTabs extends React.Component {
 
@@ -174,6 +175,8 @@ export  class VehicleTabs extends React.Component {
     componentDidMount(){
 
         console.log("props=>",this.props)
+         
+        this.vehiclelist()
 
         
         
@@ -232,6 +235,37 @@ export  class VehicleTabs extends React.Component {
         
 
     // }
+
+      vehiclelist(){
+       
+        var vehiclmake={}
+        var vehiclemodel={}
+      
+        this.apiCtrl.callAxios("vehicle/list").then(res=>{
+
+            if(res.success == true){
+                
+                const {aaData}=res.data
+
+                console.log("aadata=>",aaData)
+               if(aaData.length >0){
+                  
+                        aaData.map((value,index)=>{             
+                            vehiclmake={...vehiclmake,[value.vehicle_make]:value.vehicle_make}
+                            vehiclemodel={...vehiclemodel,[value.vehicle_model]:value.vehicle_model}                    
+                    // this.setState(old=>({...old,vehiclmake:{...old.vehiclmake,[value.vehicle_make]:value.vehicle_make}}))
+                            
+                    })
+                 this.setState(old=>({...old,vehiclmake:{...vehiclmake},vehiclemodel:{...vehiclemodel}}))
+                    // console.log("vehiclmake=>",vehiclmake)
+                    // console.log("vehiclemodel=>",vehiclemodel)
+               }
+                
+            }
+
+            
+        })
+      }
    
   
     
@@ -339,7 +373,7 @@ export  class VehicleTabs extends React.Component {
         return(<>
 
 
-      <BreadCrumb breadcrumb={"vehicletabs"} />
+      <BreadCrumb breadcrumb={"vehicle List"} />
       <Box sx={{ width: '100%', typography: 'body1', backgroundColor:'white', borderRadius:"6px" }}>
 
 
@@ -366,7 +400,7 @@ export  class VehicleTabs extends React.Component {
                           i = String(parseInt(i)+1);
                        
                         return(
-                            <Tab key={key} label={<b>{key}</b>} value={`${i}`} />
+                            <Tab key={key} label={<b>{textModifier(key)}</b>} value={`${i}`} />
 
                         )
                       
@@ -382,7 +416,7 @@ export  class VehicleTabs extends React.Component {
 
                 
 
-                 <TabPanel  value={"1"}><Detailvehicle func={onHandleChange} nextfunc={next} value={"1"} data={this.state.vehicledata}/></TabPanel> 
+                 <TabPanel  value={"1"}><Detailvehicle func={onHandleChange} nextfunc={next} value={"1"} vehiclemake={this.state.vehiclmake} vehiclemodel={this.state.vehiclemodel} data={this.state.vehicledata}/></TabPanel> 
 
                 
                 {

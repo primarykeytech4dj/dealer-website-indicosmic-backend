@@ -27,6 +27,7 @@ import { Link } from "react-router-dom";
       this.state = {
         data : [],
         isLoading: false,
+        filter:"",
         page: 0,
         pageSize: 10,
         productData:[],
@@ -54,6 +55,9 @@ import { Link } from "react-router-dom";
       if ((prevState.pageSize !== this.state.pageSize)) {
         this.getProductList(prevState.pageSize);
       }
+      if((prevState.filter!==this.state.filter)){
+        this.getProductList()
+      }
       
     }
    
@@ -68,7 +72,7 @@ import { Link } from "react-router-dom";
     getProductList = (pageSize) =>{
   
       this.setState(old => ({...old, isLoading:true}))
-       var data = {length:this.state.pageSize, start:this.state.page*this.state.pageSize};
+       var data = {filter:this.state.filter,length:this.state.pageSize, start:this.state.page*this.state.pageSize};
       // var data = {
       //   is_service: (this.props.params.any === 'service')?1:0
       // }
@@ -132,8 +136,21 @@ import { Link } from "react-router-dom";
       <BreadCrumb breadcrumb={"Vehicle List"} />
      
       <Box sx={{ width: '100%', height: '100%', typography: 'body1', backgroundColor:'white', textAlign:'right', borderRadius:"6px", padding: '2%' }}>
+        <div className="row">
+          <div className="col-md-6"></div>
+          <div className="col-md-3 mb-2">
+            <MaterialTextField size="small" name='search'  placeholder="Search"
+            onChange={(e)=>this.setState(old => ({...old, filter: e.target.value}))}
+            />
+          </div>
+          <div className="col-md-3">
+          <Link  to={"/admin/vehicletab"} ><Button >Creacte Vehicle</Button></Link>
+
+          </div>
+
+        </div>
    
-      <Link  to={"/admin/vehicletab"} ><Button style={{marginBottom: '18px'}}>Creacte Vehicle</Button></Link>
+     
       <div style={{ height: '100%', width: '100%' }}>
      
       <DataGrid

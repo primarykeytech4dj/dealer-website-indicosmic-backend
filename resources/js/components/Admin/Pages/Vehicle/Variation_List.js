@@ -37,14 +37,17 @@ export default class VariationList extends React.Component {
 
     componentDidUpdate(prevProps, prevState){
       // console.log('update')
-      if ((prevState.page !== this.state.page) ) {
-        this.getProductList();
-      } 
-    
+        if ((prevState.page !== this.state.page)) {
+          this.getProductList(this.state.pageSize);
+      }
+      if ((prevState.pageSize !== this.state.pageSize)) {
+        this.getProductList(prevState.pageSize);
+      }
+      
     }
    
   
-    getProductList = () =>{
+    getProductList = (pageSize) =>{
   
       this.setState(old => ({...old, isLoading:true}))
       var data = {length:this.state.pageSize, start:this.state.page*this.state.pageSize};
@@ -52,7 +55,14 @@ export default class VariationList extends React.Component {
           console.log("rs==>",response);
           
           if(response.success == true){
-              this.setState(old => ({...old, data:response.data,}))
+              // this.setState(old => ({...old, data:response.data,}))
+              const {aaData}=response.data
+            
+            if(pageSize == this.state.pageSize){
+              this.setState(old => ({...old, data:[...old.data,...aaData], total:response.data.iTotalRecords}))
+            } else {
+              this.setState(old => ({...old, data:aaData, total:response.data.iTotalRecords}))
+            }
   
           } else {
           alert("No Data Available")
@@ -78,7 +88,7 @@ export default class VariationList extends React.Component {
      
   
       const columns = [
-        { field: 'id', headerName: 'Sr,No', width: 100 },
+        { field: 'sr_no', headerName: 'Sr,No', width: 100 },
         { field: 'name', headerName: 'Name', width: 190 },
         { field: 'value', headerName: 'Value', width: 190 },
         { field: 'remark', headerName: 'Remark ', width: 100 },     
@@ -112,7 +122,7 @@ export default class VariationList extends React.Component {
         
           onPageChange={(newPage) => this.setState(old=>({...old, page: newPage}))}
           onPageSizeChange={(newPageSize) => this.setState(old=>({...old, pageSize: newPageSize}))}
-
+          disableRowSelectionOnClick
   
           />
          
@@ -348,6 +358,7 @@ class VariationEdit extends React.Component {
                           })
                           setTimeout(() => {
                               Swal.close()
+                              $('.close').trigger('click');
                             
                               
                         }, 3000);
@@ -363,6 +374,7 @@ class VariationEdit extends React.Component {
                           })
                           setTimeout(() => {
                               Swal.close()
+                              $('.close').trigger('click');
                         }, 3000);
                           }
           })

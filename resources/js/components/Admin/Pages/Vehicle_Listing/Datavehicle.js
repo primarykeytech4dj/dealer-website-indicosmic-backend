@@ -87,7 +87,7 @@ export class Detailvehicle extends React.Component {
     }
 
         console.log("Vehicledetailsstate=>",this.state)
-       // console.log("vehiclecreationprops=>",this.props)
+        console.log("vehiclecreationprops=>",this.props)
         return(<>
 
             <Box sx={{ width: '100%', height: '100%', typography: 'body1', backgroundColor:'white', borderRadius:"6px", padding: '2%' }}>
@@ -97,11 +97,11 @@ export class Detailvehicle extends React.Component {
 
 
                     <div className="col-md-4 mb-3"> 
-                    <MaterialSelect value={this.state.vehicle_make} label={"Make"} name={"vehicle_make"}  data={make} fullWidth onChange={(e)=>onHandleChange(e)} />
+                    <MaterialSelect value={this.state.vehicle_make} label={"Make"} name={"vehicle_make"}  data={this.props.vehiclemake?this.props.vehiclemake:""} fullWidth onChange={(e)=>onHandleChange(e)} />
 
                     </div>
                     <div className="col-md-4 mb-3"> 
-                    <MaterialSelect value={this.state.vehicle_model}  label={"Model"} name={"vehicle_model"}  data={model} fullWidth onChange={(e)=>onHandleChange(e)} />
+                    <MaterialSelect value={this.state.vehicle_model}  label={"Model"} name={"vehicle_model"}  data={this.props.vehiclemodel?this.props.vehiclemodel:""} fullWidth onChange={(e)=>onHandleChange(e)} />
 
                     </div>
                     <div className="col-md-4 mb-3"> 

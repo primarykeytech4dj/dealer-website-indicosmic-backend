@@ -24,6 +24,7 @@ export default class TestiMonialList extends React.Component {
       this.state = {
         data : [],
         isLoading: false,
+        filter:"",
         page: 0,
         pageSize: 10,
         testimonialData:[],
@@ -49,6 +50,9 @@ export default class TestiMonialList extends React.Component {
       if ((prevState.pageSize !== this.state.pageSize)) {
         this.getTestimonialList(prevState.pageSize);
       }
+      if((prevState.filter!==this.state.filter)){
+        this.getTestimonialList()
+      }
 
   
     
@@ -58,7 +62,7 @@ export default class TestiMonialList extends React.Component {
     getTestimonialList = (pageSize) =>{
   
       this.setState(old => ({...old, isLoading:true}))
-      var data = {length:this.state.pageSize, start:this.state.page*this.state.pageSize};
+      var data = {filter:this.state.filter,length:this.state.pageSize, start:this.state.page*this.state.pageSize};
       this.apiCtrl.callAxios('testimonial/list',data).then(response => {
           console.log("rs==>",response);
           
@@ -110,7 +114,22 @@ export default class TestiMonialList extends React.Component {
       <BreadCrumb breadcrumb="Testimonial List" />
      
       <Box sx={{ width: '100%', height: '100%', typography: 'body1', backgroundColor:'white', borderRadius:"6px", padding: '2%' }}>
-      <Button  type="button" style={{ backgroundColor: '#183883',width:"auto", marginBottom: "20px", marginLeft:"47rem",color:"#fff"}} href="#exampleModalToggle1" data-bs-toggle="modal" size='large' >Create Testimonial</Button>
+        <div className="row">
+          <div className="col-md-3"></div>
+          <div className="col-md-3"></div>
+          <div className="col-md-3 mb-2">
+            <MaterialTextField size="small" name='search'  placeholder="Search"
+            onChange={(e)=>this.setState(old => ({...old, filter: e.target.value}))}
+            />
+          </div>
+          <div className="col-md-3 mb-2">
+          <Button  type="button" style={{ backgroundColor: '#183883',width:"auto",color:"#fff"}} href="#exampleModalToggle1" data-bs-toggle="modal" size='large' >Create Testimonial</Button>
+
+          </div>
+
+        </div>
+        
+      
       <div style={{ height: '100%', width: '100%' }}>
      
       <DataGrid

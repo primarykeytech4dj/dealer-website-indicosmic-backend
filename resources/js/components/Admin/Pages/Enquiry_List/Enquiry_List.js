@@ -4,6 +4,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import { Box, Divider } from '@mui/material';
 import BreadCrumb from '../../BreadCrumb/BreadCrumb';
 import { Button } from 'react-bootstrap';
+import MaterialTextField from "../../../../Tags/MaterialTextField";
 
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -24,6 +25,7 @@ import MaterialSelect from "../../../../Tags/MaterialSelect";
       this.state = {
         data : [],
         isLoading: false,
+        filter:"",
         page: 0,
         pageSize: 10,
         detailsData:[],
@@ -59,6 +61,9 @@ import MaterialSelect from "../../../../Tags/MaterialSelect";
       if ((prevState.pageSize !== this.state.pageSize)) {
         this.getEnquiryList(prevState.pageSize);
       }
+      if((prevState.filter!==this.state.filter)){
+        this.getEnquiryList()
+      }
     }
 
     // componentDidUpdate = (prevProps, prevState) =>{
@@ -71,7 +76,7 @@ import MaterialSelect from "../../../../Tags/MaterialSelect";
     getEnquiryList = (pageSize) =>{
   
       this.setState(old => ({...old, isLoading:true}))
-       var data = {enquiry_type:this.state.enquiry_type,length:this.state.pageSize, start:this.state.page*this.state.pageSize};
+       var data = {filter:this.state.filter,enquiry_type:this.state.enquiry_type,length:this.state.pageSize, start:this.state.page*this.state.pageSize};
       // var data = {
       //   is_service: (this.props.params.any === 'service')?1:0
       // }
@@ -153,7 +158,13 @@ import MaterialSelect from "../../../../Tags/MaterialSelect";
      
       <Box sx={{ width: '100%', height: '100%', typography: 'body1', backgroundColor:'white', borderRadius:"6px", padding: '2%' }}>
         <div className="row mb-3">
-          <div className="col-md-10"></div>
+          <div className="col-md-7"></div>
+          
+          <div className="col-md-3 mb-2">
+            <MaterialTextField size="small" name='search'  placeholder="Search"
+            onChange={(e)=>this.setState(old => ({...old, filter: e.target.value}))}
+            />
+          </div>
           <div className="col-md-2 d-flex justify-content-end">
             
             <MaterialSelect value={this.state.enquiry_type?this.state.enquiry_type:""} size={"small"} data={enquiryType} 

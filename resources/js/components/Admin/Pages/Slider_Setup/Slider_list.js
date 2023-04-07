@@ -24,6 +24,7 @@ export default class SliderList extends React.Component{
           
             data:[],
             isLoading: false,
+            filter:"",
             page: 0,
             pageSize: 10,
             sliderData:[],
@@ -57,6 +58,9 @@ export default class SliderList extends React.Component{
           if ((prevState.pageSize !== this.state.pageSize)) {
             this.getSliderList(prevState.pageSize);
           }
+          if((prevState.filter!==this.state.filter)){
+            this.getSliderList()
+          }
         }
         
         
@@ -68,7 +72,7 @@ export default class SliderList extends React.Component{
 
        
         this.setState(old => ({...old, isLoading:true}))
-        var data = {length:this.state.pageSize, start:this.state.page*this.state.pageSize};
+        var data = {filter:this.state.filter,length:this.state.pageSize, start:this.state.page*this.state.pageSize};
 
        
       // this.setState(old => ({...old, data:response.data, total:response.data.iTotalRecords}))
@@ -137,7 +141,22 @@ export default class SliderList extends React.Component{
             {/* <Button  type="button" style={{ backgroundColor: '#183883',width:"139px", marginBottom: "20px", marginLeft:"47rem",color:"#fff"}} href="#exampleModalToggle1" data-bs-toggle="modal" size='large' >Add product</Button> */}
        
             <Box sx={{ width: '100%', height: '100%', typography: 'body1', backgroundColor:'white', borderRadius:"6px", padding: '2%' }}>
-            <Button  type="button" style={{ backgroundColor: '#183883',width:"auto", marginBottom: "20px", marginLeft:"47rem",color:"#fff"}} href="#exampleModalToggle1" data-bs-toggle="modal" size='large' >Create Slider</Button>
+              <div className="row">
+                <div className="col-md-3"></div>
+                <div className="col-md-3"></div>
+                <div className="col-md-3 mb-2">
+                  <MaterialTextField size="small" name='search'  placeholder="Search"
+                  onChange={(e)=>this.setState(old => ({...old, filter: e.target.value}))}
+                  />
+                </div>
+                <div className="col-md-3">
+                <Button  type="button" style={{ backgroundColor: '#183883',width:"auto", color:"#fff"}} href="#exampleModalToggle1" data-bs-toggle="modal" size='large' >Create Slider</Button>
+
+                </div>
+
+
+              </div>
+        
             <div style={{ height: '100%', width: '100%' }}>
         
             <DataGrid

@@ -94,7 +94,7 @@ export  class GalleryTabs extends React.Component {
         return(<>
 
 
-      <BreadCrumb breadcrumb={"vehicletabs"} />
+      <BreadCrumb breadcrumb={"Gallery List"} />
       <Box sx={{ width: '100%', typography: 'body1', backgroundColor:'white', borderRadius:"6px" }}>
 
 

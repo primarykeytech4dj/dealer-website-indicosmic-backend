@@ -85,14 +85,14 @@ const getval =(e)=>{
 
 //console.log("props=>",props)
 
-console.log("data=>",data)
+//console.log("data=>",data)
      
 
 
    return(<>
 
      
-       <div className="btn-group">
+       <div className="btn-group w-100">
 
            <TextField style={{position:"relative"}}
                name={props.name ? props.name : 'search'}
@@ -112,6 +112,7 @@ console.log("data=>",data)
                //  onChange={(e)=>handleSelectBox(e.target.value)}
                {...props}
                data-bs-toggle="dropdown"
+           
              //  onKeyDown={handleKeyDown}
                                       
            />

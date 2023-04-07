@@ -18,8 +18,9 @@ import swal from 'sweetalert'
 import withRouter from '../../../../withRouter'
 
 import Swal from 'sweetalert2'
-import { object } from 'prop-types'
-import { keys } from 'lodash'
+
+
+  
 
 
 export  class Login extends React.Component {
@@ -66,7 +67,7 @@ export  class Login extends React.Component {
     // }
     render(){
        
-
+        
 
         const handlechange =(e)=>{
             this.setState({[e.target.name]:e.target.value})
@@ -201,6 +202,18 @@ export  class Login extends React.Component {
                 </div>
                 <div className="col-md-1"></div>
             </div>
+            <div className='row'>
+                <div className="col-md-1 mb-4"></div>
+                {/* <div className="col-md-10 mb-4">
+                    <MaterialTextField type={"password"}  label="Password"  size="small" fullWidth onChange={(e)=>this.setState({password: e.target.value})} name="password" />
+                </div> */}
+                <div className="col-md-10 mb-2">
+                
+                   {/* <div className="g-recaptcha" id="rcaptcha"  data-sitekey="6LeT_WclAAAAAAQI072xwNhiouCxcrMepm3WmKOJ"></div> */}
+                </div>
+                <div className="col-md-1"></div>
+            </div>
+               
 
             <div className='row' style={{ justifyContent:"center"}}>
                     {/* <FormControlLabel control={<Checkbox />} style={{marginTop:'10px'}} label="Remember me" /> */}

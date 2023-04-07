@@ -72,7 +72,7 @@ const GalleryImage=()=>{
 
                 // console.log("key",key,"value",value)      
 
-                    data.append("images",value)
+                    data.append(`images[]`,value)
                     
             
             })

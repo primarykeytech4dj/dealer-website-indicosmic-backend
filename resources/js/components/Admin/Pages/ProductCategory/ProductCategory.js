@@ -473,9 +473,11 @@ class ProductCategoryList extends React.Component{
           
             data : [],
             isLoading: false,
+            filter:"",
             page: 0,
             pageSize: 10,
             productCategoryData:[],
+
         }
 
 
@@ -492,19 +494,39 @@ class ProductCategoryList extends React.Component{
       if(prevProps.params !== this.props.params){
         this.getProductcategoryList();
       }
+      if ((prevState.page !== this.state.page)) {
+        this.getProductcategoryList(this.state.pageSize);
+      }
+      if ((prevState.pageSize !== this.state.pageSize)) {
+        this.getProductcategoryList(prevState.pageSize);
+      }
+      if((prevState.filter!==this.state.filter)){
+        this.getProductcategoryList()
+      }
+
      }
 
-    getProductcategoryList = () =>{
+    getProductcategoryList = (pageSize) =>{
 
         this.setState(old => ({...old, isLoading:true}))
         var data = {
-          is_service: (this.props.params.any === 'service')?1:0
+          is_service: (this.props.params.any === 'service')?1:0,
+          length:this.state.pageSize, start:this.state.page*this.state.pageSize,
+          filter:this.state.filter
+
         }
         this.apiCtrl.callAxios('product/product-category-list',data).then(response => {
             console.log(response);
             
             if(response.success == true){
-                this.setState(old => ({...old, data:response.data, total:response.data.iTotalRecords}))
+               // this.setState(old => ({...old, data:response.data, total:response.data.iTotalRecords}))
+               const {aaData}=response.data
+            
+               if(pageSize == this.state.pageSize){
+                 this.setState(old => ({...old, data:[...old.data,...aaData], total:response.data.iTotalRecords}))
+               } else {
+                 this.setState(old => ({...old, data:aaData, total:response.data.iTotalRecords}))
+               }
     
             } else {
             alert("No Data Available")
@@ -559,8 +581,20 @@ class ProductCategoryList extends React.Component{
            <BreadCrumb breadcrumb={productType} breadcrumbItem1='list' />
               
               <Box sx={{ width: '100%', height: '100%', typography: 'body1', backgroundColor:'white', borderRadius:"6px", padding: '2%' }}>
-                <div className="row" style={{textAlign:"right", width:"100%", display:'block'}}>
-                  <Button  type="button" onClick={handleAddCategory} style={{ backgroundColor: '#183883',width:" 159px",marginBottom:"20px",fontSize: "small",color:"#fff"}} href="#exampleModalToggle1" data-bs-toggle="modal" size='large' >{"Add"+" "+productType+" "+"Category"}</Button>
+                {/* <div className="row" style={{textAlign:"right", width:"100%", display:'block'}}> */}
+                <div className="row" >
+                  <div className="col-md-3"></div>   
+                  <div className="col-md-3"></div>
+                  <div className="col-md-3 mb-2">
+                    <MaterialTextField size="small" name='search'  placeholder="Search"
+                    onChange={(e)=>this.setState(old => ({...old, filter: e.target.value}))}
+                    />
+                  </div>
+                  <div className="col-md-3 mb-2">
+                    <Button  type="button" onClick={handleAddCategory} style={{ backgroundColor: '#183883',width:" 162px", height:"39px",fontSize: "small",color:"#fff"}} href="#exampleModalToggle1" data-bs-toggle="modal" size='large' >{"Add"+" "+productType+" "+"Category"}</Button>
+
+                  </div>
+                 
                 </div>
             <div style={{ height: '100%', width: '100%' }}>
            
@@ -577,6 +611,10 @@ class ProductCategoryList extends React.Component{
                 pageSize={this.state.pageSize}
                 rowsPerPageOptions={[10, 30, 50, 70, 100]}
                 // checkboxSelection
+                onPageChange={(newPage) => this.setState(old=>({...old, page: newPage}))}
+                onPageSizeChange={(newPageSize) => this.setState(old=>({...old, pageSize: newPageSize}))}
+      
+        
         
                 />
                
@@ -766,6 +804,7 @@ function Model(props){
             description:null,
             hsn_code:null,
             image_name_1:null,
+            imageshow:"",
            // gst:null,
 
             errors:{},
@@ -1019,6 +1058,8 @@ function Model(props){
       
                 if(e.target.name==="image_name_1"){
                   this.setState(old=>({...old, image_name_1 : e.target.files[0]}))
+                  this.setState(old=>({...old,imageshow:URL.createObjectURL(e.target.files[0])}))
+
                 }
               }
 
@@ -1167,10 +1208,14 @@ function Model(props){
 
                    </div>
 
-                   {this.state.image_name_1!==""?
+                   {this.state.imageshow==""?
                     <div className="col-md-4 mb-2">
                     <img  style={{width:"58px",marginLeft:"2px"}} src={this.state.image_name_1?this.state.image_name_1:""} />
-                    </div>:""
+                    </div>:
+                     <div className="col-md-4 mb-2">
+                     <img  style={{width:"58px",marginLeft:"2px"}} src={this.state.imageshow?this.state.imageshow:""} />
+                     </div>
+
                      }
 
               </div>

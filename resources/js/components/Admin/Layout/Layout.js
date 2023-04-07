@@ -48,10 +48,14 @@ import { VariationCreate } from '../Pages/Vehicle/Variation_Create';
 import VariationList from '../Pages/Vehicle/Variation_List';
 import { FeatureCreation } from '../Pages/Vehicle/Feature';
 import FeatureList from '../Pages/Vehicle/Feature_list';
-import VehicleCreation from '../Pages/Vehicle_Listing/Vehicle_Creation';
+
 import GalleryImage from '../Pages/Gallery_Image/Gallery_Image';
 import { GalleryTabs } from '../Pages/Gallery_Image/GalleryImage_Tab';
-import { Company } from '../Pages/Company/Company';
+
+import CompanyTab from '../Pages/Company/CompanyTab';
+import Chat from '../Pages/Chat/Chat';
+import Invoice from '../Pages/Invoice/Invoice';
+
 // import UserCreation
 
 
@@ -130,7 +134,7 @@ export default function Layout() {
                   {<Route path ="/admin/template" element={<GandhiTemplate/>}/>}
                   {<Route path="/admin/vehicle-list" element={<VehicleList/>}/>}
                   {<Route path='/admin/vehicle-upload' element={<VehicleImageUpload/>}/>}
-                  {<Route path='/admin/vehicle-creation' element={<VehicleCreation/>}/>}
+                  
                   {<Route path ="/admin/template" element={<GandhiTemplate/>}/>}
                   {<Route path="/admin/enquiry-list" element={<EnquiryList/>}/>}
                   {<Route path='/admin/vehicletab' element={<VehicleTabs/>}/>}
@@ -141,7 +145,8 @@ export default function Layout() {
               {<Route path='/admin/featured-list' element={<FeatureList/>}/>}
               {<Route path='/admin/gallery' element={<GalleryImage/>}/>}
               {<Route path='/admin/gallery-list' element={<GalleryTabs/>}/>}
-              {<Route path='/admin/company' element={<Company/>}/>}
+              {<Route path='/admin/company' element={<CompanyTab/>}/>}
+              {<Route path="/admin/invoice" element={<Invoice/>}/>}
               </Routes>
                :""}
                 
@@ -157,9 +162,11 @@ export default function Layout() {
           </div>
         </div>
     
-        <a className="scroll-to-top rounded" href="#page-top">
+        {/* <a className="scroll-to-top rounded" href="#page-top">
           <i className="fa fa-angle-up"></i>
-        </a>
+        </a> */}
+        {/* <Chat/> */}
+       
       
       </div>
     </Router>

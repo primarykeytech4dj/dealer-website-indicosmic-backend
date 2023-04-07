@@ -52,7 +52,8 @@ export class VariationCreate extends React.Component {
                                     vehicle_type_id:null,
                         
                                 })
-                                location.reload("/variation-list")
+                                // location.reload("/variation-list")
+                                $('.close').trigger('click');
                           }, 3000);
                           
                     
@@ -65,6 +66,7 @@ export class VariationCreate extends React.Component {
                             })
                             setTimeout(() => {
                                 Swal.close()
+                                $('.close').trigger('click');
                           }, 3000);
                             }
             })

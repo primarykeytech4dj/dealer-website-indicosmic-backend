@@ -261,13 +261,22 @@ class Columns extends React.Component {
 
   <li className="nav-item" data-toggle="tooltip" data-placement="right" style={{borderBottomColor:"#183883", borderBottomWidth:"thin"}}  title="Testimonials">
   
-  <Link className="nav-link" to="/admin/testimonials">
-      <i className="fa fa-fw fa-dashboard"></i>
-      <span className="nav-link-text">&nbsp;Testimonials</span>
+    <Link className="nav-link" to="/admin/testimonials">
+        <i className="fa fa-fw fa-dashboard"></i>
+        <span className="nav-link-text">&nbsp;Testimonials</span>
     </Link>
-    
+        
 
-</li>
+  </li>
+  <li className="nav-item" data-toggle="tooltip" data-placement="right" style={{borderBottomColor:"#183883", borderBottomWidth:"thin"}}  title="Invoice">
+    
+    <Link className="nav-link" to="/admin/invoice">
+        <i className="fa fa-fw fa-dashboard"></i>
+        <span className="nav-link-text">&nbsp;Invoice</span>
+    </Link>
+      
+
+  </li>
 
   <li className="nav-item" data-toggle="tooltip" style={{borderBottomColor:"#183883", borderBottomWidth:"thin"}}  data-placement="right" title="My listings">
         <a className="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMylistings">
@@ -303,7 +312,7 @@ class Columns extends React.Component {
         {/* <li><Link  to="/variation-create">Variation</Link></li> */}
 
         <li><Link  to="/admin/gallery">Gallery Image Upload </Link></li>
-        <li><Link  to="/admin/gallery-list">Gallery Tab</Link></li>
+        <li><Link  to="/admin/gallery-list">Gallery List</Link></li>
      
         </ul>
   </li>

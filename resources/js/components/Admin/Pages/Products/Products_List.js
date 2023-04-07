@@ -31,6 +31,7 @@ import { Products } from "./Products";
         pageSize: 10,
         productData:[],
        // product_type:this.props.title,
+       filter:"",
         is_service: this.props.params.any === 'service'?1:0
   
     }
@@ -48,6 +49,16 @@ import { Products } from "./Products";
       if ((prevState.page !== this.state.page)||(prevProps.params !== this.props.params)) {
           this.getProductList();
       }
+      if ((prevState.page !== this.state.page)) {
+        this.getProductList(this.state.pageSize);
+      }
+      if ((prevState.pageSize !== this.state.pageSize)) {
+        this.getProductList(prevState.pageSize);
+      }
+
+      if((prevState.filter!==this.state.filter)){
+        this.getProductList()
+      }
     }
 
     // componentDidUpdate = (prevProps, prevState) =>{
@@ -57,10 +68,10 @@ import { Products } from "./Products";
     //  }
   
   
-    getProductList = () =>{
+    getProductList = (pageSize) =>{
   
       this.setState(old => ({...old, isLoading:true}))
-       var data = {is_service:this.state.is_service,length:this.state.pageSize, start:this.state.page*this.state.pageSize};
+       var data = {filter:this.state.filter,is_service:this.state.is_service,length:this.state.pageSize, start:this.state.page*this.state.pageSize};
       // var data = {
       //   is_service: (this.props.params.any === 'service')?1:0
       // }
@@ -68,7 +79,14 @@ import { Products } from "./Products";
           console.log(response);
           
           if(response.success == true){
-              this.setState(old => ({...old, data:response.data, total:response.data.iTotalRecords}))
+              //this.setState(old => ({...old, data:response.data, total:response.data.iTotalRecords}))
+              const {aaData}=response.data
+            
+               if(pageSize == this.state.pageSize){
+                 this.setState(old => ({...old, data:[...old.data,...aaData], total:response.data.iTotalRecords}))
+               } else {
+                 this.setState(old => ({...old, data:aaData, total:response.data.iTotalRecords}))
+               }
   
           } else {
           alert("No Data Available")
@@ -119,10 +137,20 @@ import { Products } from "./Products";
       <BreadCrumb breadcrumb={productType} />
      
       <Box sx={{ width: '100%', height: '100%', typography: 'body1', backgroundColor:'white', borderRadius:"6px", padding: '2%' }}>
-      <div className="row" style={{textAlign:"right", width:"100%", display:'block'}}>
-                  
-      <Button  type="button" style={{ backgroundColor: '#183883',width:"139px", marginBottom: "20px", marginLeft:"47rem",color:"#fff"}} href="#exampleModalToggle1" data-bs-toggle="modal" size='large' >Add {productType}</Button>
-                </div>
+      <div className="row mb-3" >  
+        <div className="col-md-3"></div>   
+        <div className="col-md-3"></div>
+        <div className="col-md-3 mb-2">
+          <MaterialTextField size="small" name='search'  placeholder="Search"
+          onChange={(e)=>this.setState(old => ({...old, filter: e.target.value}))}
+          />
+        </div>
+      
+        <div className="col-md-3 mb-2">
+           <Button  type="button" style={{ backgroundColor: '#183883',width:"139px",color:"#fff"}} href="#exampleModalToggle1" data-bs-toggle="modal" size='large' >Add {productType}</Button>
+        </div>      
+        
+      </div>
       <div style={{ height: '100%', width: '100%' }}>
      
 
