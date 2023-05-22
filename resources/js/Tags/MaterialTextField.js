@@ -11,6 +11,7 @@ const handleTextField = (event) => {
   setInput(event.target.value);
 
 }
+
   return (
 
   
@@ -29,7 +30,7 @@ const handleTextField = (event) => {
 
 
     inputProps={{ 
-        style: props.style  ? (props.style.input ?{...props.style.input} :  {...inputcss}) :  {...inputcss},
+        style: props.style  ? (props.style ?{...props.style} :  {...inputcss}) :  {...inputcss},
     // max:props.max?props.max:200,
     //     min:props.min?props.min:200
 

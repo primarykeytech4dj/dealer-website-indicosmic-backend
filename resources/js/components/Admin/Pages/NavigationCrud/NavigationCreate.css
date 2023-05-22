@@ -1,0 +1,90 @@
+.dropdown-check-list {
+    display: inline-block;
+  }
+  
+  .dropdown-check-list .anchor {
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    padding: 5px 50px 5px 10px;
+    border: 1px solid #ccc;
+    width: 224px;
+  }
+  
+  .dropdown-check-list .anchor:after {
+    position: absolute;
+    content: "";
+    border-left: 2px solid black;
+    border-top: 2px solid black;
+    padding: 5px;
+    right: 10px;
+    top: 20%;
+    -moz-transform: rotate(-135deg);
+    -ms-transform: rotate(-135deg);
+    -o-transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+    transform: rotate(-135deg);
+  }
+  
+  .dropdown-check-list .anchor:active:after {
+    right: 8px;
+    top: 21%;
+  }
+  
+  .dropdown-check-list ul.items {
+    padding: 2px;
+    /* display: none; */
+    margin: 0;
+    border: 1px solid #ccc;
+    border-top: none;
+   
+  }
+  
+  .dropdown-check-list ul.items li {
+    list-style: none;
+  }
+  
+  .dropdown-check-list.visible .anchor {
+    color: #0094ff;
+  }
+  
+  .dropdown-check-list.visible .items {
+    display: block;
+  }
+
+  .bttn{
+    border: 1px solid rgb(157 152 152);
+    /* border-radius: 16px; */
+    color: #908c8c;
+    background: none;
+    padding: 3px;
+  }
+
+
+
+
+
+
+  .item-list,.info-box{background: #fff;padding: 10px;}
+  .item-list-body{max-height: 300px;overflow-y: scroll;}
+  .panel-body p{margin-bottom: 5px;}
+  .info-box{margin-bottom: 15px;}
+  .item-list-footer{padding-top: 10px;}
+  .panel-heading a{display: block;}
+  .form-inline{display: inline;}
+  .form-inline select{padding: 4px 10px;}
+  .btn-menu-select{padding: 4px 10px}
+  .disabled{pointer-events: none; opacity: 0.7;}
+
+  .menu-item-bar{background: #eee;padding: 5px 10px;border:1px solid #d7d7d7;margin-bottom: 5px; width: 75%; cursor: move;display: block;}
+  #serialize_output{display: none;}
+  .menulocation label{font-weight: normal;display: block;}
+  body.dragging, body.dragging * {cursor: move !important;}
+  .dragged {position: absolute;z-index: 1;}
+  ol.example li.placeholder {position: relative;}
+  ol.example li.placeholder:before {position: absolute;}
+  #menuitem{list-style: none;}
+  #menuitem ul{list-style: none;}
+  .input-box{width:75%;background:#fff;padding: 10px;box-sizing: border-box;margin-bottom: 5px;}
+  .input-box .form-control{width: 50%}
+  .menulocation label{font-weight: normal;display: block;}

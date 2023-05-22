@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/{page?}/{pages?}/{pagess?}', function () {
+Route::get('/{page?}/{pages?}/{pagess?}/{pagesss?}', function () {
     return view('welcome');
 });
 Route::get('/admin', function () {

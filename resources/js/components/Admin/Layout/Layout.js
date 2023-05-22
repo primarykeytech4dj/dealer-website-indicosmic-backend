@@ -55,14 +55,75 @@ import { GalleryTabs } from '../Pages/Gallery_Image/GalleryImage_Tab';
 import CompanyTab from '../Pages/Company/CompanyTab';
 import Chat from '../Pages/Chat/Chat';
 import Invoice from '../Pages/Invoice/Invoice';
-
-// import UserCreation
+import { InvoiceListing } from '../Pages/Invoice/InvoiceListing';
+import { SalesList } from '../Pages/SalesLeadList/SalesLeadList';
+import ProductCtaegoryList from '../Pages/ProductCategory/ProductCtaegoryList';
+import Error from '../Pages/404 page/Error';
+import NavigationCreate from '../Pages/NavigationCrud/NavigationCreate';
+import ComapnyList from '../Pages/CompanyList/ComapnyList';
+import { API_CONSTANTS } from '../../../assets/constant';
+import Api from '../../../api';
+import ProductCategoryList from '../Pages/ProductCategory/ProductCtaegoryList';
+import BranchList from '../Pages/Branch/Branch';
 
 
 export default function Layout() {
-
+  const apiCtrl = new Api;
   var roles = JSON.parse(localStorage.getItem('user_roles'))
+  var path=<Invoice/>
+  useEffect(()=>{
+    
+    var res;
+    if(window.sessionStorage.getItem(`${API_CONSTANTS.subdomain}_company_data`)){
+       res = JSON.parse(window.sessionStorage.getItem(`${API_CONSTANTS.subdomain}_company_data`))
+
+      const data = [
+        {
+            image: res.about_company_image,
+            title: 'About',
+            description: res.about_company,
+            isReverse: true
+        },   
+        {
+            title: 'Mission',
+            image: res.company_mission_image,
+            description: res.company_mission,
+            isReverse: false
+        },
+        {
+            title: 'Vision',
+            image:  res.company_vision_image,
+            description: res.company_vision,
+            isReverse: true
+        }
+      ];
      
+      const companydetails={
+        meta_description: res.meta_description,
+        meta_keyword: res.meta_keyword,
+        meta_title: res.meta_title
+      }
+     
+    } else {
+      // alert()
+      apiCtrl.callAxiosGet(`company/view`).then((response)=>{
+        console.log('About US Response', response)
+        if(response.success == false){
+            const res = response.data.data;
+    
+            
+          sessionStorage.setItem(`${API_CONSTANTS.subdomain}_company_data`, JSON.stringify({...res}))
+          
+        }
+      })
+ 
+
+    }
+
+
+   
+   
+  },[])
 
   return (
     <Router>
@@ -99,14 +160,19 @@ export default function Layout() {
                   <Route path="/admin/user-list" element={<UserList />} /> 
                   <Route path="/admin/create-role" element={<AddRoles />} /> 
                   <Route path="/admin/role-list" element={<RolesList />} /> 
-                    <Route path="/admin/products" element={<Product title={'Product'} />} />
-                  <Route path="/admin/service" element={<Product title={'service'} />} /> 
-                  <Route path="/admin/products-list" element={<ProductList title={'Product'}/>} /> 
-                  <Route path="/admin/service-list" element={<ProductList title={'service'}/>} /> 
-                  {/* <Route path="/admin/products/categories" element={<ProductCategory title={'Product'}/>}/>
-                  <Route path="/admin/service/categories" element={<ProductCategory title={'service'}/>}/> */}
-                  <Route path="/admin/:any/categories" element={<ProductCategory />}/>
-                  <Route path="/admin/:any/categories" element={<ProductCategory />}/>
+                 
+                  <Route path='/admin/product/list' element={<ProductsList title={'product'}/>}/>
+                  <Route path='/admin/product/create' element={<Products title={'product'}/>}/>
+                  <Route path='/admin/service/list' element={<ProductsList title={'service'}/>}/>
+                  <Route path='/admin/service/create' element={<Products title={'service'}/>}/>
+                  <Route path='/admin/product/edit' element={<ProductEdit title={'product'}/>}/>
+                  <Route path='/admin/service/edit' element={<ProductEdit title={'service'}/>}/>
+                  
+                  <Route path="/admin/product-category/create" element={<ProductCategory title={'product'} />}/> 
+                  <Route path='/admin/product-category/list' element={<ProductCtaegoryList title={'product'}/>} />
+                  <Route path="/admin/service-category/create" element={<ProductCategory title={'service'}/>}/> 
+                  <Route path='/admin/service-category/list' element={<ProductCtaegoryList title={'service'}/>} />
+                 
                   <Route path="/admin/setup" element={<Setup/>}/>
                   {/* <Route path="/admin/setup/type/website" element={<Setting/>}/> */}
                   <Route path="/admin/website" element={<Setting/>}/>
@@ -122,12 +188,7 @@ export default function Layout() {
                   <Route path="/admin/testimonial/creation" element={<TestiMonial/>}/>
                   <Route path='/admin/testimonials' element={<TestiMonialList/>}/>
                   <Route path='/admin/product' element={<Products/>}/>
-                  {/* <Route path='/admin/product/list' element={<ProductsList title={'Product'}/>}/>
-                  <Route path='/admin/service/list' element={<ProductsList title={'Service'}/>}/> */}
-                      <Route path='/admin/:any/list' element={<ProductsList/>}/>
-                  {/* <Route path='/admin/service/list' element={<ProductsList />}/> */}
-                  <Route path='/admin/product/edit' element={<ProductEdit title={'product'}/>}/>
-                  <Route path='/admin/service/edit' element={<ProductEdit title={'service'}/>}/>
+                 
                   {/* <Route path='/admin/file-upload' element={<FileUpload/>}/> */}
                   {<Route path="/admin/file-upload" element={<FileUploadCampaign/>}/>}
                   {<Route path ="/admin/vehicle-excel/export" element={<VehicleExcelExport/>}/>}
@@ -137,6 +198,7 @@ export default function Layout() {
                   
                   {<Route path ="/admin/template" element={<GandhiTemplate/>}/>}
                   {<Route path="/admin/enquiry-list" element={<EnquiryList/>}/>}
+                  {<Route path='/admin/sales-enquiry-list' element={<SalesList/>}/>}
                   {<Route path='/admin/vehicletab' element={<VehicleTabs/>}/>}
                 
               {<Route path='/admin/variation-create' element={<VariationCreate/>}/>}
@@ -145,8 +207,11 @@ export default function Layout() {
               {<Route path='/admin/featured-list' element={<FeatureList/>}/>}
               {<Route path='/admin/gallery' element={<GalleryImage/>}/>}
               {<Route path='/admin/gallery-list' element={<GalleryTabs/>}/>}
-              {<Route path='/admin/company' element={<CompanyTab/>}/>}
+              {<Route path='/admin/company/create' element={<CompanyTab/>}/>}
+              {<Route path='/admin/company/list' element={<ComapnyList/>}/>}
               {<Route path="/admin/invoice" element={<Invoice/>}/>}
+              {<Route path='/admin/branch' element={<BranchList/>}/>}
+              {<Route path='/admin/invoice-list' element={<InvoiceListing/>}/>}
               </Routes>
                :""}
                 
@@ -172,3 +237,126 @@ export default function Layout() {
     </Router>
   )
 }
+
+
+
+
+// export default function Layout() {
+
+//   var roles = JSON.parse(localStorage.getItem('user_roles'))
+//   var path=<Invoice/>
+     
+
+//   return (
+//     <Router>
+//       <div  className=" body fixed-nav sticky-footer" id="page-top">
+
+//         <NavBar />
+//         <div className="content-wrapper" style={{backgroundColor: "#EEF5FF"}}>
+//           <div className="container-fluid" style={{backgroundColor: "#EEF5FF"}}>
+            
+//           { roles === "" ? 
+//              <Routes>
+//               <Route path='/admin/login' element={<Login />} />
+//               <Route exact path="/" element={<Dashboard />} />
+//               <Route path='/admin/forgotpassword' element={<ForgotPassword/>}/>
+//               </Routes> 
+//               :''}
+              
+//           { roles[0].role_code === "WO" || roles[0].role_code === "IN" || roles[0].role_code === "DA" || roles[0].role_code === "AG" ? 
+//               <Routes>
+//                  <Route exact path="/" element={<Dashboard />} />
+//                 {/* <Route path="/admin/claim-list" element={<ClaimList />} />  */}
+//                 {/* <Route path="/admin/assessor/claim-assessment" element={<ClaimAssesment />} /> */}
+//               </Routes> 
+//               :''}
+
+
+//               { roles[0].role_code === "SA" || roles[0].role_code === "AD" || roles[0].role_code === "AS"  || roles[0].role_code === "CC" ?  
+//               <Routes>
+//                 <Route  exact path="/" element={<Dashboard />} />
+//                     {/* <Route path="/admin/create/:any" element={<AddUsers />} /> */}
+//                  <Route path="/admin/user/create" element={<AddUsers />} />
+       
+//                   {/* <Route path="/admin/user-list/:any" element={<UserList />} />  */}
+//                   <Route path="/admin/user/list" element={<UserList />} /> 
+//                   <Route path="/admin/create-role" element={<AddRoles />} /> 
+//                   <Route path="/admin/role-list" element={<RolesList />} /> 
+//                   <Route path='/admin/product/list' element={<ProductsList title={'product'}/>}/>
+//                   <Route path='/admin/product/create' element={<Products title={'product'}/>}/>
+//                   <Route path='/admin/service/list' element={<ProductsList title={'service'}/>}/>
+//                   <Route path='/admin/service/create' element={<Products title={'service'}/>}/>
+//                   <Route path='/admin/product/edit' element={<ProductEdit title={'product'}/>}/>
+//                   <Route path='/admin/service/edit' element={<ProductEdit title={'service'}/>}/>
+                  
+//                   <Route path="/admin/product-category/create" element={<ProductCategory title={'product'} />}/> 
+//                   <Route path='/admin/product-category/list' element={<ProductCtaegoryList title={'product'}/>} />
+//                   <Route path="/admin/service-category/create" element={<ProductCategory title={'service'}/>}/> 
+//                   <Route path='/admin/service-category/list' element={<ProductCtaegoryList title={'service'}/>} />
+                 
+//                   <Route path="/admin/setup" element={<Setup/>}/>
+//                   {/* <Route path="/admin/setup/type/website" element={<Setting/>}/> */}
+//                   {/* <Route path="/admin/website" element={<Setting/>}/> */}
+//                   <Route path="/admin/productCreation" element={<ProducCreation/>}/>
+//                   <Route path="/admin/setup/type/products" element={<SetupProductSetting/>}/>
+//                   <Route path="/admin/setup-list" element={< SetupList/>}/>
+//                   <Route path="/admin/setting" element={<ProductSetting/>}/>
+//                   <Route path="/admin/website" element ={<WebsiteSetting/>}/>
+//                   <Route path ="/admin/setup/type/home" element={<HomeSetting/>}/>
+//                   <Route path ="/admin/slider/create" element={<SliderCreation/>}/>
+//                   <Route path ="/admin/slider/list" element={<SliderList/>}/>
+//                   <Route path ="/admin/text-editor" element={<TextEditor/>}/>
+//                   <Route path="/admin/testimonial/create" element={<TestiMonial/>}/>
+//                   <Route path='/admin/testimonial/list' element={<TestiMonialList/>}/>
+
+                  
+//                   {/* <Route path='/admin/file-upload' element={<FileUpload/>}/> */}
+//                   {<Route path="/admin/file-upload" element={<FileUploadCampaign/>}/>}
+//                   {<Route path ="/admin/vehicle-excel/export" element={<VehicleExcelExport/>}/>}
+//                   {<Route path ="/admin/template" element={<GandhiTemplate/>}/>}
+              
+//                   {<Route path ="/admin/template" element={<GandhiTemplate/>}/>}
+//                   {<Route path="/admin/enquiry-list" element={<EnquiryList/>}/>}
+//                   {<Route path='/admin/sales-enquiry-list' element={<SalesList/>}/>}
+//                   {<Route path="/admin/vehicle/vehicle-list/list" element={<VehicleList/>}/>}
+//                   {<Route path='/admin/vehicle-upload' element={<VehicleImageUpload/>}/>}
+                  
+//                   {<Route path='/admin/vehicle/vehicle-list/create' element={<VehicleTabs/>}/>}
+                
+//                   {<Route path='/admin/vehicle/variant/create' element={<VariationCreate/>}/>}
+//                   {<Route path='/admin/vehicle/variant/list' element={<VariationList/>}/>}
+//                   {<Route path='/admin/vehicle/feature/create' element={<FeatureCreation/>}/>}
+//                   {<Route path='/admin/vehicle/feature/list' element={<FeatureList/>}/>}
+//                   {<Route path='/admin/gallery/create' element={<GalleryImage/>}/>}
+//                   {<Route path='/admin/gallery/list' element={<GalleryTabs/>}/>}
+//                   {<Route path='/admin/company' element={<CompanyTab/>}/>}
+//                   {<Route path="/admin/invoice" element={<Invoice/>}/>}
+//                   {<Route path='/admin/invoice/list' element={<InvoiceListing/>}/>}
+//                   {<Route path='/admin/navigation/create' element={<NavigationCreate/>}/>}
+
+//                   {<Route path='*' exact={true} element={<Error/>}/>}
+//               </Routes>
+//                :""}
+                
+               
+              
+               
+              
+        
+           
+
+            
+            
+//           </div>
+//         </div>
+    
+//         {/* <a className="scroll-to-top rounded" href="#page-top">
+//           <i className="fa fa-angle-up"></i>
+//         </a> */}
+//         {/* <Chat/> */}
+       
+      
+//       </div>
+//     </Router>
+//   )
+// }

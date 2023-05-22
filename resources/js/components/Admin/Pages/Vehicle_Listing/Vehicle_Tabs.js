@@ -140,7 +140,7 @@ export  class VehicleTabs extends React.Component {
             if((this.props.location!==null)&&( typeof this.props.location.state!=="undefined")&&(this.props.location.state!=="")&&(this.props.location.state!==null)){
                 const {vehicle_model,vehicle_make,vehicle_status,transmission,system_code,fuel_type,specification,used_vehicle,features}=this.props.location.state
 
-                if(this.state.fields.vehicle_status=="new"){
+                if(this.state.fields.vehicle_status=="Used"){
 
                     this.setState(old=>({...old,fields:{...old.fields,used_vehicle}}))
 
@@ -150,7 +150,7 @@ export  class VehicleTabs extends React.Component {
 
             }else{
 
-            if(this.state.fields.vehicle_status=="new"){
+            if(this.state.fields.vehicle_status=="Used"){
 
                 this.setState(old=>({...old,fields:{...old.fields,  "used_vehicle":[{
                     "History":"",

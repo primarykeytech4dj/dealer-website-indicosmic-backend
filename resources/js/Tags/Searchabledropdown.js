@@ -3,6 +3,7 @@ import React, { useState } from "react"
 import { TextField,MenuItem } from "@mui/material"
 import Api from "../api"
 import { useEffect } from "react"
+import { set } from "react-hook-form"
 
 export const SearchDropdown=(props)=>{
     const [listval,setListval]=useState()
@@ -17,14 +18,18 @@ export const SearchDropdown=(props)=>{
 
 useEffect(()=>{
 
-   apiCtrl.callAxios("gallery/list",).then(res=>{     
-        Object.entries(res.data).map(([key,value])=>{
-            // console.log("key",key,"value",value)
-           setData(old=>({...old,[value.title]:value.title}))
-        })
+//    apiCtrl.callAxios("gallery/list",).then(res=>{     
+//         Object.entries(res.data).map(([key,value])=>{
+//             // console.log("key",key,"value",value)
+//            setData(old=>({...old,[value.title]:value.title}))
+//         })
 
        
-    })
+//     })
+
+ // setData(old=>({...old,...props.data}))
+
+  
 
   
 
@@ -35,7 +40,8 @@ const getval =(e)=>{
   // console.log("value=>",e)
 
    setListval(e.target.innerText)
-   e.target ={...e.target, value: e.target.innerText}
+   e.target ={...e.target, value: e.target.innerText,name:props.name}
+//    console.log("value=>",e.target.name)
    props.onChange(e)
   // setVisable(false)
 
@@ -83,7 +89,8 @@ const getval =(e)=>{
 
 
 
-//console.log("props=>",props)
+// console.log("props=>",props)
+// console.log("datastate=>",data)
 
 //console.log("data=>",data)
      
@@ -125,7 +132,7 @@ const getval =(e)=>{
            <div className="dropdown-menu">
 
 
-               { Object.entries(data).map(([index, value]) =>  {
+               { Object.entries(props.data).map(([index, value]) =>  {
                    
 
                //  console.log("value =>",value)

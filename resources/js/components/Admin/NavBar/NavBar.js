@@ -2,8 +2,9 @@ import React from 'react'
 import logo from "../../../../assets/img/logo.png";
 import logo_sticky from "../../../../assets/img/logo_sticky.png";
 import SideBar from '../SideBar/SideBar';
-
+import { API_CONSTANTS } from '../../../assets/constant';
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 export default function NavBar() {
     const navigation = useNavigate();
 
@@ -12,11 +13,17 @@ export default function NavBar() {
         navigation('/admin');
         location.reload('/admin');
     }
+    var companyName=sessionStorage.getItem(`${API_CONSTANTS.subdomain}_company_data`)
+    var comanydata=JSON.parse(companyName)
+    // console.log("companyName==>",comanydata)
+    // useEffect(()=>{
+
+    // },[])
   return (
     <>
 
         <nav className="navbar navbar-expand-lg navbar-dark bg-default fixed-top" id="mainNav">
-            <a className="navbar-brand" href="index.html"><p width="150" style={{marginLeft:"15px", color:"#183883", height:"20px",fontSize:25, fontWeight:"bold"}} >Dynamic Website</p>{/*<img src={logo} alt="" width="150" height="36" style={{marginLeft:"20px"}} />*/}</a>
+            <a className="navbar-brand" href="index.html"><p width="150" style={{marginLeft:"15px", color:"#183883", height:"20px",fontSize:25, fontWeight:"bold"}} >{comanydata!==null?comanydata.company_name:""}</p>{/*<img src={logo} alt="" width="150" height="36" style={{marginLeft:"20px"}} />*/}</a>
             <button className="navbar-toggler navbar-toggler-right" style={{backgroundColor:"#183883"}} type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
             </button>

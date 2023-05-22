@@ -11,6 +11,7 @@ import Swal from "sweetalert2";
 import Api from "../../../../api";
 import { VariationCreate } from "./Variation_Create";
 import { useState } from "react";
+import MaterialSelect from "../../../../Tags/MaterialSelect";
 
 
 
@@ -319,6 +320,7 @@ class VariationEdit extends React.Component {
     this.apiCtrl = new Api;
     this.state = {
       is_active:"1",
+      vehicletype:{}
      
     }
   }
@@ -330,8 +332,28 @@ class VariationEdit extends React.Component {
       console.log('Propps', this.props.params)
       this.setState(this.props.params)
     } 
+    
     //console.log("props=>",this.props)
   }
+
+  
+  componentDidMount(){
+    this.apiCtrl.callAxios("get-vehicle-type").then(res=>{
+      var  vehicleType={}
+        if(res.success==true){
+         //  console.log("res=>type",res)
+            res.data.length>0&&res.data.map((val,key)=>{
+                 
+                vehicleType={...vehicleType,[val.id]:val.vehicle_type}
+                      
+            })
+        }
+       // console.log("vehicleType=>",vehicleType)
+
+        this.setState(old=>({...old,vehicletype:{...vehicleType}}))
+
+    })
+}
 
   render(){
 
@@ -440,10 +462,10 @@ class VariationEdit extends React.Component {
                                   
                           </div>
                           <div className="col-md-4 mb-4">
-                              <MaterialTextField name="vehicle_type_id" type={"number"} label="Vehicle Type" fullWidth  
-                                      value={this.state.vehicle_type_id?this.state.vehicle_type_id:""}
+                              <MaterialSelect name="vehicle_type_id" type={"number"} label="Vehicle Type" fullWidth  
+                                   data={this.state.vehicletype}   value={this.state.vehicle_type_id?this.state.vehicle_type_id:""}
                           
-                              onChange={(e)=>this.setState({vehicle_type_id:e.target.vehicle_type_id
+                              onChange={(e)=>this.setState({vehicle_type_id:e.target.value
                               })}
                                   
                               />

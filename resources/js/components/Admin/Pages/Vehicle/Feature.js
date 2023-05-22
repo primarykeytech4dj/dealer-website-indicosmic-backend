@@ -6,6 +6,7 @@ import Switch from "@mui/material/Switch";
 import Swal from "sweetalert2";
 import { Divider } from "@mui/material";
 import Button  from '@mui/material/Button';
+import MaterialSelect from "../../../../Tags/MaterialSelect";
 
 
 
@@ -15,8 +16,27 @@ export class FeatureCreation extends React.Component {
       this.apiCtrl = new Api;
       this.state = {
         is_active:"1",
+        vehicletype:{}
        
       }
+    }
+
+    componentDidMount(){
+        this.apiCtrl.callAxios("get-vehicle-type").then(res=>{
+          var  vehicleType={}
+            if(res.success==true){
+               console.log("res=>type",res)
+                res.data.length>0&&res.data.map((val,key)=>{
+                     
+                    vehicleType={...vehicleType,[val.id]:val.vehicle_type}
+                          
+                })
+            }
+            console.log("vehicleType=>",vehicleType)
+
+            this.setState(old=>({...old,vehicletype:{...vehicleType}}))
+
+        })
     }
 
     render(){
@@ -70,8 +90,10 @@ export class FeatureCreation extends React.Component {
                             }
             })
         }
+    
 
-     
+  
+     console.log("festurestate=>",this.state)
 
         return(<>
 
@@ -104,7 +126,7 @@ export class FeatureCreation extends React.Component {
                              
                     </div>
                     <div className="col-md-4 mb-4">
-                        <MaterialTextField name="vehicle_type_id" type={"number"} label="Vehicle Type" fullWidth  
+                        <MaterialSelect name="vehicle_type_id" data={this.state.vehicletype} type={"number"} label="Vehicle Type" fullWidth  
                                 value={this.state.vehicle_type_id?this.state.vehicle_type_id:""}
                      
                          onChange={(e)=>this.setState({vehicle_type_id:e.target.value

@@ -18,6 +18,8 @@ import textModifier from "../../../services/textModifier";
 import { useEffect } from "react";
 import { Edit } from "@mui/icons-material";
 import { Link } from "react-router-dom";
+import { FileUploader } from "react-drag-drop-files";
+import Slider from "react-slick";
 
  export class VehicleList extends React.Component {
     constructor(props){
@@ -143,10 +145,10 @@ import { Link } from "react-router-dom";
             onChange={(e)=>this.setState(old => ({...old, filter: e.target.value}))}
             />
           </div>
-          <div className="col-md-3">
+          {/* <div className="col-md-3">
           <Link  to={"/admin/vehicletab"} ><Button >Creacte Vehicle</Button></Link>
 
-          </div>
+          </div> */}
 
         </div>
    
@@ -337,25 +339,156 @@ function EditVehicle(props){
 
 function UploadModel(props){
   const [state,setState]=useState({
-    vehicle_model:props.params.vehicle_model?props.params.vehicle_model:""
+    // vehicle_model:props.params.vehicle_model?props.params.vehicle_model:""
+    
   })
-
+  const [message,setMessage]=useState({})
+  const [showgalleryimages,setshowgalleryimages]=useState([])
+  const apiCtrl=new Api
   console.log("state=>",state)
-
+  const fileTypes = ["JPG", "PNG", "GIF", "JPEG"];
+  const filetypes = ["PDF"];
  
 
-useEffect(()=>{
+  useEffect(()=>{
 
 
 
-})
+  })
 
 
-  const apiCtrl=new Api
-  const submit=()=>{
+ 
+  const submit=(e)=>{
+    e.preventDefault();
+    const slug=props.params.slug
+
+    const statedata={
+
+      featured_image:state.feature_image,
+      banner_image:state.banner_image,
+      other_images:state.other_images,
+      document:state.document,
+
+    }
+
+    const data=new FormData
+     
+   
+
+    Object.entries(statedata).map(([key,value])=>{
+
+         console.log("key",key,"value",value)
+      if(key=="other_images"){
+      
+          // console.log("====>",value)
+          if(value!==undefined){
+
+            Object.entries(value).map(([index,img])=>{
+              console.log("img",img)   
+                 
+                 
+                 data.append(`${key}[]`,img)
+   
+             })
+          }
+         
+        
+      
+      }else{
+        if(value!==undefined){
+          data.append(`${key}`,value)
+
+        }
+        
+          
+      }
+            
+    
+    })
+    data.append("slug",slug)
+    
+    apiCtrl.callAxiosFile("vehicle/upload-docs-vehicle",data).then(res=>{
+
+      if(res.success==true){
+         
+       setMessage(old=>({...old,...res.message}))
+      
+        Swal.fire({
+            title: "Vehicle",
+            text: "Vehicle Image Upload",
+            icon: "success",
+            showConfirmButton: false,
+        })
+    } else {
+        Swal.fire({
+            title: "Vehicle",
+            text:  "Vehicle Image Not Upload",
+            icon: "error",
+            showConfirmButton: false,
+        })
+    }
+
+
+
+    })
     
   }
-  //console.log("props=>",props.params)
+  
+  let settings = {
+    dots: true,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    responsive: [
+        {
+            breakpoint: 1024,
+            settings: {
+                slidesToShow: 4
+            }
+        },
+        {
+            breakpoint: 600,
+            settings: {
+                slidesToShow: 2
+            }
+        },
+        {
+            breakpoint: 480,
+            settings: {
+                slidesToShow: 1
+            }
+        }
+    ]
+  };
+
+  const imageupload = (file) => {
+     console.log(file)
+    Object.entries(file).map(([index, value])=>{
+
+     // console.log("value=>",value)
+
+        setState(old=>({...old,other_images:{...file}}))
+        //setState(old=>({...old,showgalleryimages:[...old.showgalleryimages,URL.createObjectURL(value)]}))
+       setshowgalleryimages(old=>([...old,URL.createObjectURL(value)]))
+    })
+      
+  };
+
+  const docupload =(file)=>{
+       console.log(file)
+      
+
+        setState(old=>({...old,document:file}))
+        
+  
+
+  }
+ 
+  // console.log("props model=>",props.params)
+  // console.log("stae=>",state)
+  // console.log("shoimage=>",showgalleryimages)
+  console.log("message=>",message)
  
  
 
@@ -365,7 +498,7 @@ useEffect(()=>{
   return(<>
 
     <div className="modal fade" id="exampleModalToggle1" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabIndex="-1">
-      <div className="modal-dialog  modal-dialog-centered">
+      <div className="modal-dialog modal-lg modal-dialog-centered">
           <div className="modal-content">
               <div className="modal-header">
                   {/* <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5> */}
@@ -379,25 +512,67 @@ useEffect(()=>{
           
           <div className="modal-body m-body">
               
-              <div className="row">
+              <div className="row mb-2">
 
                 
                   <div className="col-md-6 mb-3">
-                      <MaterialTextField type={"file"} label="Image Upload" accept="image/*" name="image" fullWidth  onChange={(e)=>setState({image : e.target.files[0]})}/>
-
+                      <MaterialTextField type={"file"} label="Feature image" accept="image/*" name="feature_image" fullWidth  onChange={(e)=>setState(old=>({...old,feature_image : e.target.files[0]}))}/>
+                      <label className="d-flex justify-content-start"><span className="text-success">{message.featured_image?message.featured_image.success:""}</span></label>
                   </div>
+                
                   <div className="col-md-6 mb-3">
-                      <MaterialTextField type={"file"} label="Other Upload" accept="application/pdf" name="other" fullWidth onChange={(e)=>setState({other : e.target.files[0]})}/>
-
-                  </div>
+                      <MaterialTextField type={"file"} label="Banner Image" accept="application/pdf" name="banner_image" fullWidth onChange={(e)=>setState(old=>({...old,banner_image : e.target.files[0]}))}/>
+                      <label className="d-flex justify-content-start"><span className="text-success">{message.banner_image?message.banner_image.success:""}</span></label>
               
+                  </div>
+                 
 
               </div>
+
+              <div className="row">
+             
+                <div className="col-md-6 mb-3">
+                  <label className="d-flex justify-content-start"><b>{"Other Image Upload"}</b></label>
+                   
+                    <FileUploader handleChange={imageupload}  multiple={true} name="other_images" types={fileTypes} />
+                    <label className="d-flex justify-content-start"><span className="text-success">{message.other_images?message.other_images.success:""}</span></label>
+                </div>
+               
+                <div className="col-md-6 mb-3">
+                 <label className="d-flex justify-content-start"><b>{"Document Upload"}</b></label>
+                  <FileUploader handleChange={docupload}  name="doucment" types={filetypes} />
+                  <label className="d-flex justify-content-start"><span className="text-success">{message.doucment?message.doucment.success:""}</span></label>
+                </div>
+                
+
+              </div>
+              <div  className="row mb-2">
+                <div className="container">
+                <Slider {...settings}>
+                    {showgalleryimages.length >0 && Object.entries(showgalleryimages).map(([key,image])=>{
+                    return(<>
+                        <div className="card" style={{width:"180px"}}>
+                        <img className="sliderimage" src={image}  alt="..."/>
+                        
+                        </div>
+                        {/* <img className="image" src={image}/> */}
+                    </>)  
+
+                    })}
+                
+                    
+                        
+                </Slider> 
+                    
+                </div>
+
+              </div>
+           
               
               <div className="modal-footer">
                   
 
-                  <Button style={{ backgroundColor: 'rgb(108 110 116)',color:"#fff"}} onClick={submit}>Submit</Button>&nbsp;&nbsp;
+                  <Button style={{ backgroundColor: 'rgb(108 110 116)',color:"#fff"}} onClick={submit}>Upload</Button>&nbsp;&nbsp;
                   
           
                   

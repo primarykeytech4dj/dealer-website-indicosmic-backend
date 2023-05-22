@@ -92,9 +92,9 @@ export  class FileUpload extends React.Component {
                         this.setState(old=>({...old,error:errors}))
                     }
                  })
-              };
+        };
               
-              console.log("state filesupload=>",this.state)
+        console.log("state filesupload=>",this.state)
         const fileTypes={
             image:["JPG", "PNG","JPEG"] ,
             video:["mp4"],

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FileUploader } from "react-drag-drop-files";
 import Slider from "react-slick";
 import { Box,Divider } from "@mui/material";
@@ -13,9 +13,13 @@ const GalleryImage=()=>{
         showgalleryimages:[],
 
     })
+  
     const [title,setTitle]=useState()
+    const [data,setData]=useState({})
     const apiCtrl=new Api
     const fileTypes = ["JPG", "PNG", "GIF", "JPEG"];
+     
+  
 
     let settings = {
         dots: true,
@@ -44,6 +48,27 @@ const GalleryImage=()=>{
             }
         ]
     };
+
+    useEffect(()=>{
+        apiCtrl.callAxios("gallery/list",).then(res=>{ 
+            if(res.success==true){
+                console.log("res=>",res)
+                if(res.data.length >0){
+                    Object.entries(res.data).map(([key,value])=>{
+                        // console.log("key",key,"value",value)
+                    setData(old=>({...old,[value.title]:value.title}))
+                    })
+
+                }
+              
+
+            }
+            
+          
+
+       
+        })
+    },[])
 
 
     const handleChan = (file) => {
@@ -115,11 +140,12 @@ const GalleryImage=()=>{
 
 
             <div className="row mb-3">
-                <div className="col-md-12 mb-3">
+                <div className="col-md-3 mb-3">
                     <SearchDropdown
                         placeholder="Search" label={"Title"} size={"small"} name={"title"} value={title&&title} 
                         onChange={handleChange}
                         fullWidth
+                        data={data}
 
                     />
                 </div>

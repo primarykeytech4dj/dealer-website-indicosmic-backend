@@ -3,8 +3,11 @@ import React from "react";
 let host = window.location.host;
 let protocol = window.location.protocol;
 let parts = host.split(".");
-var subdomain = "shubhauto";
+// var subdomain = "shubhauto";
+var subdomain="sharvaautomobiles";
 var domain = '2wh'
+// var subdomain = "dealer-website";
+// var domain = 'primarykeytech'
 // If we get more than 3 parts, then we have a subdomain
 // INFO: This could be 4, if you have a co.uk TLD or something like that.
 if (parts.length >= 3) {
@@ -31,7 +34,9 @@ export const API_CONSTANTS = {
     refresh: "/refresh",
     setupList: "/setup/list",
 
-
+    domain:domain,
 
     subdomain: `${subdomain}`,
+   
 }
+

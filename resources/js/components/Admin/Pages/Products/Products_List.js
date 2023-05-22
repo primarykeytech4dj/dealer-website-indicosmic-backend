@@ -114,16 +114,17 @@ import { Products } from "./Products";
         { field: 'sr_no', headerName: 'Sr.No', width: 100 },
         { field: 'product', headerName: 'Product', width: 190 },
         { field: 'product_code', headerName: 'Product Code', width: 190 },
-        { field: 'slug', headerName: 'Slug', width: 150 },
+        // { field: 'slug', headerName: 'Slug', width: 150 },
         { field: 'base_price', headerName: 'Base Price', width: 100 },
-        { field: 'is_active', headerName: 'Active', width: 150 ,renderCell: (params) => <IsActive key={params.row.id}  url={this.props.params.any}  param={params.row} />,},
+        { field: 'is_active', headerName: 'Active', width: 150 ,renderCell: (params) => <IsActive key={params.row.id}  url={this.props.title}  param={params.row} />,},
         // { field: 'gst', headerName: 'GST', width: 150 },
-        { field: 'action', headerName: 'Action',  width: 190,  renderCell: (params) => <Action key={params.row.id} fun={handleClick} params={this.props.params} param={params.row} />, },
+        { field: 'action', headerName: 'Action',  width: 190,  renderCell: (params) => <Action key={params.row.id} fun={handleClick} params={this.props.title} param={params.row} />, },
       ];
 
 
-      let  products =  this.props.params.any.replace(/-/g, " "); 
+      // let  products =  this.props.params.any.replace(/-/g, " "); 
       //let products ="product"
+      let  products =  this.props.title.replace(/-/g, " "); 
        
       var productType =   products
       .toLowerCase()
@@ -175,7 +176,7 @@ import { Products } from "./Products";
          
       </div>
 
-      <Model params={this.props.params}/>
+      <Model title={this.props.title}/>
   
       
       </Box>
@@ -195,7 +196,7 @@ function Action(props){
 
   const [state,setState]=useState(props.param)
 
-  var url=props.params.any=="product"?"product":"service"
+  var url=props.params=="product"?"product":"service"
   
  
 
@@ -331,8 +332,9 @@ function IsActive(props){
 function Model(props){
 
   //  console.log( "modelprops==>",props)
-  let  products =  props.params.any.replace(/-/g, " "); 
+  // let  products =  props.params.any.replace(/-/g, " "); 
   //let products ="product"
+  let  products =  props.title.replace(/-/g, " "); 
    
   var productType =   products
   .toLowerCase()
@@ -361,7 +363,7 @@ function Model(props){
               
             <div className="row">
               
-              <Products params={props.params}/>
+              <Products title={props.title}/>
   
             </div>
               

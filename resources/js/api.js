@@ -247,6 +247,7 @@ callAxios(endPoint, reqData, auth=true,type='application/json'){
   
       
     }
+ 
   callAxiosGet(endPoint, auth=true){
     return new Promise((resolve, reject) => {
       Promise.all([this.getBaseUrl(),this.getToken()])

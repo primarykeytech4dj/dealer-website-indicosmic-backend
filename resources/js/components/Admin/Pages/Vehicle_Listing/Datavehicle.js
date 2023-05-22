@@ -28,11 +28,18 @@ export class Detailvehicle extends React.Component {
         this.setState({...this.props.data})
     }
     componentDidUpdate(prevProps, prevState){
-        if(prevProps.data !== this.props.data)
-        this.setState({...this.props.data})
+        if(prevProps.data !== this.props.data){
+            this.setState({...this.props.data})
+        }
+      
         if(prevState!==this.state){
                 this.props.func({...this.state},{title:""})
         }
+
+        // if(prevState!== this.props.data){
+        //     this.setState({...this.props.data})
+        // }
+       
 
 
     }
@@ -42,8 +49,8 @@ export class Detailvehicle extends React.Component {
        // console.log('Vehicle Edit',this.props)
         
        const used={
-        "used":"Used",
-        "new":"New"
+        "Used":"Used",
+        "New":"New"
     }
     const make={
        "tvs":" TVS"
@@ -59,8 +66,8 @@ export class Detailvehicle extends React.Component {
        "manual":"Manual"
     }
     const fuelType={
-        "diesel":"Diesel",
-        "petrol":"Petrol"
+        "Diesel":"Diesel",
+        "Petrol":"Petrol"
     }
 
     const onHandleChange=(e)=>{
@@ -97,15 +104,15 @@ export class Detailvehicle extends React.Component {
 
 
                     <div className="col-md-4 mb-3"> 
-                    <MaterialSelect value={this.state.vehicle_make} label={"Make"} name={"vehicle_make"}  data={this.props.vehiclemake?this.props.vehiclemake:""} fullWidth onChange={(e)=>onHandleChange(e)} />
+                    <MaterialSelect value={this.state.vehicle_make?this.state.vehicle_make:""} label={"Make"} name={"vehicle_make"}  data={this.props.vehiclemake?this.props.vehiclemake:""} fullWidth onChange={(e)=>onHandleChange(e)} />
 
                     </div>
                     <div className="col-md-4 mb-3"> 
-                    <MaterialSelect value={this.state.vehicle_model}  label={"Model"} name={"vehicle_model"}  data={this.props.vehiclemodel?this.props.vehiclemodel:""} fullWidth onChange={(e)=>onHandleChange(e)} />
+                    <MaterialSelect value={this.state.vehicle_model?this.state.vehicle_model:""}  label={"Model"} name={"vehicle_model"}  data={this.props.vehiclemodel?this.props.vehiclemodel:""} fullWidth onChange={(e)=>onHandleChange(e)} />
 
                     </div>
                     <div className="col-md-4 mb-3"> 
-                    <MaterialSelect value={this.state.fuel_type}  label={"Fuel Type"} name={"fuel_type"}  data={fuelType} fullWidth onChange={(e)=>onHandleChange(e)} />
+                    <MaterialSelect value={this.state.fuel_type?this.state.fuel_type:""}  label={"Fuel Type"} name={"fuel_type"}  data={fuelType} fullWidth onChange={(e)=>onHandleChange(e)} />
 
                     </div>
                     <div className="col-md-4 mb-3"> 
@@ -113,7 +120,7 @@ export class Detailvehicle extends React.Component {
 
                     </div>
                     <div className="col-md-4 mb-3"> 
-                    <MaterialSelect label={"Transmission"} value={this.state.transmission} name={"transmission"}  data={transMission} fullWidth onChange={(e)=>onHandleChange(e)} />
+                    <MaterialSelect label={"Transmission"} value={this.state.transmission?this.state.transmission:""} name={"transmission"}  data={transMission} fullWidth onChange={(e)=>onHandleChange(e)} />
 
                     </div>
                     <div className="col-md-4 mb-3">

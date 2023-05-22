@@ -48,7 +48,7 @@ export  class Products extends React.Component {
         is_featured:0,
         product_images:[],
         showproductimages:[],
-        product_type:this.props.params.any,
+        product_type:this.props.title,
 
 
         errors:{},
@@ -75,8 +75,9 @@ export  class Products extends React.Component {
       
     }
     render(){
-        let  products =  this.props.params.any.replace(/-/g, " "); 
+        // let  products =  this.props.params.any.replace(/-/g, " "); 
         //let products ="product"
+        let  products =  this.props.title.replace(/-/g, " "); 
         
         var productType =   products
         .toLowerCase()

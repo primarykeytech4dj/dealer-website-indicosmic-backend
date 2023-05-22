@@ -30,10 +30,10 @@ import MaterialSelect from "../../../../Tags/MaterialSelect";
         pageSize: 10,
         detailsData:[],
         enquiry_type:""
-       // product_type:this.props.title,
+        // product_type:this.props.title,
       
-  
-    }
+         
+      }
   
     }
   
@@ -47,7 +47,7 @@ import MaterialSelect from "../../../../Tags/MaterialSelect";
       // console.log('update')
       if(prevState.enquiry_type !== this.state.enquiry_type){
           // this.setState(old=>({...old,data:[""]}))
-          alert()
+         
         this.getEnquiryList();
       
       } 
@@ -82,7 +82,7 @@ import MaterialSelect from "../../../../Tags/MaterialSelect";
       // }
       this.apiCtrl.callAxios('enquiry/list',data).then(response => {
           console.log(response);
-            this.setState({data:""})
+          this.setState({data:""})
           
           if(response.success == true){
               //this.setState(old => ({...old, data:response.data.aaData, total:response.data.iTotalRecords}))
@@ -176,7 +176,7 @@ import MaterialSelect from "../../../../Tags/MaterialSelect";
    
       <div style={{ height: '100%', width: '100%' }}>
      
-      <DataGrid
+        <DataGrid
           autoHeight
           rows={this.state.data}
           rowCount={this.state.total}
@@ -193,7 +193,7 @@ import MaterialSelect from "../../../../Tags/MaterialSelect";
           onPageSizeChange={(newPageSize) => this.setState(old=>({...old, pageSize: newPageSize}))}
           disableRowSelectionOnClick
   
-          />
+        />
          
       </div>
 
@@ -311,227 +311,231 @@ function Action(props){
 
 function Model(props){
 
-   const [data,setData]=useState({})
+  const [data,setData]=useState({})
   
   //  console.log("data",data)
 
   
   console.log("props",props)
-  
-      return(
-        <>
-       
-          <div className="modal fade" id="exampleModalToggle1" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabIndex="-1">
-            <div className="modal-dialog modal-lg modal-dialog-centered">
-            <div className="modal-content">
-            <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLongTitle"></h5>
-                <div className="row ml-1" style={{ paddingTop: '2%'}}>
-                    {/* <label><b>{props.params.any} Details</b></label> */}
-                </div>
-                <button type="button"   data-bs-dismiss="modal" className="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              
-              <div className="modal-body m-body">
-                
-              <div className="row">
 
-                <div className="col-md-12">
+  return(
+    <>
+    
+      <div className="modal fade" id="exampleModalToggle1" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabIndex="-1">
+        <div className="modal-dialog modal-lg modal-dialog-centered">
+        <div className="modal-content">
+        <div className="modal-header">
+            <h5 className="modal-title" id="exampleModalLongTitle"></h5>
+            <div className="row ml-1" style={{ paddingTop: '2%'}}>
+                {/* <label><b>{props.params.any} Details</b></label> */}
+            </div>
+            <button type="button"   data-bs-dismiss="modal" className="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          
+          <div className="modal-body m-body">
+            
+          <div className="row">
 
-                    {(props.params!==null )?
-                      <fieldset className="form-group border p-3">
-                        <div className="row " >
-                          {/* <legend className="col-form-label col-sm-2  pt-0" ></legend> */}
-                            <div className="col-sm-10">
-                                <div className="row">
+            <div className="col-md-12">
 
-                                 
-                                 
-                                 {(typeof props.params.data !== 'undefined') && Object.entries(props.params.data).slice(0).reverse().map(([key,value])=>{
+                {(props.params!==null )?
+                  <fieldset className="form-group border p-3">
+                    <div className="row " >
+                      {/* <legend className="col-form-label col-sm-2  pt-0" ></legend> */}
+                        <div className="col-sm-10">
+                            <div className="row">
+                              {typeof props.params.data !== 'undefined'?<>
+                              {(typeof props.params.data !== 'undefined') && Object.entries(props.params.data).slice(0).reverse().map(([key,value])=>{
 
-                                    //console.log("key",key,"value",value)
+                                console.log("key",key,"value",value)
 
-                                    return(
-                                      <>
-                                      <div className="row m-2">
-                                      <span><b>{key!=="date"&&textModifier(key)}</b></span>
+                                return(
+                                  <>
+                                  <div className="row m-2">
+                                  <span><b>{key!=="date"&&key!=="time"&&textModifier(key)}</b></span>
 
-                                      {key!=="date"&&
-                                            Object.entries(value).slice(0).reverse().map(([key1,val1])=>{
-                                             // console.log('first Loop', key1, val1)
+                                  {key!=="date"&&key!=="time"&&
+                                    Object.entries(value).slice(0).reverse().map(([key1,val1])=>{
+                                      // console.log('first Loop', key1, val1)
 
-                                             return(
-                                              <div className='row m-1'>
-                                                {/* <span><b>{textModifier(key1)}</b></span> */}
-                                                {(typeof val1 === 'object') ?
-                                                  <>
-                                                  <span><b>{textModifier(key1)}</b></span>
+                                      return(
+                                      <div className='row m-1'>
+                                        {/* <span><b>{textModifier(key1)}</b></span> */}
+                                        {(typeof val1 === 'object') ?
+                                          <>
+                                          <span><b>{textModifier(key1)}</b></span>
 
-                                                  {
-                                                     Object.entries(val1).slice(0).reverse().map(([key2, val2])=>{
-                                                     // console.log('second Loop', key2, val2)
-                                                      return(
-                                                        <div className='row m-1'>
-                                                          {(typeof val2 === 'object') ?
-                                                            <>
-                                                            <span><b>{textModifier(key2)}</b></span>
-                                                             { Object.entries(val2).slice(0).reverse().map(([key3, val3])=>{
-                                                             //   console.log('Third Loop', key3, val3)
-                                                                return(
-                                                                  <>
-                                                                    <span><b>{textModifier(key3)}</b> : {val3}</span>
-                                                                  </>
-                                                                )              
-                                                              })}
-                                                            </>
-                                                            :
-                                                            <span><b>{textModifier(key2)}</b> : {val2}</span>
-                                                          }
-                                                        </div>
-                                                      )
-                                                    })
+                                          {
+                                              Object.entries(val1).slice(0).reverse().map(([key2, val2])=>{
+                                              // console.log('second Loop', key2, val2)
+                                              return(
+                                                <div className='row m-1'>
+                                                  {(typeof val2 === 'object') ?
+                                                    <>
+                                                    <span><b>{textModifier(key2)}</b></span>
+                                                      { Object.entries(val2).slice(0).reverse().map(([key3, val3])=>{
+                                                      //   console.log('Third Loop', key3, val3)
+                                                        return(
+                                                          <>
+                                                            <span><b>{textModifier(key3)}</b> : {val3}</span>
+                                                          </>
+                                                        )              
+                                                      })}
+                                                    </>
+                                                    :
+                                                    <span><b>{textModifier(key2)}</b> : {val2}</span>
                                                   }
-                                                  </>
-                                                  :
-                                                 
-                                                  <span><b>{textModifier(key1)}</b> : {val1}</span>
-                                                }
-                                              </div>
-                                             )
-                                                // return(<>
-                                                //    <Divider sx={{ borderColor: '#dac4c4',marginTop:"10px",marginBottom:"10px"}} />
-                                                //   <span><b>{textModifier(key1)}</b></span>                             
-                                                //  {
-                                                //    Object.entries(val1).slice(0).reverse().map(([key2,val2])=>{
+                                                </div>
+                                              )
+                                            })
+                                          }
+                                          </>
+                                          :
+                                          
+                                          <span><b>{textModifier(key1)}</b> : {val1}</span>
+                                        }
+                                      </div>
+                                      )
+                                        // return(<>
+                                        //    <Divider sx={{ borderColor: '#dac4c4',marginTop:"10px",marginBottom:"10px"}} />
+                                        //   <span><b>{textModifier(key1)}</b></span>                             
+                                        //  {
+                                        //    Object.entries(val1).slice(0).reverse().map(([key2,val2])=>{
 
-                                                //     return(<>
+                                        //     return(<>
 
-                                                //       { ( (Object.keys(val2).length > 0)) ? 
-                                                //       <>
+                                        //       { ( (Object.keys(val2).length > 0)) ? 
+                                        //       <>
 
-                                                //           {/* <span><b>{textModifier(key2)}</b></span> */}
-                                                //        { Object.entries(val2).map(([key3, val3])=>{
-                                                //           return <span><b>{textModifier(key3)}</b>:  {val3}</span>
-                                                //         })}
-                                                //         </>
-                                                //        :
-                                                       
-                                                //         <span><b>{textModifier(key2)}</b>:  {val2}</span>
-                                                //        }
+                                        //           {/* <span><b>{textModifier(key2)}</b></span> */}
+                                        //        { Object.entries(val2).map(([key3, val3])=>{
+                                        //           return <span><b>{textModifier(key3)}</b>:  {val3}</span>
+                                        //         })}
+                                        //         </>
+                                        //        :
+                                                
+                                        //         <span><b>{textModifier(key2)}</b>:  {val2}</span>
+                                        //        }
 
-                                                //     </>)
+                                        //     </>)
 
-                                                  
-                                                //   })
-                                                //  }
-                                                   
-                                                  
-                                                // </>)
+                                          
+                                        //   })
+                                        //  }
+                                            
+                                          
+                                        // </>)
 
-                                              // if(key1=="user"){
+                                      // if(key1=="user"){
+                                        
+
+
+
+                                      // }else{
+
+
+                                      //   return(<>
+
+                                          
+                                      //    <p>{textModifier(key1)}</p>
+
+                                      //      {
+                                      //           Object.entries(val1).slice(0).reverse().map(([key3,val3])=>{
+                                      //         //   console.log("key3",key3,"val3",val3)
+
+                                            
+
+                                      //         return(<>
+                                                
+                                                    
+                                      //           {key3!=="features"&&key3!=="specification"?
+
+                                      //             <span><b>{textModifier(key3)}</b>:  {val3}</span>
+
+                                      //         :   Object.entries(val3).map(([key4,val4])=>{
+
+                                      //             //console.log("key4",key4,"val4",val4)
+
+                                      //               return(<>
+
+
+                                      //                   {Object.entries(val4).map(([key5,val5])=>{
+
+                                      //                   return(<>
+                                      //                         <span><b>{textModifier(key5)}</b>:  {val5}</span>
+                                      //                   </>)
+                                      //                   })}
+                                      //               </>)
+
+                                      //             })
                                                 
 
 
-
-                                              // }else{
-
-
-                                              //   return(<>
-
-                                                 
-                                              //    <p>{textModifier(key1)}</p>
-
-                                              //      {
-                                              //           Object.entries(val1).slice(0).reverse().map(([key3,val3])=>{
-                                              //         //   console.log("key3",key3,"val3",val3)
-
+                                      //           }
                                                     
+                                      //         </>)
 
-                                              //         return(<>
-                                                       
-                                                            
-                                              //           {key3!=="features"&&key3!=="specification"?
+                                      //       })
+                                      //      }
+                                      //   </>)
 
-                                              //             <span><b>{textModifier(key3)}</b>:  {val3}</span>
-
-                                              //         :   Object.entries(val3).map(([key4,val4])=>{
-
-                                              //             //console.log("key4",key4,"val4",val4)
-
-                                              //               return(<>
+                                      // }
+                                    
+                                      
 
 
-                                              //                   {Object.entries(val4).map(([key5,val5])=>{
+                                    })
 
-                                              //                   return(<>
-                                              //                         <span><b>{textModifier(key5)}</b>:  {val5}</span>
-                                              //                   </>)
-                                              //                   })}
-                                              //               </>)
+                                  }
 
-                                              //             })
-                                                       
+                                  </div>
+                                  </>
+                                )
+                                
+                                
 
-
-                                              //           }
-                                                            
-                                              //         </>)
-
-                                              //       })
-                                              //      }
-                                              //   </>)
-
-                                              // }
-                                            
-                                              
+                              })}</>:
+                              Object.entries(props.params).map(([keyy,valuee])=>{
+                                  return <span><b>{textModifier(keyy)}</b> : {valuee}</span>
+                              })
+                              
+                              
+                            }
 
 
-                                            })
-
-                                      }
-
-                                      </div>
-                                      </>
-                                    )
-                                   
-                                   
-
-                                 })}
-
-
-                                </div>
                             </div>
                         </div>
-                      </fieldset>:"No Data Available"
-                    }
+                    </div>
+                  </fieldset>:"No Data Available"
+                }
 
-                </div>
-                                
-                
-                
-    
-              </div>
-                
-              {/* <div className="modal-footer">
-                      
-    
-                      <Button data-bs-dismiss="modal" style={{ backgroundColor: 'rgb(108 110 116)',color:"#fff"}}>Close</Button>&nbsp;&nbsp;
-                    
-              
-                      {/* <Button data-bs-dismiss="modal" style={{ backgroundColor: '#183883',color:"#fff"}} onClick={ submituser }>Submit</Button> 
-                    
-                    </div>*/}
-              </div>  
-    
-              
             </div>
+                            
+            
+            
+
           </div>
-          </div>
+            
+          {/* <div className="modal-footer">
+                  
+
+            <Button data-bs-dismiss="modal" style={{ backgroundColor: 'rgb(108 110 116)',color:"#fff"}}>Close</Button>&nbsp;&nbsp;
+          
     
-    
-        </>
-      )
-    }
+            {/* <Button data-bs-dismiss="modal" style={{ backgroundColor: '#183883',color:"#fff"}} onClick={ submituser }>Submit</Button> 
+          
+          </div>*/}
+          </div>  
+
+          
+        </div>
+      </div>
+      </div>
+
+
+    </>
+  )
+}
     

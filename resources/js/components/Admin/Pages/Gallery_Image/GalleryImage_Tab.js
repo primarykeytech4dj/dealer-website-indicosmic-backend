@@ -10,8 +10,9 @@ import Api from "../../../../api";
 
 
 import Swal from "sweetalert2";
-
-import GalleryList from "./Gallery_List";
+import { Suspense } from "react";
+const GalleryList = React.lazy(() => import('./Gallery_List'));
+//import GalleryList from "./Gallery_List";
 
 export  class GalleryTabs extends React.Component {
 
@@ -32,6 +33,13 @@ export  class GalleryTabs extends React.Component {
   
 
     componentDidMount(){
+        this.gallerlist()
+       
+    }
+
+
+    gallerlist=()=>{
+
         this.apiCtrl.callAxios("gallery/list").then(res=>{
 
             //this.setState(old=>({...old,isLoading:true}))
@@ -58,6 +66,7 @@ export  class GalleryTabs extends React.Component {
           //  console.log("response=>",res)
            
         })
+
     }
 
     
@@ -83,6 +92,7 @@ export  class GalleryTabs extends React.Component {
          
 
         }
+       
 
       
 
@@ -136,22 +146,15 @@ export  class GalleryTabs extends React.Component {
                             console.log("value=>",value)         
                                 
                             a = String(parseInt(a)+1);
-                        
+                           
                             return(
 
                             
-                                <TabPanel key={key} value={`${a}`}><GalleryList nextfunc={next}   data={value} value={`${a}`} /></TabPanel> 
+                                <TabPanel  key={key} value={`${a}`}><Suspense fallback={<div>Loading...</div>}><GalleryList nextfunc={next} gallfunc={this.gallerlist.bind(this)}  data={value} value={`${a}`} /></Suspense></TabPanel> 
 
                             )
 
-
-                        
-                            
-
-                        
-                        
-                        
-                            
+                          
                         })}
                      </>
                     

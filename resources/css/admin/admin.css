@@ -293,8 +293,8 @@ html {
   }
   @media (min-width: 992px) {
     .content-wrapper {
-      /* margin-left: 250px; */
-      margin-left:257px;
+     /* margin-left: 250px; */
+       margin-left:257px; 
     }
   }
   
@@ -354,7 +354,10 @@ html {
   @media (min-width: 992px) {
     #mainNav.navbar-dark .navbar-collapse .navbar-sidenav {
       background: #183883;
-      padding-top: 10px;
+      /* padding: 1px 2px 0px 1px; */
+       padding-top: 10px; 
+      /* width:22%; */
+      /* width:250px; */
     }
     #mainNav.navbar-dark .navbar-collapse .navbar-sidenav li.active a {
       color: white !important;
@@ -1195,3 +1198,4 @@ html {
     margin-left: auto!important;
 }
 
+ 
