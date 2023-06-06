@@ -7,9 +7,12 @@ import BreadCrumb from '../../BreadCrumb/BreadCrumb';
 import Api from "../../../../api";
 import reactCSS from 'reactcss'
 import { SketchPicker } from 'react-color'
+import {websiteJson} from '../../../../constants';
+
 import Swal from 'sweetalert2';
 import withRouter from '../../../../withRouter';
 import { API_CONSTANTS } from '../../../../assets/constant';
+import { useEffect } from 'react';
 // import state from 'sweetalert/typings/modules/state';
 // import { set } from 'lodash';
 
@@ -61,7 +64,8 @@ export  class WebsiteSetting extends React.Component {
 
 
   componentWillMount = () => {
-    this.webdata();
+    //this.webdata();
+    this.loadConfigJson()
   }
 
 
@@ -94,20 +98,22 @@ export  class WebsiteSetting extends React.Component {
  
     if(this.props.location.state!==null){
       if(this.props.location.state.param!==null&&this.props.location.state.param!==undefined){
-        const{website_config}=this.props.location.state.param
+        const{website_config,company_code}=this.props.location.state.param
         console.log("wesbiteconfigdata=>",website_config)
         if(website_config!==null){
-           this.setState(old=>({...old, ...website_config }))
+           this.setState(old=>({...old, ...website_config ,company_code}))
         }else{
          var companyName=sessionStorage.getItem(`${API_CONSTANTS.subdomain}_company_data`)
          var comanydata=JSON.parse(companyName)
-         this.setState(old=>({...old, ...comanydata.website_config }))
+         const {company_code}=comanydata
+         this.setState(old=>({...old, ...comanydata.website_config,company_code }))
         }
         
       }else{
         var companyName=sessionStorage.getItem(`${API_CONSTANTS.subdomain}_company_data`)
          var comanydata=JSON.parse(companyName)
-         this.setState(old=>({...old, ...comanydata.website_config }))
+         const {company_code}=comanydata
+         this.setState(old=>({...old, ...comanydata.website_config,company_code }))
       }
       
      
@@ -115,7 +121,8 @@ export  class WebsiteSetting extends React.Component {
     }else{
       var companyName=sessionStorage.getItem(`${API_CONSTANTS.subdomain}_company_data`)
         var comanydata=JSON.parse(companyName)
-        this.setState(old=>({...old, ...comanydata.website_config }))
+        const {company_code}=comanydata
+        this.setState(old=>({...old, ...comanydata.website_config,company_code}))
     }
 
  
@@ -128,7 +135,31 @@ export  class WebsiteSetting extends React.Component {
 
   }
 
+  
+  loadConfigJson=()=>{
 
+    var obj = {}
+
+    
+
+    this.apiCtrl.callAxios("config/module", { file_name:websiteJson  }).then(response => {
+      //    console.log("Config Response=>",response)
+
+      
+      obj = response.data;
+
+      this.setState({ ...obj })
+      this.webdata();
+
+      console.log("obj=>", obj)
+
+
+    })
+     
+  }
+
+
+ 
   render() {
 
     const submission = (e) => {
@@ -139,8 +170,8 @@ export  class WebsiteSetting extends React.Component {
         theme: this.state.theme,
         captcha_key: this.state.captcha_key,
         lat: this.state.lat,
-        lng: this.state.lng
-
+        lng: this.state.lng,
+        
 
 
 
@@ -148,6 +179,8 @@ export  class WebsiteSetting extends React.Component {
 
       data.append("type", this.state.type);
       data.append("module_name", this.state.module_name)
+      data.append("company_code",this.state.company_code
+      )
 
       Object.entries(config).map(([index, value]) => {
         if ((typeof value !== 'string') && (value!==null&&value!==""&&Object.keys(value).length > 0)) {
@@ -198,12 +231,25 @@ export  class WebsiteSetting extends React.Component {
         //    console.log ("response==>",response)
 
         if (response.success == true) {
+         // this.companyView()
+          const {data}=response.data.original
+          var companyName=sessionStorage.getItem(`${API_CONSTANTS.subdomain}_company_data`)
+           var comanydata=JSON.parse(companyName)
+           const {company_code}=comanydata
+           if(data.company_code==company_code){
+
+            sessionStorage.setItem(`${API_CONSTANTS.subdomain}_company_data`, JSON.stringify({...data}))
+          
+
+          }
           Swal.fire({
             title: "Website",
             text: "Updated",
             icon: "success",
             showConfirmButton: false,
           })
+
+          
           setTimeout(() => {
             Swal.close()
 
@@ -275,7 +321,7 @@ export  class WebsiteSetting extends React.Component {
                 return (
                   <>
 
-                    {value!==null&&value!==""&&Object.entries(value).map(([attr, values]) => {
+                    {value!==null&&value!==""&&value!==undefined&&Object.entries(value).map(([attr, values]) => {
                       // console.log("attr",attr,"values",values)
                       switch (attr) {
                         case "logo":
@@ -424,6 +470,9 @@ const Color = (props) => {
   const [coloratr, setColoatr] = useState(
     props.attr
   )
+  useEffect(()=>{
+    setColoatr(props.attr)
+  },[props.attr])
   // console.log("coloratr=>",coloratr)
   // console.log("clrprops=>",props)
 
@@ -454,6 +503,9 @@ const ColorMaker = (props) => {
 
   })
   const [colors, setColors] = useState(props.val);
+  useEffect(()=>{
+    setColors(props.val)
+  },[props.val])
   const primary = () => {
 
     setState({

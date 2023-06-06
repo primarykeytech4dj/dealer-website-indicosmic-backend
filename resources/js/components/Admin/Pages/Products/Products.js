@@ -325,7 +325,7 @@ export  class Products extends React.Component {
 
         const productCategory = () => {
             var data = {
-                is_service: (this.props.params.any === 'service')?1:0
+                is_service: (this.props.title === 'service')?1:0
               }
             this.apiCtrl.callAxios('product/get-product-category',data).then(res => {
               // const array={}

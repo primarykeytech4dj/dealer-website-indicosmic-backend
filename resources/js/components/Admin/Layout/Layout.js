@@ -65,11 +65,17 @@ import { API_CONSTANTS } from '../../../assets/constant';
 import Api from '../../../api';
 import ProductCategoryList from '../Pages/ProductCategory/ProductCtaegoryList';
 import BranchList from '../Pages/Branch/Branch';
+import Crypt from '../../../Services/Crypt';
+import InvoiceReport from'../../../components/Admin/Pages/AssesmentReport/AssesmentReport';
+import EnquiryCreate from '../Pages/Enquiry_List/EnquiryCreate';
 
 
 export default function Layout() {
   const apiCtrl = new Api;
-  var roles = JSON.parse(localStorage.getItem('user_roles'))
+  const  cryptCtrl = new Crypt
+   var roles = JSON.parse(localStorage.getItem('user_roles'))
+  // var role = cryptCtrl.decrypt(localStorage.getItem('user_roles'))
+  // var roles =JSON.parse(role)
   var path=<Invoice/>
   useEffect(()=>{
     
@@ -106,6 +112,7 @@ export default function Layout() {
      
     } else {
       // alert()
+      
       apiCtrl.callAxiosGet(`company/view`).then((response)=>{
         console.log('About US Response', response)
         if(response.success == false){
@@ -197,6 +204,7 @@ export default function Layout() {
                   {<Route path='/admin/vehicle-upload' element={<VehicleImageUpload/>}/>}
                   
                   {<Route path ="/admin/template" element={<GandhiTemplate/>}/>}
+                  {<Route path='/admin/enquiry/create' element={<EnquiryCreate/>}/>}
                   {<Route path="/admin/enquiry-list" element={<EnquiryList/>}/>}
                   {<Route path='/admin/sales-enquiry-list' element={<SalesList/>}/>}
                   {<Route path='/admin/vehicletab' element={<VehicleTabs/>}/>}
@@ -212,6 +220,7 @@ export default function Layout() {
               {<Route path="/admin/invoice" element={<Invoice/>}/>}
               {<Route path='/admin/branch' element={<BranchList/>}/>}
               {<Route path='/admin/invoice-list' element={<InvoiceListing/>}/>}
+              {<Route path='/admin/document' element={<InvoiceReport/>}/>}
               </Routes>
                :""}
                 

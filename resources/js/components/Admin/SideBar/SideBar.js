@@ -225,6 +225,10 @@ export default function SideBar() {
 class Columns extends React.Component {
   render() {
     var roles = JSON.parse(localStorage.getItem('user_roles'))
+
+    var detail=JSON.parse(localStorage.getItem('user_details'))
+    console.log("detailsUser==>",detail)
+
     
     if( (roles[0].role_code === "DA") || (roles[0].role_code === "WO" ) ){
       return (
@@ -273,12 +277,12 @@ class Columns extends React.Component {
         <ul className="sidenav-second-level collapse" id="collapseMylistings">
         {/* <i className="fa fa-fw fa-globe"></i> */}
         <li><Link  to="/admin/setup/type/website"><i className="fa fa-fw fa-globe"></i>Website Setting</Link></li>
-      <li><Link  to="/admin/setup/type/home">Home Setting</Link></li>
+      {/* <li><Link  to="/admin/setup/type/home">Home Setting</Link></li>
       <li><Link  to="/admin/setup/type/about">About US setting</Link></li>
       <li><Link  to="/admin/setup/type/services">Services Setting</Link></li>
       <li><Link  to="/admin/setup/type/products">Products Settings</Link></li>
       <li><Link  to="/admin/setup/type/gallery">Gallery Settings</Link></li>
-      <li><Link  to="/admin/setup/type/services">Contact Us Settings</Link></li>
+      <li><Link  to="/admin/setup/type/services">Contact Us Settings</Link></li> */}
         </ul>
   </li>
 
@@ -294,17 +298,28 @@ class Columns extends React.Component {
     
         </ul>
   </li>
-
-  <li className="nav-item" data-toggle="tooltip" style={{borderBottomColor:"#183883", borderBottomWidth:"thin"}}  data-placement="right" title="My listings">
-        <a className="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMylistings">
-          <i className="fa fa-fw fa-list"></i>
-          <span className="nav-link-text">&nbsp; Company</span>
-        </a>
-        <ul className="sidenav-second-level collapse" id="collapseMylistings">
-        <li><Link  to="/admin/company/create">Company Create</Link></li>
-      <li><Link  to="/admin/company/list">CompanyList</Link></li>
-        </ul>
-  </li>
+  {detail.is_admin==undefined?
+    <li className="nav-item" data-toggle="tooltip" style={{borderBottomColor:"#183883", borderBottomWidth:"thin"}}  data-placement="right" title="My listings">
+          <a className="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMylistings">
+            <i className="fa fa-fw fa-list"></i>
+            <span className="nav-link-text">&nbsp; Company </span>
+          </a>
+          <ul className="sidenav-second-level collapse" id="collapseMylistings">
+          <li><Link  to="/admin/company/create">Company Create</Link></li>
+        <li><Link  to="/admin/company/list">CompanyList</Link></li>
+          </ul>
+    </li>:detail.is_admin==1?
+    <li className="nav-item" data-toggle="tooltip" style={{borderBottomColor:"#183883", borderBottomWidth:"thin"}}  data-placement="right" title="My listings">
+    <a className="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMylistings">
+      <i className="fa fa-fw fa-list"></i>
+      <span className="nav-link-text">&nbsp; Company </span>
+    </a>
+    <ul className="sidenav-second-level collapse" id="collapseMylistings">
+    <li><Link  to="/admin/company/create">Company Create</Link></li>
+    <li><Link  to="/admin/company/list">CompanyList</Link></li>
+    </ul>
+    </li>:""
+    }
 
 
   <li className="nav-item" data-toggle="tooltip" style={{borderBottomColor:"#183883", borderBottomWidth:"thin"}}  data-placement="right" title="My listings">
@@ -328,17 +343,28 @@ class Columns extends React.Component {
       <li><Link  to="/admin/service/list">Services</Link></li>
         </ul>
   </li>
+  {detail.is_admin==undefined?
+    <li className="nav-item" data-toggle="tooltip" style={{borderBottomColor:"#183883", borderBottomWidth:"thin"}}  data-placement="right" title="My listings">
+          <a className="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMylistings">
+            <i className="fa fa-fw fa-list"></i>
+            <span className="nav-link-text">&nbsp; Users</span>
+          </a>
+          <ul className="sidenav-second-level collapse" id="collapseMylistings">
+          <li><Link  to="/admin/user-list">UserList</Link></li>
+      
+          </ul>
+    </li>:detail.is_admin==1?
+    <li className="nav-item" data-toggle="tooltip" style={{borderBottomColor:"#183883", borderBottomWidth:"thin"}}  data-placement="right" title="My listings">
+    <a className="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMylistings">
+      <i className="fa fa-fw fa-list"></i>
+      <span className="nav-link-text">&nbsp; Users</span>
+    </a>
+    <ul className="sidenav-second-level collapse" id="collapseMylistings">
+    <li><Link  to="/admin/user-list">UserList</Link></li>
 
-  <li className="nav-item" data-toggle="tooltip" style={{borderBottomColor:"#183883", borderBottomWidth:"thin"}}  data-placement="right" title="My listings">
-        <a className="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMylistings">
-          <i className="fa fa-fw fa-list"></i>
-          <span className="nav-link-text">&nbsp; Users</span>
-        </a>
-        <ul className="sidenav-second-level collapse" id="collapseMylistings">
-        <li><Link  to="/admin/user-list">UserList</Link></li>
-    
-        </ul>
-  </li>
+    </ul>
+    </li>:""
+  }
 
   <li className="nav-item" data-toggle="tooltip" data-placement="right" style={{borderBottomColor:"#183883", borderBottomWidth:"thin"}}  title="Testimonials">
   

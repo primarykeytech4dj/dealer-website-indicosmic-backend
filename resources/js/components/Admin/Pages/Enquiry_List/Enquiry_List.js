@@ -15,6 +15,9 @@ import { useState } from "react";
 import textModifier from "../../../services/textModifier";
 import { object } from "prop-types";
 import MaterialSelect from "../../../../Tags/MaterialSelect";
+import IconButton from '@mui/material/IconButton';
+
+import ArrowDownwardTwoToneIcon from '@mui/icons-material/ArrowDownwardTwoTone';
 
 
  export class EnquiryList extends React.Component {
@@ -317,6 +320,21 @@ function Model(props){
 
   
   console.log("props",props)
+  // const dwnloadcv=(data)=>{
+  //   console.log("data==>",data)
+  //       var txt = atob(data);
+
+  //   // Blob for saving.
+  //   // var blob = new Blob([byteString], { type: "application/pdf" });
+
+  //   // // Tell the browser to save as report.txt.
+  //   //   saveAs(blob, "report.txt");
+      
+  //   //     console.log("decode==>",blob)
+  //       window.open(txt)
+          
+
+  // }
 
   return(
     <>
@@ -498,7 +516,13 @@ function Model(props){
 
                               })}</>:
                               Object.entries(props.params).map(([keyy,valuee])=>{
+                                if(keyy=="cv_upload"){
+                                  return <span><b>{"CV Download"}</b> :Dawnload CV <a download="PDF CV" href={valuee}><IconButton><ArrowDownwardTwoToneIcon></ArrowDownwardTwoToneIcon></IconButton></a></span>
+                                  // return <span><b>{"CV Download"}</b> :Download CV<IconButton onClick={()=>dwnloadcv(valuee)}><ArrowDownwardTwoToneIcon></ArrowDownwardTwoToneIcon></IconButton></span>
+                                }else{
                                   return <span><b>{textModifier(keyy)}</b> : {valuee}</span>
+                                }
+                                  
                               })
                               
                               

@@ -383,7 +383,7 @@ function Model(props){
           // c_password: this.state.c_password,
           role: this.state.role,
           address: this.state.address,
-          district: this.state.district,
+          // district: this.state.district,
           city: this.state.city,
           state: this.state.state,
           pincode: this.state.pincode,

@@ -32,7 +32,7 @@ import { Products } from "./Products";
         productData:[],
        // product_type:this.props.title,
        filter:"",
-        is_service: this.props.params.any === 'service'?1:0
+        is_service: this.props.title === 'service'?1:0
   
     }
   
@@ -40,7 +40,12 @@ import { Products } from "./Products";
   
     componentWillMount = () => {
       this.getProductList();
+   
     }
+  //  componentDidMount=()=>{
+  //   this.getProductList();
+   
+  //  }
 
     
 
@@ -62,16 +67,16 @@ import { Products } from "./Products";
     }
 
     // componentDidUpdate = (prevProps, prevState) =>{
-    //   if(prevProps.params !== this.props.params){
-    //     this.getProductcategoryList();
+    //   if(prevProps.title !== this.props.title){
+    //     this.getProductList()
     //   }
     //  }
   
   
     getProductList = (pageSize) =>{
-  
+      console.log("state=>",this.state)
       this.setState(old => ({...old, isLoading:true}))
-       var data = {filter:this.state.filter,is_service:this.state.is_service,length:this.state.pageSize, start:this.state.page*this.state.pageSize};
+       var data = {filter:this.state.filter,is_service:this.props.title=== 'service'?1:0,length:this.state.pageSize, start:this.state.page*this.state.pageSize};
       // var data = {
       //   is_service: (this.props.params.any === 'service')?1:0
       // }

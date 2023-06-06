@@ -52,7 +52,7 @@ class ProductCategoryList extends React.Component{
     }
 
     componentDidUpdate = (prevProps, prevState) =>{
-      if(prevProps.params !== this.props.params){
+      if(prevProps.title !== this.props.title){
         this.getProductcategoryList();
       }
       if ((prevState.page !== this.state.page)) {
@@ -68,10 +68,10 @@ class ProductCategoryList extends React.Component{
      }
 
     getProductcategoryList = (pageSize) =>{
-
+    
         this.setState(old => ({...old, isLoading:true}))
         var data = {
-          is_service: (this.props.title === 'service')?1:0,
+          is_service:this.props.title === 'service'?1:0,
           length:this.state.pageSize, start:this.state.page*this.state.pageSize,
           filter:this.state.filter
 

@@ -20,6 +20,7 @@ import { Edit } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { FileUploader } from "react-drag-drop-files";
 import Slider from "react-slick";
+import { object } from "prop-types";
 
  export class VehicleList extends React.Component {
     constructor(props){
@@ -344,6 +345,7 @@ function UploadModel(props){
   })
   const [message,setMessage]=useState({})
   const [showgalleryimages,setshowgalleryimages]=useState([])
+  const[imgshow,setImgshow]=useState({})
   const apiCtrl=new Api
   console.log("state=>",state)
   const fileTypes = ["JPG", "PNG", "GIF", "JPEG"];
@@ -351,10 +353,11 @@ function UploadModel(props){
  
 
   useEffect(()=>{
-
-
-
-  })
+   console.log("propsupload=>",props)
+   const {featured_image, document,other_images,banner_image   }=props.params
+  
+   setState(old=>({...old,featured_image,document,other_images,banner_image}))
+  },[props.params])
 
 
  
@@ -468,7 +471,7 @@ function UploadModel(props){
 
      // console.log("value=>",value)
 
-        setState(old=>({...old,other_images:{...file}}))
+        setState(old=>({...old,other_images:{...old.other_images,...file}}))
         //setState(old=>({...old,showgalleryimages:[...old.showgalleryimages,URL.createObjectURL(value)]}))
        setshowgalleryimages(old=>([...old,URL.createObjectURL(value)]))
     })
@@ -484,11 +487,108 @@ function UploadModel(props){
   
 
   }
+  const handleChange=(e)=>{
+
+    setState(old=>({...old,[e.target.name]:e.target.files[0]}))
+    setImgshow(old=>({...old,[e.target.name]:URL.createObjectURL(e.target.files[0])}))
+  }
+
+  const deleteimage=(key,slug)=>{
+
+    // console.log("key=>",key)
+    // console.log("slug=>",slug)
+    const data={
+       id:key,
+     
+   }
+
+    var arr=state.other_images     
+
+    
+    arr[key] ={};
+    console.log("arr=>",arr)
+     
+    const msg_1={
+      text_1:"Do you want to De-Activate",
+      //text_1:"",
+      text_3:" De-Activate ",
+      text_2:"Do you want to Activate",
+    
+      text_4:" Activate "
+    }
+     var msg=""
+     var msg1=""
+     if(data.is_active===0){
+      msg= msg_1.text_1;
+      msg1=msg_1.text_3
+     }else{
+      msg= msg_1.text_2;
+      msg1=msg_1.text_4
+     }
+     // console.log("msg",msg)
+   
+   
+     Swal.fire({
+       title: 'Are you sure?',
+       html: `${msg}`,
+       icon: 'warning',
+       showCancelButton: true,
+       confirmButtonColor: '#00B96F',
+       cancelButtonColor: '#d33',
+       confirmButtonText: 'Yes',
+     }).then((result) => {
+   
+       if (result.value) {
+        setState(old=>({...old,other_images:{...arr}}))
+       apiCtrl.callAxios(`vehicle/deleteVehicleImage  `,data).then(response => {
+   
+   
+           if(response.success == true){
+             Swal.fire({
+              
+                  title:`Vehicle ${msg1} Successfully!`,
+               icon: "success",
+               showConfirmButton: false,
+               timer: 1200,
+             });
+             setTimeout(() => {
+              Swal.close()
+              
+             }, 5000);
+            // location.reload(`/${props.url}-list`)
+               } else {
+                 Swal.fire({
+                   title: `Vehicle ${msg1} unsuccessfully!`,
+                   icon: "error",
+                   showConfirmButton: false,
+                   timer: 1200,
+                 });
+                 setTimeout(() => {
+                  Swal.close()
+                  
+                 }, 5000);
+               }
+             
+           console.log('deleted res', response);
+   
+        
+         });
+       }else{
+        //location.reload(`/admin/${props.url}-list`)
+       }
+     });
+
+   
+  
+   
+
+
+  }
  
   // console.log("props model=>",props.params)
-  // console.log("stae=>",state)
+   console.log("stae=>",state)
   // console.log("shoimage=>",showgalleryimages)
-  console.log("message=>",message)
+ // console.log("message=>",message)
  
  
 
@@ -515,16 +615,42 @@ function UploadModel(props){
               <div className="row mb-2">
 
                 
-                  <div className="col-md-6 mb-3">
-                      <MaterialTextField type={"file"} label="Feature image" accept="image/*" name="feature_image" fullWidth  onChange={(e)=>setState(old=>({...old,feature_image : e.target.files[0]}))}/>
+                  <div className="col-md-3 mb-3">
+                      <MaterialTextField type={"file"} label="Feature image" accept="image/*" name="feature_image" fullWidth  onChange={handleChange}/>
                       <label className="d-flex justify-content-start"><span className="text-success">{message.featured_image?message.featured_image.success:""}</span></label>
                   </div>
+                  {imgshow.feature_image?
+                    <div className="col-md-3 mb-3">
+                    <img src={imgshow.feature_image?imgshow.feature_image:""}/>
+                  
+
+                    </div>:
+                   state.featured_image?
+                    <div className="col-md-3 mb-3">
+                      <img src={state.featured_image?state.featured_image:""}/>
+                    
+
+                    </div>:""
+                  }
                 
-                  <div className="col-md-6 mb-3">
-                      <MaterialTextField type={"file"} label="Banner Image" accept="application/pdf" name="banner_image" fullWidth onChange={(e)=>setState(old=>({...old,banner_image : e.target.files[0]}))}/>
+                  <div className="col-md-3 mb-3">
+                      <MaterialTextField type={"file"} label="Banner Image" accept="application/pdf" name="banner_image" fullWidth onChange={handleChange}/>
                       <label className="d-flex justify-content-start"><span className="text-success">{message.banner_image?message.banner_image.success:""}</span></label>
               
                   </div>
+                  {imgshow.banner_image?
+                  <div className="col-md-3 mb-3">
+                  <img src={imgshow.banner_image?imgshow.banner_image:""}/>
+                
+
+                </div>:
+                  state.banner_image?
+                    <div className="col-md-3 mb-3">
+                      <img src={state.banner_image?state.banner_image:""}/>
+                    
+
+                    </div>:""
+                  }
                  
 
               </div>
@@ -547,7 +673,8 @@ function UploadModel(props){
 
               </div>
               <div  className="row mb-2">
-                <div className="container">
+                {/* <div className="container">
+                {showgalleryimages.length>0?
                 <Slider {...settings}>
                     {showgalleryimages.length >0 && Object.entries(showgalleryimages).map(([key,image])=>{
                     return(<>
@@ -555,16 +682,76 @@ function UploadModel(props){
                         <img className="sliderimage" src={image}  alt="..."/>
                         
                         </div>
-                        {/* <img className="image" src={image}/> */}
+                       
                     </>)  
 
                     })}
                 
                     
                         
-                </Slider> 
+                </Slider>:state.other_images?
+                   
+                   <Slider {...settings}>
+                   {state.other_images.length >0 && Object.entries(state.other_images).map(([key,image])=>{
+                   return(<>
+                       <div className="card" style={{width:"180px"}}>
+                       <img className="sliderimage" src={image}  alt="..."/>
+                       
+                       </div>
+                     
+                   </>)  
+
+                   })}
+               
+                   
+                       
+               </Slider>:""
+                 
+                }
                     
-                </div>
+                </div> */}
+                 
+                 
+                 {showgalleryimages.length>0?<>
+                    {
+                         showgalleryimages.length >0 && Object.entries(showgalleryimages).map(([key,image])=>{
+                          return(<>
+                              <div className="col-md-3 profile-pic" >
+                              <img className="sliderimage" src={image}  alt="..."/>
+                              
+                              </div>
+                             
+                          </>)  
+      
+                          })
+                    }
+                   </>:state.other_images?
+                     <>
+                     {
+                          Object.keys(state.other_images).length >0 && Object.entries(state.other_images).map(([key,image])=>{
+                          // console.log("key",key,"image",typeof image)
+                           return(<>
+                            {typeof image !=="object"&&
+                              <div className="col-md-3 profile-pic " >
+                                 <img style={{width:"100%"}} className="sliderimage" src={image}  alt="..."/>
+
+                                  <div className="edit">
+                     
+                                    <button  type="submit" onClick={()=>deleteimage(key)}> <i className="fa fa-fw fa-trash" ></i></button>
+
+                                  </div>
+                               
+                               
+                              </div>
+                            }
+                              
+                           </>)  
+       
+                           })
+                     }
+                    </>:""
+                       
+                  }
 
               </div>
            

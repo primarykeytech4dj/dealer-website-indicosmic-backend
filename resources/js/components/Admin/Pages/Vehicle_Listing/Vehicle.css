@@ -6,6 +6,23 @@ img{
     /* width:"180px",
     \height:"57px !important" */
 }
+.edit {
+	padding-top: 7px;	
+	padding-right: 7px;
+	position: absolute;
+	right: 0;
+	top: 0;
+	display: none;
+}
+
+.profile-pic {
+	position: relative;
+	display: inline-block;
+}
+
+.profile-pic:hover .edit {
+	display: block;
+}
  /* fileuploader zone */
  /* fileuploader zone */
 .ewqTBN {

@@ -4,6 +4,7 @@ let host = window.location.host;
 let protocol = window.location.protocol;
 let parts = host.split(".");
 // var subdomain = "shubhauto";
+
 var subdomain="sharvaautomobiles";
 var domain = '2wh'
 // var subdomain = "dealer-website";
