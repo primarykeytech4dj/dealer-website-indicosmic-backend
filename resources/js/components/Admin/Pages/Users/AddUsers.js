@@ -9,6 +9,8 @@ import MaterialSelect from '../../../../Tags/MaterialSelect';
 import Swal from 'sweetalert2';
 import Geocode from "react-geocode";
 import withRouter from '../../../../withRouter';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
 //import Googlemap from '../Google_lat_lan/Google_lat_lan';
 
 export class AddUsers extends React.Component {
@@ -294,12 +296,13 @@ export class AddUsers extends React.Component {
                 c_password: this.state.c_password,
                 role: this.state.role,
                 address: this.state.address,
-                district: this.state.district,
+                // district: this.state.district,
                 city: this.state.city,
                 state: this.state.state,
                 pincode: this.state.pincode,
                 lat:this.state.lat,
-                lng:this.state.lng
+                lng:this.state.lng,
+                is_admin:this.state.is_admin
 
             
             }
@@ -313,10 +316,11 @@ export class AddUsers extends React.Component {
                 // c_password: this.state.c_password,
                 role: this.state.role,
                 address: this.state.address,
-                district: this.state.district,
+                // district: this.state.district,
                 city: this.state.city,
                 state: this.state.state,
                 pincode: this.state.pincode,
+                is_admin:this.state.is_admin
       
             
             }
@@ -502,7 +506,7 @@ export class AddUsers extends React.Component {
                    error={this.state.errors.name?true:false}
                  />
             </div>
-            <div className="col-md-4 mb-4">
+            <div className="col-md-3 mb-4">
                 <MaterialTextField value={this.state.email?this.state.email:""}   label={" User Email *"} size="small" fullWidth name='email' onChange={(e)=>{handleChange(e)}}
                   helperText={
                     this.state.errors.email
@@ -511,6 +515,10 @@ export class AddUsers extends React.Component {
                    }
                    error={this.state.errors.email?true:false}
                  />
+            </div>
+            <div className='col-md-1 mb-4'>
+            <FormControlLabel control={<Checkbox checked={this.state.is_admin==1?true:false}   onChange={(e)=>this.setState({is_admin:e.target.checked?1:0})}/>} label={"Admin"} />
+
             </div>
             <div className="col-md-4 mb-4">
                 <MaterialTextField value={this.state.mobile?this.state.mobile:""} label={ " User Mobile *"} size="small" fullWidth name='mobile' onChange={(e)=>{handleChange(e)}}

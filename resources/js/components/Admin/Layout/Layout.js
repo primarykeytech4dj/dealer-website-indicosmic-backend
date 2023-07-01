@@ -68,12 +68,14 @@ import BranchList from '../Pages/Branch/Branch';
 import Crypt from '../../../Services/Crypt';
 import InvoiceReport from'../../../components/Admin/Pages/AssesmentReport/AssesmentReport';
 import EnquiryCreate from '../Pages/Enquiry_List/EnquiryCreate';
+import { CompanyEditTab } from '../Pages/CompanyEdit/CompanyTab';
 
 
 export default function Layout() {
   const apiCtrl = new Api;
   const  cryptCtrl = new Crypt
    var roles = JSON.parse(localStorage.getItem('user_roles'))
+   var detail=JSON.parse(localStorage.getItem('user_details'))
   // var role = cryptCtrl.decrypt(localStorage.getItem('user_roles'))
   // var roles =JSON.parse(role)
   var path=<Invoice/>
@@ -148,16 +150,15 @@ export default function Layout() {
               </Routes> 
               :''}
               
-          { roles[0].role_code === "WO" || roles[0].role_code === "IN" || roles[0].role_code === "DA" || roles[0].role_code === "AG" ? 
+          {/* { roles[0].role_code === "WO" || roles[0].role_code === "IN" || roles[0].role_code === "DA" || roles[0].role_code === "AG" ? 
               <Routes>
                  <Route exact path="/admin" element={<Dashboard />} />
-                {/* <Route path="/admin/claim-list" element={<ClaimList />} />  */}
-                {/* <Route path="/admin/assessor/claim-assessment" element={<ClaimAssesment />} /> */}
+            
               </Routes> 
-              :''}
+              :''} */}
 
 
-              { roles[0].role_code === "SA" || roles[0].role_code === "AD" || roles[0].role_code === "AS"  || roles[0].role_code === "CC" ?  
+              {detail.is_admin==1 ?
               <Routes>
                 <Route  path="/admin" element={<Dashboard />} />
                     {/* <Route path="/admin/create/:any" element={<AddUsers />} /> */}
@@ -221,6 +222,7 @@ export default function Layout() {
               {<Route path='/admin/branch' element={<BranchList/>}/>}
               {<Route path='/admin/invoice-list' element={<InvoiceListing/>}/>}
               {<Route path='/admin/document' element={<InvoiceReport/>}/>}
+              {<Route path='/admin/company/edit' element={<CompanyEditTab/>}/>}
               </Routes>
                :""}
                 

@@ -483,6 +483,52 @@ class ProductCategoryEdit extends React.Component {
                 })
                 this.setState(old=>({...old,errors:{ ...old.errors, ...error}})) 
             }
+            if(fieldName=="image_name_1"){
+                 
+              var reader = new FileReader();
+              //Read the contents of Image File.
+              reader.readAsDataURL(fieldValue);
+             
+              reader.onload = (e) => {
+                  //Initiate the JavaScript Image object.
+                  var image = new Image();
+                  //Set the Base64 string return from FileReader as source.
+                  image.src = e.target.result;
+                  image.onload = (e) => {
+                      //Determine the Height and Width.
+                      var height = image.height;
+                      var width = image.width;
+                      console.log("height=>",height,"width=>",height)
+                      var res = true;
+                      error[fieldName] = '';
+                      if (height<600 && width<640) {
+                          error[fieldName] = "Height and Width must  exceed 600px."
+                          // alert("Height and Width must not exceed 600px.");
+
+                         // this.setState(old=>({...old,errors:{ ...old.errors, ...error}})) 
+                          // return false;
+                          res =  false;
+
+                      }
+              
+                      // alert("Uploaded image has valid Height and Width.");
+                    
+                      // alert("validation")
+                 
+                      // this.setState(old=>({...old,errors:{ ...old.errors, ...error}})) 
+                      this.setState(old=>({...old,errors:{ ...old.errors, ...error}})) 
+                      if(res){
+                            this.setState(old=>({...old,[fieldName]: fieldValue } ))
+                      }
+                      return res;
+                      
+                  };
+                 
+              }
+
+             
+             
+            }
             if(isMax >= fieldValue.length){
                this.setState(old=>({...old,[fieldName]: fieldValue } ))
             }
@@ -618,13 +664,23 @@ class ProductCategoryEdit extends React.Component {
 
               const handleChange = (e) => {
 
-                validation(e.target.name, e.target.value)
-                console.log(e.target.value)
+                // validation(e.target.name, e.target.value)
+                // console.log(e.target.value)
       
-                if(e.target.name==="image_name_1"){
-                  this.setState(old=>({...old, image_name_1 : e.target.files[0]}))
-                  this.setState(old=>({...old,imageshow:URL.createObjectURL(e.target.files[0])}))
+                // if(e.target.name==="image_name_1"){
+                //   this.setState(old=>({...old, image_name_1 : e.target.files[0]}))
+                //   this.setState(old=>({...old,imageshow:URL.createObjectURL(e.target.files[0])}))
 
+                // }
+                  if(e.target.name==="image_name_1"){
+                    validation(e.target.name, e.target.files[0])
+                  // this.setState(old=>({...old, image_name_1 : e.target.files[0]}))
+                    this.setState(old=>({...old, imageshow :URL.createObjectURL(e.target.files[0])}))
+                }else{
+                    validation(e.target.name, e.target.value)
+                    console.log(e.target.value)
+        
+        
                 }
               }
 
@@ -759,7 +815,7 @@ class ProductCategoryEdit extends React.Component {
                   <div className="col-md-6 mt-1">
                
                     <MaterialTextField    name="image_name_1" type="file"    onChange={(e)=>{handleChange(e)}} 
-                       label="Image 1"  fullWidth
+                        label="Image 1 (600px X 600px)"   fullWidth
                        helperText={
                         this.state.errors.image_name_1
                         ? this.state.errors.image_name_1

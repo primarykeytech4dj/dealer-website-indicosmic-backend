@@ -196,7 +196,7 @@ function Action(props){
       {/* <Button type='button' onClick={(e)=>{editSliderdata(e)}} >Edit</Button>&nbsp; */}
       <Link key={props.key}  to={`/admin/company/create`} state={{param:props.param}}><IconButton aria-label="Edit Company List"> <EditIcon fontSize="inherit" /></IconButton></Link>  
       <Link to={`/admin/branch`} ><IconButton aria-label="Branch Create"><FactoryIcon fontSize="inherit"/></IconButton></Link>
-     <Link to={"/admin/setup/type/website"} state={{param:props.param}}> <IconButton aria-label="Web Config"><LanguageIcon fontSize="inherit"/></IconButton></Link>
+      <Link to={"/admin/setup/type/website"} state={{param:props.param}}> <IconButton aria-label="Web Config"><LanguageIcon fontSize="inherit"/></IconButton></Link>
     
 
       

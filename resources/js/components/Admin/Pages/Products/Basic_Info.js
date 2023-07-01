@@ -314,23 +314,120 @@ export  class BasicInfo extends React.Component {
             })
             this.setState(old=>({...old,errors:{ ...old.errors, ...error}})) 
         }
+        if(fieldName=="banner_image"){
+                 
+            var reader = new FileReader();
+            //Read the contents of Image File.
+            reader.readAsDataURL(fieldValue);
+           
+            reader.onload = (e) => {
+                //Initiate the JavaScript Image object.
+                var image = new Image();
+                //Set the Base64 string return from FileReader as source.
+                image.src = e.target.result;
+                image.onload = (e) => {
+                    //Determine the Height and Width.
+                    var height = image.height;
+                    var width = image.width;
+                    console.log("height=>",height,"width=>",height)
+                    var res = true;
+                    error[fieldName] = '';
+                    if (height<600 && width<640) {
+                        error[fieldName] = "Height and Width must  exceed 600px."
+                        // alert("Height and Width must not exceed 600px.");
+
+                       // this.setState(old=>({...old,errors:{ ...old.errors, ...error}})) 
+                        // return false;
+                        res =  false;
+
+                    }
+            
+                    // alert("Uploaded image has valid Height and Width.");
+                  
+                    // alert("validation")
+               
+                    // this.setState(old=>({...old,errors:{ ...old.errors, ...error}})) 
+                    this.setState(old=>({...old,errors:{ ...old.errors, ...error}})) 
+                    if(res){
+                          this.setState(old=>({...old,[fieldName]: fieldValue } ))
+                    }
+                    return res;
+                    
+                };
+               
+            }
+
+           
+           
+          }
+          if(fieldName=="featured_image"){
+             
+            var reader = new FileReader();
+            //Read the contents of Image File.
+            reader.readAsDataURL(fieldValue);
+           
+            reader.onload = (e) => {
+                //Initiate the JavaScript Image object.
+                var image = new Image();
+                //Set the Base64 string return from FileReader as source.
+                image.src = e.target.result;
+                image.onload = (e) => {
+                    //Determine the Height and Width.
+                    var height = image.height;
+                    var width = image.width;
+                    console.log("height=>",height,"width=>",height)
+                    var res = true;
+                    error[fieldName] = '';
+                    if (height>400 && width>400) {
+                        error[fieldName] = "Height and Width must not exceed 400px."
+                        // alert("Height and Width must not exceed 600px.");
+
+                       // this.setState(old=>({...old,errors:{ ...old.errors, ...error}})) 
+                        // return false;
+                        res =  false;
+
+                    }
+            
+                    // alert("Uploaded image has valid Height and Width.");
+                  
+                    // alert("validation")
+               
+                    // this.setState(old=>({...old,errors:{ ...old.errors, ...error}})) 
+                    this.setState(old=>({...old,errors:{ ...old.errors, ...error}})) 
+                    if(res){
+                          this.setState(old=>({...old,[fieldName]: fieldValue } ))
+                    }
+                    return res;
+                    
+                };
+               
+            }
+
+           
+           
+          }
         if(isMax >= fieldValue.length){
            this.setState(old=>({...old,[fieldName]: fieldValue } ))
         }
     }
     const handleChange = (e) => {
 
-        validation(e.target.name, e.target.value)
-        console.log(e.target.value)
-
         if((e.target.name==="banner_image")||(e.target.name==="featured_image")){
+            validation(e.target.name, e.target.files[0])
             if(e.target.name==="banner_image"){
                 this.setState(old=>({...old,bannerImageshow : URL.createObjectURL(e.target.files[0])}))
             }else{
                 this.setState(old=>({...old,featuredImageshow : URL.createObjectURL(e.target.files[0])}))
             }
-          this.setState(old=>({...old,[e.target.name] : e.target.files[0]}))
+           
+        //   this.setState(old=>({...old,[e.target.name] : e.target.files[0]}))
+        }else{
+            validation(e.target.name, e.target.value)
         }
+
+
+
+        
       }
 
 
@@ -512,7 +609,7 @@ export  class BasicInfo extends React.Component {
 
             <div className="row">
                 <div className="col-md-6 mb-2">
-                    <MaterialTextField type={"file"}  onChange={(e)=>{handleChange(e)}}    name="banner_image" label="Banner Image"
+                    <MaterialTextField type={"file"}  onChange={(e)=>{handleChange(e)}}    name="banner_image" label="Banner Image (600px X 600px)"
                       helperText={
                         this.state.errors.banner_image
                         ? this.state.errors.banner_image
@@ -523,7 +620,7 @@ export  class BasicInfo extends React.Component {
 
                 </div>
                 <div className="col-md-6 mb-2">
-                    <MaterialTextField type={"file"}  onChange={(e)=>{handleChange(e)}}    name="featured_image" label="Featured Image"
+                    <MaterialTextField type={"file"}  onChange={(e)=>{handleChange(e)}}    name="featured_image" label="Featured Image (400px X 400px)"
                       helperText={
                         this.state.errors.featured_image
                         ? this.state.errors.featured_image

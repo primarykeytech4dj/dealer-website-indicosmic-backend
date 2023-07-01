@@ -11,6 +11,8 @@ import MaterialTextField from '../../../../Tags/MaterialTextField'
 import Api from '../../../../api';
 import { param } from 'jquery';
 import Swal from 'sweetalert2';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
 
 
 export  class UserList extends React.Component {
@@ -387,6 +389,7 @@ function Model(props){
           city: this.state.city,
           state: this.state.state,
           pincode: this.state.pincode,
+          is_
 
       
       }

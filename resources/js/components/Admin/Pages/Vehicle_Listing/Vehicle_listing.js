@@ -346,6 +346,7 @@ function UploadModel(props){
   const [message,setMessage]=useState({})
   const [showgalleryimages,setshowgalleryimages]=useState([])
   const[imgshow,setImgshow]=useState({})
+  const [errors, setErrors] = useState({})
   const apiCtrl=new Api
   console.log("state=>",state)
   const fileTypes = ["JPG", "PNG", "GIF", "JPEG"];
@@ -487,9 +488,192 @@ function UploadModel(props){
   
 
   }
-  const handleChange=(e)=>{
+  const validation = {
 
-    setState(old=>({...old,[e.target.name]:e.target.files[0]}))
+
+   
+    feature_image: { required: true, },
+    banner_image: { required: true, },
+    
+}
+  const validate = (fieldName, fieldValue) => {
+
+    let error = {}
+    let isValid = true;
+    let isMax = 1000;
+    if (typeof validation[fieldName] !== "undefined") {
+        Object.entries(validation[fieldName]).map(([key, value]) => {
+
+            let temp = fieldName.replace(/_/g, " ");
+            var names = temp
+                .toLowerCase()
+                .split(' ')
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                .join(' ');
+
+            if (key === 'required') {
+                if ((fieldValue.length < 0) || (fieldValue === '') || (fieldValue === null)) {
+                    error[fieldName] = `${names} Field is required`
+                    isValid = false;
+                }
+            } else if (key ==='min') {
+                if (fieldValue.length < value) {
+                    error[fieldName] = `${names} must be more than ${value} characters`
+                    isValid = false;
+                }
+            } else if (key ==='max') {
+                if (fieldValue.length > value) {
+                    error[fieldName] = `${names} must be less than ${value} characters`
+                    isMax = value;
+                    isValid = false;
+                }
+            
+            } else if (key === 'type') {
+                if (value === 'alpha') {
+                    if (!fieldValue.match(/^[A-Za-z\s]*$/)) {
+                        error[fieldName] = `${names} must be String characters`
+                        isValid = false;
+                    }
+                } else if (value === 'AlphaNumeric') {
+
+                    // if(!fieldValue.match(/^[A-Za-z0-9/(),-.\s]*$/)){
+                    if (!fieldValue.match(/^[A-Za-z0-9/(),-.\s]*$/)) {
+                        error[fieldName] = `${names} Is Invalid`
+                        isValid = false;
+                    }
+                } else if (value === 'Numeric') {
+                    if (!fieldValue.match(/^[0-9]*$/)) {
+                        error[fieldName] = `${names} must be String Numeric`
+                        isValid = false;
+                    }
+                } else if (value === 'email') {
+                    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+                    if (!fieldValue.match(reg)) {
+                        error[fieldName] = `${names} must be in Email format`
+                        isValid = false;
+                    }
+                } else if (value == "phone") {
+                    let reg = /^(?:(?:\+|0{0,2})91(\s*|[\-])?|[0]?)?([6789]\d{2}([ -]?)\d{3}([ -]?)\d{4})$/;
+                    if (!fieldValue.match(reg)) {
+                        error[fieldName] = `${names} Is Invalid`
+                        isValid = false;
+                    }
+                }
+
+            }
+            if (isValid == true) {
+
+                error[fieldName] = '';
+            }
+        })
+        setErrors(old => ({ ...old, ...error }))
+        // console.log('Error', errors);
+        // console.log('Error NAme', errors.name);
+    }
+
+    if(fieldName=="banner_image"){
+                 
+      var reader = new FileReader();
+      //Read the contents of Image File.
+      reader.readAsDataURL(fieldValue);
+     
+      reader.onload = (e) => {
+          //Initiate the JavaScript Image object.
+          var image = new Image();
+          //Set the Base64 string return from FileReader as source.
+          image.src = e.target.result;
+          image.onload = (e) => {
+              //Determine the Height and Width.
+              var height = image.height;
+              var width = image.width;
+              console.log("height=>",height,"width=>",height)
+              var res = true;
+              error[fieldName] = '';
+              if (height<600 && width<640) {
+                  error[fieldName] = "Height and Width must  exceed 600px."
+                  // alert("Height and Width must not exceed 600px.");
+
+                 // this.setState(old=>({...old,errors:{ ...old.errors, ...error}})) 
+                  // return false;
+                  res =  false;
+
+              }
+      
+              // alert("Uploaded image has valid Height and Width.");
+            
+              // alert("validation")
+         
+              // this.setState(old=>({...old,errors:{ ...old.errors, ...error}})) 
+              setErrors(old => ({ ...old, ...error }))
+              if(res){
+                    setState(old=>({...old,[fieldName]: fieldValue } ))
+              }
+              return res;
+              
+          };
+         
+      }
+
+     
+     
+    }
+    if(fieldName=="featured_image"){
+       
+      var reader = new FileReader();
+      //Read the contents of Image File.
+      reader.readAsDataURL(fieldValue);
+     
+      reader.onload = (e) => {
+          //Initiate the JavaScript Image object.
+          var image = new Image();
+          //Set the Base64 string return from FileReader as source.
+          image.src = e.target.result;
+          image.onload = (e) => {
+              //Determine the Height and Width.
+              var height = image.height;
+              var width = image.width;
+              console.log("height=>",height,"width=>",height)
+              var res = true;
+              error[fieldName] = '';
+              if (height>400 && width>400) {
+                  error[fieldName] = "Height and Width must not exceed 400px."
+                  // alert("Height and Width must not exceed 600px.");
+
+                 // this.setState(old=>({...old,errors:{ ...old.errors, ...error}})) 
+                  // return false;
+                  res =  false;
+
+              }
+      
+              // alert("Uploaded image has valid Height and Width.");
+            
+              // alert("validation")
+         
+              // this.setState(old=>({...old,errors:{ ...old.errors, ...error}})) 
+              setErrors(old => ({ ...old, ...error }))
+              if(res){
+                    setState(old=>({...old,[fieldName]: fieldValue } ))
+              }
+              return res;
+              
+          };
+         
+      }
+
+     
+     
+    }
+
+
+   
+}
+
+
+
+
+  const handleChange=(e)=>{
+    validate(e.target.name, e.target.files[0])
+    // setState(old=>({...old,[e.target.name]:e.target.files[0]}))
     setImgshow(old=>({...old,[e.target.name]:URL.createObjectURL(e.target.files[0])}))
   }
 
@@ -616,7 +800,14 @@ function UploadModel(props){
 
                 
                   <div className="col-md-3 mb-3">
-                      <MaterialTextField type={"file"} label="Feature image" accept="image/*" name="feature_image" fullWidth  onChange={handleChange}/>
+                      <MaterialTextField type={"file"} label="Feature image (400px X 400px)" accept="image/*" name="feature_image" fullWidth  onChange={handleChange}
+                         helperText={
+                          errors.feature_image
+                          ? errors.feature_image
+                          : ''
+                          }
+                          error={errors.feature_image?true:false}           
+                      />
                       <label className="d-flex justify-content-start"><span className="text-success">{message.featured_image?message.featured_image.success:""}</span></label>
                   </div>
                   {imgshow.feature_image?
@@ -634,7 +825,14 @@ function UploadModel(props){
                   }
                 
                   <div className="col-md-3 mb-3">
-                      <MaterialTextField type={"file"} label="Banner Image" accept="application/pdf" name="banner_image" fullWidth onChange={handleChange}/>
+                      <MaterialTextField type={"file"} label="Banner Image (600px X 600px)" accept="application/pdf" name="banner_image" fullWidth onChange={handleChange}
+                        helperText={
+                          errors.banner_image
+                          ? errors.banner_image
+                          : ''
+                          }
+                          error={errors.banner_image?true:false}      
+                      />
                       <label className="d-flex justify-content-start"><span className="text-success">{message.banner_image?message.banner_image.success:""}</span></label>
               
                   </div>

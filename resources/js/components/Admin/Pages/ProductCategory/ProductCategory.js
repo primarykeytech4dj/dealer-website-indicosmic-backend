@@ -21,7 +21,7 @@ import Swal from "sweetalert2";
 
 import { ErrorMessage } from "@hookform/error-message";
 import { event } from "jquery";
-import swal from "sweetalert";
+
 import Editor from "../Editor/Editor";
 
 
@@ -148,178 +148,237 @@ class ProductCategory extends React.Component {
                 })
                 this.setState(old=>({...old,errors:{ ...old.errors, ...error}})) 
             }
+            if(fieldName=="image_name_1"){
+                 
+                var reader = new FileReader();
+                //Read the contents of Image File.
+                reader.readAsDataURL(fieldValue);
+               
+                reader.onload = (e) => {
+                    //Initiate the JavaScript Image object.
+                    var image = new Image();
+                    //Set the Base64 string return from FileReader as source.
+                    image.src = e.target.result;
+                    image.onload = (e) => {
+                        //Determine the Height and Width.
+                        var height = image.height;
+                        var width = image.width;
+                        console.log("height=>",height,"width=>",height)
+                        var res = true;
+                        error[fieldName] = '';
+                        if (height<600 && width<640) {
+                            error[fieldName] = "Height and Width must exceed 600px."
+                            // alert("Height and Width must not exceed 600px.");
+
+                           // this.setState(old=>({...old,errors:{ ...old.errors, ...error}})) 
+                            // return false;
+                            res =  false;
+
+                        }
+                
+                        // alert("Uploaded image has valid Height and Width.");
+                      
+                        // alert("validation")
+                   
+                        // this.setState(old=>({...old,errors:{ ...old.errors, ...error}})) 
+                        this.setState(old=>({...old,errors:{ ...old.errors, ...error}})) 
+                        if(res){
+                              this.setState(old=>({...old,[fieldName]: fieldValue } ))
+                        }
+                        return res;
+                        
+                    };
+                   
+                }
+
+               
+               
+            }
+          
             if(isMax >= fieldValue.length){
                this.setState(old=>({...old,[fieldName]: fieldValue } ))
             }
-        }
+           }
 
 
         
           
 
-        const handleChange = (e) => {
+            const handleChange = (e) => {
 
-          validation(e.target.name, e.target.value)
-          console.log(e.target.value)
-
-          if(e.target.name==="image_name_1"){
-            this.setState(old=>({...old, image_name_1 : e.target.files[0]}))
-            this.setState(old=>({...old, imageshow :URL.createObjectURL(e.target.files[0])}))
-          }
-         
           
-          // this.setState({errors: ''})
-        }
+            if(e.target.name==="image_name_1"){
+                validation(e.target.name, e.target.files[0])
+               // this.setState(old=>({...old, image_name_1 : e.target.files[0]}))
+                this.setState(old=>({...old, imageshow :URL.createObjectURL(e.target.files[0])}))
+            }else{
+                validation(e.target.name, e.target.value)
+                console.log(e.target.value)
+    
+    
+            }
+            
+            
+            // this.setState({errors: ''})
+            }
 
-        console.log()
+          console.log()
     
            
-        const prosumbmit = async (e) => {              
-            e.preventDefault();            
-            // var data = {
+            const prosumbmit = async (e) => {              
+                e.preventDefault();            
+                // var data = {
+                    
+
+                //     category_name:this.state.category_name,
+                //     description:this.state.description,
+                //     hsn_code:this.state.hsn_code,
+                //     gst:this.state.gst,
+                //     is_service:this.state.isservice,
+                //     is_parent:this.state.isparent,
+                //     // slug:this.props.data.slug
+                
+                // }
+
+                
+            let errors = {};
+            let isValid = this.state.isValid;
+            Object.entries(this.state.validation).map(([key,value])=>{
+
+                
+                if((this.state[key] === null) ) {
+                    let temp =  key.replace(/_/g, " "); 
+                    var name = temp
+                    .toLowerCase()
+                    .split(' ')
+                    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                    .join(' ');
+
+                    if(value.required === true){
+                        errors[key] = `${name} Field is Required`;
+                        isValid = false;
+                    }
+                } else {
+                    errors[key] = '';
+                    isValid = true;
+                }
+                this.setState(old=>({
+                    ...old,
+                    errors:errors
+                })) 
+            })
+
+            var count = 0;
+            Object.entries(errors).map(([key, value])=>{
+                if(value !== ''){
+                    count += 1;
+                }
+            })
+            
+            if(count>0){
+                return false;
+            }
+            
+                var data = new FormData();
+
+                const statedata={
+
+                category_name:this.state.category_name,
+                description:this.state.description,
+                hsn_code:this.state.hsn_code, 
+                image_name_1:this.state.image_name_1,
+                is_service:this.state.is_service
+
+                }
+
+                if(products=="service"){
+                statedata.link = this.state.link;
+                
+                }
+    
+    
+
                 
 
-            //     category_name:this.state.category_name,
-            //     description:this.state.description,
-            //     hsn_code:this.state.hsn_code,
-            //     gst:this.state.gst,
-            //     is_service:this.state.isservice,
-            //     is_parent:this.state.isparent,
-            //     // slug:this.props.data.slug
-            
-            // }
+                Object.entries(statedata).map(([index, value])=>{
+                // if((index!=="errors")&&(index!=="validation")&&(index!=="isValid")&&(index!=="imageshow")){
+                //   data.append(`${index}`, value);
+                // }
 
-            
-        let errors = {};
-        let isValid = this.state.isValid;
-        Object.entries(this.state.validation).map(([key,value])=>{
-
-            
-            if((this.state[key] === null) ) {
-                let temp =  key.replace(/_/g, " "); 
-                var name = temp
-                .toLowerCase()
-                .split(' ')
-                .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-                .join(' ');
-
-                if(value.required === true){
-                    errors[key] = `${name} Field is Required`;
-                    isValid = false;
-                }
-            } else {
-                errors[key] = '';
-                isValid = true;
-            }
-            this.setState(old=>({
-                ...old,
-                errors:errors
-            })) 
-        })
-
-        var count = 0;
-        Object.entries(errors).map(([key, value])=>{
-            if(value !== ''){
-                count += 1;
-            }
-        })
-        
-        if(count>0){
-            return false;
-        }
-          
-            var data = new FormData();
-
-            const statedata={
-
-              category_name:this.state.category_name,
-              description:this.state.description,
-              hsn_code:this.state.hsn_code, 
-              image_name_1:this.state.image_name_1,
-              is_service:this.state.is_service
-
-            }
-
-            if(products=="service"){
-              statedata.link = this.state.link;
-              
-            }
-  
-  
-
-            
-
-            Object.entries(statedata).map(([index, value])=>{
-              // if((index!=="errors")&&(index!=="validation")&&(index!=="isValid")&&(index!=="imageshow")){
-              //   data.append(`${index}`, value);
-              // }
-
-              data.append(`${index}`, value);
-            
-            })         
-            //  console.log(data);
-              // return;
+                data.append(`${index}`, value);
+                
+                })         
+                //  console.log(data);
+                // return;
 
 
-              this.apiCtrl.callAxiosFile("product/create-product-category",data).then((response)=>{
-              if(response.success == true){
-                Swal.fire({
-                    title: productType+" "+"Category",
-                    text: "Created!",
-                    icon: "success",
-                    showConfirmButton: false,
-                })
-                setTimeout(() => {
-                  Swal.close()
-                  this.setState({
-                    category_name:null,
-                    description:null,
-                    hsn_code:null,
-                    image_name_1:null,
-                  })
-                  $('.close').trigger('click');
-                  
-                 }, 3000);
-
-              } else {
+                this.apiCtrl.callAxiosFile("product/create-product-category",data).then((response)=>{
+                if(response.success == true){
                     Swal.fire({
-                      title: productType+" "+"Category",
-                        text: "Not Created!",
-                        icon: "error",
+                        title: productType+" "+"Category",
+                        text: "Created!",
+                        icon: "success",
                         showConfirmButton: false,
                     })
                     setTimeout(() => {
-                      Swal.close()
-                      $('.close').trigger('click');
+                    Swal.close()
+                    this.setState({
+                        category_name:null,
+                        description:null,
+                        hsn_code:null,
+                        image_name_1:null,
+                    })
+                    $('.close').trigger('click');
                     
-                }, 3000);
-                    //$('.close').trigger('click');
-                    // location.reload(`/${products}-category`)
-                }
-              
-                // console.log("CategoryCreate===>",response);
-                // sessionStorage.setItem('_token', response.data.)
+                    }, 3000);
+
+                } else {
+                        Swal.fire({
+                        title: productType+" "+"Category",
+                            text: "Not Created!",
+                            icon: "error",
+                            showConfirmButton: false,
+                        })
+                        setTimeout(() => {
+                        Swal.close()
+                        $('.close').trigger('click');
+                        
+                    }, 3000);
+                        //$('.close').trigger('click');
+                        // location.reload(`/${products}-category`)
+                    }
                 
-              }).catch(function (error) {
-                console.log(error);
-              });
-              
-              
-        }
+                    // console.log("CategoryCreate===>",response);
+                    // sessionStorage.setItem('_token', response.data.)
+                    
+                }).catch(function (error) {
+                    console.log(error);
+                });
+                
+                
+            }
 
-        const handleEdit=(data)=>{
-          console.log("data=>",data)
+            const handleEdit=(data)=>{
+            console.log("data=>",data)
 
-          this.setState(old=>({...old,description:data}))
+            this.setState(old=>({...old,description:data}))
 
-        }
+            }
+
+           
 
              
 
-                  
+            // const onImgLoad=({target:img})=> {
+            //     console.log("imfdimensions=>",img)
+            //   //  console.log("hwight=>",img.offsetHeight,"width=>",img.offsetWidth)
+            //     // this.setState({dimensions:{height:img.offsetHeight,
+            //     //                            width:img.offsetWidth}});
+            // }
               
 
            console.log("state=>",this.state)
+             // this.setState({errors: ''})
             return(
                 <>
                  {/* <BreadCrumb breadcrumb="Roles" breadcrumbItem1='Create' /> */}
@@ -415,7 +474,7 @@ class ProductCategory extends React.Component {
                
                <MaterialTextField    name="image_name_1" type="file" 
                  onChange={(e)=>{handleChange(e)}}    
-                  label="Image 1"  fullWidth  
+                  label="Image 1 (600px X 600px)"  fullWidth  
                   
                   helperText={
                    this.state.errors.image_name_1
@@ -427,9 +486,9 @@ class ProductCategory extends React.Component {
                 
  
               </div>
-              {this.state.imageshow!==null?
+              {this.state.image_name_1!==null?
                  <div className="col-md-4">
-                 <img src={this.state.imageshow?this.state.imageshow:""}/>
+                 <img  src={this.state.imageshow?this.state.imageshow:""}/>
                </div>:""
               }
               

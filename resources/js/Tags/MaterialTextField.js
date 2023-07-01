@@ -31,6 +31,7 @@ const handleTextField = (event) => {
 
     inputProps={{ 
         style: props.style  ? (props.style ?{...props.style} :  {...inputcss}) :  {...inputcss},
+        readOnly:props.readOnly?props.readOnly:false
     // max:props.max?props.max:200,
     //     min:props.min?props.min:200
 
