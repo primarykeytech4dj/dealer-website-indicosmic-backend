@@ -351,7 +351,7 @@ function SliderImage(props){
       </div>
       {state.type==="image"?
            <div className="col-md-2 mb-2">
-            <MaterialTextField style={{width:"40%", borderRadius:"14px"}}  type="file" name="image"  label="" onChange={imagehandlechange}  fullWidth  />
+            <MaterialTextField style={{width:"40%", borderRadius:"14px"}} label={"600px X 300px "} type="file" name="image"   onChange={imagehandlechange}  fullWidth  />
             {showimg.imgslider!==""?
              
                 

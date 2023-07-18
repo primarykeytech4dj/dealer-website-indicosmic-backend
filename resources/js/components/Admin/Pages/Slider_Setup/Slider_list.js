@@ -766,7 +766,7 @@ function Model(props){
 
         <>
           <div className="col-md-2 mb-2">
-            <MaterialTextField style={{width:"40%", borderRadius:"14px"}} type="file" name="image"  placeholder="Choose File" label="" onChange={(e)=>props.imgupld(e,props.id)}    />
+            <MaterialTextField style={{width:"40%", borderRadius:"14px"}} type="file" name="image"  placeholder="Choose File" label={"600px X 300px "} onChange={(e)=>props.imgupld(e,props.id)}    />
             
             {value.image!==""?
         

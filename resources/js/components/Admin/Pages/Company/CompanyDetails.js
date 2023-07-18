@@ -298,7 +298,7 @@ export class ComapnyDetails extends React.Component {
 
                     </div>
                     <div className={`${this.state.imageshow.logo||this.state.comapnyDetails.logo ? "col-md-3 mb-3" : "col-md-4 mb-3"}`}>
-                        <MaterialTextField size={"small"} type="file" name="logo" label="Logo" onChange={handleChange} fullWidth
+                        <MaterialTextField size={"small"} type="file" name="logo" label="Logo (57px X 57px)" onChange={handleChange} fullWidth
                             helperText={
                                 this.state.errors.logo
                                     ? this.state.errors.logo
@@ -412,7 +412,7 @@ export class ComapnyDetails extends React.Component {
 
                     </div>
                     <div className={`${this.state.imageshow.about_company_image||this.state.comapnyDetails.about_company_image ? "col-md-3 mb-3" : "col-md-4 mb-3"}`}>
-                        <MaterialTextField fullWidth size={"small"} type="file" name="about_company_image" label="About Company Image" onChange={handleChange}
+                        <MaterialTextField fullWidth size={"small"} type="file" name="about_company_image" label="About Company Image (57px X 57px)" onChange={handleChange}
                             helperText={
                                 this.state.errors.about_company_image
                                     ? this.state.errors.about_company_image
@@ -445,7 +445,7 @@ export class ComapnyDetails extends React.Component {
 
                     </div>
                     <div className={`${this.state.imageshow.company_mission_image ||this.state.comapnyDetails.company_mission_image? "col-md-3 mb-3" : "col-md-4 mb-3"}`}>
-                        <MaterialTextField fullWidth size={"small"} type="file" name="company_mission_image" label="Company Mission Image" onChange={handleChange}
+                        <MaterialTextField fullWidth size={"small"} type="file" name="company_mission_image" label="Company Mission Image (57px X 57px)" onChange={handleChange}
                             helperText={
                                 this.state.errors.company_mission_image
                                     ? this.state.errors.company_mission_image
@@ -479,7 +479,7 @@ export class ComapnyDetails extends React.Component {
 
                     </div>
                     <div className={`${this.state.imageshow.company_vision_image ||this.state.comapnyDetails.company_vision_image ? "col-md-3 mb-3" : "col-md-4 mb-3"}`}>
-                        <MaterialTextField size={"small"} fullWidth type="file" name="company_vision_image" label="Company Vision Image" onChange={handleChange}
+                        <MaterialTextField size={"small"} fullWidth type="file" name="company_vision_image" label="Company Vision Image (57px X 57px)" onChange={handleChange}
                             helperText={
                                 this.state.errors.company_vision_image
                                     ? this.state.errors.company_vision_image

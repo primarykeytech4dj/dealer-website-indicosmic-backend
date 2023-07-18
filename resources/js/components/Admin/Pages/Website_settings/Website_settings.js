@@ -609,7 +609,7 @@ const ImgFields = (props) => {
   const [logoimg, setLogoimg] = useState({
     imglogo: ""
   })
-  console.log("Image fieldprops=>", props)
+ // console.log("Image fieldprops=>", props)
   const logoupload = (e) => {
     props.logofucn({ key: props.fieldName, name: e.target.name, val: e.target.files[0] })
     setLogoimg({ imglogo: URL.createObjectURL(e.target.files[0]) })
@@ -622,8 +622,8 @@ const ImgFields = (props) => {
 
     <div className="col-md-2 mt-3" >
       <MaterialTextField fullWidth type="file"
-        name={props.name} label={props.name} placeholder={props.name}
-
+        name={props.name} label={`${props.name}, 180px X 180px`} placeholder={props.name}
+     
         onChange={logoupload}
       />
     </div>
